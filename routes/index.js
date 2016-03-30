@@ -97,7 +97,7 @@ function renderWork (req, res)  {
     imageStatus: WorkImageStatus.IMAGE_NONE
   }).exec(function (err, docs) {
 
-    if (docs.length) {
+    if (docs.length > 0) {
       const doc = docs[0];
       const chromosome = doc.chromosome;
       res.end(`<!doctype html>
@@ -116,7 +116,7 @@ window.hash = '${sha1(chromosome)}';
 `);
     } else {
       res.end(`<!doctype html>
-<html><head><meta http-equiv="refresh" content="5"></head><body>completed</body></html>`);
+<html><head><title>done</title><meta http-equiv="refresh" content="5"></head><body>completed</body></html>`);
     }
   });
 }
