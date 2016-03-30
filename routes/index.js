@@ -64,18 +64,45 @@ router.post('/work/breed', (req, res) => {
   breed(parents, count).then((result) => res.send(result));
 });
 
+router.get('/breed/:p1/:p2', (req, res) =>{
+  const p1 = req.params.p1;
+  const p2 = req.params.p2;
+  const count = 3;
+  const parents = [p1,p2].sort();
+
+  breed([p1, p2], count).then((result) => {
+    Work.find({
+      parents
+    }).exec(function (err, docs) {
+      res.render('breed', {p1, p2, works:docs});
+    });
+  });
+});
+
+router.get('/children/:p1/:p2', (req, res) =>{
+  const p1 = req.params.p1;
+  const p2 = req.params.p2;
+  const parents = [p1,p2].sort();
+
+  Work.find({
+    parents
+  }).exec(function (err, docs) {
+    res.render('breed', {p1, p2, works:docs});
+  });
+});
+
 function renderWork (req, res)  {
 
   Work.find({
     imageStatus: WorkImageStatus.IMAGE_NONE
-  }).limit(1).exec(function (err, docs) {
+  }).exec(function (err, docs) {
 
     if (docs.length) {
       const doc = docs[0];
       const chromosome = doc.chromosome;
       res.end(`<!doctype html>
 <html>
-<head><script>
+<head><title>${docs.length} to go...</title><meta http-equiv="refresh" content="10"><script>
 window.chromosome = '${chromosome}';
 window.hash = '${sha1(chromosome)}';
 </script></head>

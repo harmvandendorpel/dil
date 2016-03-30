@@ -1,16 +1,25 @@
 import State from './state';
+import { clone } from 'lodash';
 
 class App {
 
   remember(hash) {
+
     window.state.remember(hash);
     this.render();
+
+    if (window.state.data.memory.length == 2) {
+      setTimeout(function () {
+        const pair = clone(window.state.data.memory).sort();
+        location.href = `/breed/${pair[0]}/${pair[1]}`;
+        window.state.clearMemory();
+      },500);
+    }
   }
   
   render() {
     const $tools = $('<div></div>').addClass('tools');
     const $memory = $('<div></div>').addClass('memory');
-    console.log('render');
     window.state.data.memory.forEach((hash) => {
       const $img = $('<img>')
         .attr('src', `/works/thumb/${hash}.jpg`)

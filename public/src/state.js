@@ -20,6 +20,11 @@ export default class State extends EventEmitter {
     this.persist();
   }
 
+  clearMemory() {
+    this.data.memory = [];
+    this.persist();
+  }
+
   persist() {
     localStorage.setItem(LOCALSTORAGE_ID, JSON.stringify(this.data));
     this.emit('change');
@@ -35,7 +40,6 @@ export default class State extends EventEmitter {
       };
       this.persist();
     }
-    console.log(this.data);
   }
 
   constructor() {

@@ -17,11 +17,6 @@ export function saveOrganism(title, chromosome, parents = []) {
   return new Promise((resolve, reject) => {
     work.save(function(err) {
       resolve();
-      // if (err) {
-      //   resolve(err);
-      // } else {
-      //   resolve();
-      // }
     });
   });
 }

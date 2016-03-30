@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    p= p1
+    p= p2
+
+    each work in works
+        .work-medium.work
+            .work-tools
+                button.btn.btn-remember(data-hash=work.hash) remember
+            if work.imageStatus === 0
+                img.shadow(src='/images/rendering.png')
+                p.title= `${work.title} (rendering)`
+
+            else if work.imageStatus === 2
+                img.shadow(src=`/works/medium/${work.filename}`)
+                p.title= work.title
+
