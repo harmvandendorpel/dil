@@ -14,7 +14,7 @@ class App {
     window.state.data.memory.forEach((hash) => {
       const $img = $('<img>')
         .attr('src', `/works/thumb/${hash}.jpg`)
-        .addClass('work-thumb work');
+        .addClass('work-thumb work shadow');
       $memory.append($img);
     });
 

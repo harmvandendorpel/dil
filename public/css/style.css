@@ -1,5 +1,5 @@
 body {
-  padding: 50px;
+  padding: 100px 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     background-color:#eee;
 }
@@ -13,14 +13,14 @@ a {
     max-width:500px;
 }
 
-.work {
+.shadow {
     -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
 }
 
 .work-medium {
     position: relative;
     display:inline-block;
-    margin-right:50px;
+    margin-right:80px;
 }
 
 .work-tools {
@@ -52,4 +52,9 @@ a {
     top: 0;
     right: 0;
     padding:20px;
+}
+
+p.title {
+    text-align: center;
+    margin-bottom:50px;
 }

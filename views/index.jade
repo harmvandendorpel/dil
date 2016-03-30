@@ -6,11 +6,11 @@ block content
         .work-tools
             button.btn.btn-remember(data-hash=work.hash) remember
         if work.imageStatus === 0
-            img(src='/images/rendering.png')
-            p= `${work.title} (rendering)`
+            img.shadow(src='/images/rendering.png')
+            p.title= `${work.title} (rendering)`
 
         else if work.imageStatus === 2
-            img(src=`/works/medium/${work.filename}`)
-            p= work.title
+            img.shadow(src=`/works/medium/${work.filename}`)
+            p.title= work.title
 
 
