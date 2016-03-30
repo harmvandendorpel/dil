@@ -1,8 +1,15 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background-color:#eee;
 }
 
 a {
   color: #00B7FF;
+}
+
+
+.work-medium img {
+    max-width:500px;
+    -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
 }

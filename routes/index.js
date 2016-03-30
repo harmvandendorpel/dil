@@ -7,10 +7,26 @@ import { saveOrganism, breed } from '../organisms';
 import sha1 from 'sha1';
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  Work.find({}).sort({_id:-1}).exec((err, works) => {
+    res.render('index', { title: 'index', works });
+  });
+
 });
 
 router.get('/work/render', renderWork);
+
+router.get('/api/forceregenerate', (req, res) => {
+  Work.update(
+    {  },
+    { imageStatus: WorkImageStatus.IMAGE_NONE },
+    { multi:true },
+    () => {
+      res.send({
+        result: {'status':'done'}
+      });
+    });
+
+});
 
 router.post('/api/saveimage', (req, res) => {
   saveWorkImage(req).then((data) => {
