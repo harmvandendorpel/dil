@@ -2,7 +2,7 @@ extends layout
 
 block content
   each work in works
-    .work-medium
+    .work-medium.work
         .work-tools
             button.btn.btn-remember(data-hash=work.hash) remember
         if work.imageStatus === 0

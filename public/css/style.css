@@ -11,12 +11,16 @@ a {
 
 .work-medium img {
     max-width:500px;
+}
+
+.work {
     -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
 }
 
 .work-medium {
     position: relative;
     display:inline-block;
+    margin-right:50px;
 }
 
 .work-tools {
@@ -36,4 +40,16 @@ a {
     background-color:white;
     border:none;
     border-radius:2px;
+}
+
+.work-thumb {
+    width:50px;
+    margin-right:10px;
+}
+
+.tools-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding:20px;
 }

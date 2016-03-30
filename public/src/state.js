@@ -17,7 +17,7 @@ export default class State extends EventEmitter {
   }
 
   load() {
-    const ls = localStorage.getItem('LOCALSTORAGE_ID');
+    const ls = localStorage.getItem(LOCALSTORAGE_ID);
     if (ls) {
       this.data = JSON.parse(localStorage.getItem(LOCALSTORAGE_ID));
     } else {
@@ -30,6 +30,7 @@ export default class State extends EventEmitter {
   }
 
   constructor() {
+    super();
     this.load();
   }
 }
