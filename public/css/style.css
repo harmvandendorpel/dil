@@ -13,3 +13,27 @@ a {
     max-width:500px;
     -webkit-box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
 }
+
+.work-medium {
+    position: relative;
+    display:inline-block;
+}
+
+.work-tools {
+    position:absolute;
+    right: 0;
+    padding:10px;
+    display:none;
+}
+
+.work-medium:hover .work-tools {
+    display:inline;
+}
+
+.btn {
+    -webkit-appearance: none;
+    color:black;
+    background-color:white;
+    border:none;
+    border-radius:2px;
+}
