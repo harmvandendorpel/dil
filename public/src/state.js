@@ -1,4 +1,4 @@
-import { uniq } from 'lodash';
+import { uniq, findIndex } from 'lodash';
 import EventEmitter from 'events';
 const LOCALSTORAGE_ID = 'DIL';
 
@@ -8,6 +8,15 @@ export default class State extends EventEmitter {
   remember(hash) {
     this.data.memory.push(hash);
     this.data.memory = uniq(this.data.memory);
+    this.persist();
+  }
+
+  forget(hash) {
+    const indexToDelete = findIndex(this.data.memory, (el) => {
+      return el === hash;
+    });
+
+    this.data.memory.splice(indexToDelete, 1);
     this.persist();
   }
 

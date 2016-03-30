@@ -10,17 +10,24 @@ class App {
   render() {
     const $tools = $('<div></div>').addClass('tools');
     const $memory = $('<div></div>').addClass('memory');
-
+    console.log('render');
     window.state.data.memory.forEach((hash) => {
       const $img = $('<img>')
         .attr('src', `/works/thumb/${hash}.jpg`)
-        .addClass('work-thumb work shadow');
+        .addClass('work-thumb work shadow')
+        .attr('data-hash', hash)
+        .bind('mousedown', (e) => {
+          const hash = $(e.target).data().hash;
+          window.state.forget(hash);
+        });
+
       $memory.append($img);
     });
 
     $tools.append($memory);
 
-    $('.tools-container').html($tools.html());
+    $('.tools-container').html('');
+    $('.tools-container').append($tools);
   }
   
   constructor() {
