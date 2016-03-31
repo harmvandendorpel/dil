@@ -23,7 +23,6 @@ function deleteWork(req, res) {
       status:'removed'
     })
   })
-
 }
 
 router.get('/api/forceregenerate', (req, res) => {
@@ -36,7 +35,6 @@ router.get('/api/forceregenerate', (req, res) => {
         result: {'status':'done'}
       });
     });
-
 });
 
 router.post('/api/saveimage', (req, res) => {
@@ -51,7 +49,6 @@ router.post('/api/saveimage', (req, res) => {
           result: 'done'
         });
       });
-
   });
 });
 
