@@ -5,7 +5,7 @@ block content
     p= p2
 
     each work in works
-        .work-medium.work
+        .work-medium.work(data-hash=work.hash)
             .work-tools
                 button.btn.btn-breed(data-hash=work.hash) breed
                 button.btn.btn-kill(data-hash=work.hash) kill

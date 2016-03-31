@@ -1,5 +1,6 @@
 import State from './state';
 import { clone } from 'lodash';
+import sha1 from 'sha1';
 
 class App {
 
@@ -20,8 +21,10 @@ class App {
   kill(hash) {
     if (confirm('really?')) {
       $.post(`/api/delete/${hash}`).done(() => {
-        location.href = location.href;
-
+        const $work = $(`.work[data-hash='${hash}']`);
+        $work.slideUp(() => {
+          $work.remove();
+        });
       });
     }
   }
@@ -60,7 +63,8 @@ class App {
     });
 
     $('.btn-kill').bind('mousedown', (e) => {
-      const hash = $(e.target).data().hash;
+      const $target = $(e.target);
+      const hash = $target.data().hash;
       this.kill(hash);
     });
 
