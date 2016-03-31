@@ -103,10 +103,10 @@ function renderWork (req, res)  {
 
   Work.find({
     imageStatus: WorkImageStatus.IMAGE_NONE
-  }).exec(function (err, docs) {
+  }).sort({_id:-1}).limit(1).exec(function (err, docs) {
 
     if (docs.length > 0) {
-      const doc = docs[Math.round(Math.random() * (docs.length-1))];
+      const doc = docs[0];
       const chromosome = doc.chromosome;
       res.end(`<!doctype html>
 <html>
