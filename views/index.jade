@@ -4,7 +4,8 @@ block content
   each work in works
     .work-medium.work
         .work-tools
-            button.btn.btn-remember(data-hash=work.hash) remember
+            button.btn.btn-breed(data-hash=work.hash) breed
+            button.btn.btn-kill(data-hash=work.hash) kill
         if work.imageStatus === 0
             img.shadow(src='/images/rendering.png')
             p.title= `${work.title} (rendering)`

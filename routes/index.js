@@ -14,6 +14,17 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/work/render', renderWork);
+router.post('/api/delete/:hash', deleteWork);
+
+function deleteWork(req, res) {
+  const hash = req.params.hash;
+  Work.remove({hash}).exec(() => {
+    res.send({
+      status:'removed'
+    })
+  })
+
+}
 
 router.get('/api/forceregenerate', (req, res) => {
   Work.update(

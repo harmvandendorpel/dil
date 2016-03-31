@@ -16,6 +16,15 @@ class App {
       },500);
     }
   }
+
+  kill(hash) {
+    if (confirm('really?')) {
+      $.post(`/api/delete/${hash}`).done(() => {
+        location.href = location.href;
+
+      });
+    }
+  }
   
   render() {
     const $tools = $('<div></div>').addClass('tools');
@@ -45,11 +54,17 @@ class App {
       this.render();
     });
 
-    $('.btn-remember').bind('mousedown', (e) => {
+    $('.btn-breed').bind('mousedown', (e) => {
       const hash = $(e.target).data().hash;
       this.remember(hash);
     });
-    
+
+    $('.btn-kill').bind('mousedown', (e) => {
+      const hash = $(e.target).data().hash;
+      this.kill(hash);
+    });
+
+
     this.render();
   }
 }
