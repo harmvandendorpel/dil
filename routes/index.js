@@ -106,7 +106,7 @@ function renderWork (req, res)  {
   }).exec(function (err, docs) {
 
     if (docs.length > 0) {
-      const doc = docs[0];
+      const doc = docs[Math.round(Math.random() * (docs.length-1))];
       const chromosome = doc.chromosome;
       res.end(`<!doctype html>
 <html>
