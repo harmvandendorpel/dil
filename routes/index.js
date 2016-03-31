@@ -78,7 +78,7 @@ router.post('/work/breed', (req, res) => {
 router.get('/breed/:p1/:p2', (req, res) =>{
   const p1 = req.params.p1;
   const p2 = req.params.p2;
-  const count = 3;
+  const count = 6;
   const parents = [p1,p2].sort();
 
   breed([p1, p2], count).then((result) => {
