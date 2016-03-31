@@ -16,6 +16,7 @@ export default class State extends EventEmitter {
       return el === hash;
     });
 
+    
     this.data.memory.splice(indexToDelete, 1);
     this.persist();
   }
