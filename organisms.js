@@ -13,6 +13,7 @@ export function saveOrganism(title, chromosome, parents = []) {
   work.imageStatus = WorkImageStatus.IMAGE_NONE;
   work.parents = parents;
   work.ts = new Date().getTime();
+  work.enabled = true;
   
   return new Promise((resolve, reject) => {
     work.save(function(err) {

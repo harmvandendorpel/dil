@@ -7,7 +7,9 @@ import { saveOrganism, breed } from '../organisms';
 import sha1 from 'sha1';
 
 router.get('/', function(req, res, next) {
-  Work.find({}).sort({_id:-1}).exec((err, works) => {
+  Work.find({
+    enabled: true
+  }).sort({_id:-1}).exec((err, works) => {
     res.render('index', { title: 'index', works });
   });
 
@@ -18,11 +20,16 @@ router.post('/api/delete/:hash', deleteWork);
 
 function deleteWork(req, res) {
   const hash = req.params.hash;
-  Work.remove({hash}).exec(() => {
-    res.send({
-      status:'removed'
-    })
-  })
+  Work.update(
+    { hash },
+    { enabled: false },
+    {},
+    () => {
+      res.send({
+        status: 'disabled'
+      })
+    }
+  );
 }
 
 router.get('/api/forceregenerate', (req, res) => {
@@ -102,11 +109,12 @@ router.get('/children/:p1/:p2', (req, res) =>{
 function renderWork (req, res)  {
 
   Work.find({
+    enabled: true,
     imageStatus: WorkImageStatus.IMAGE_NONE
-  }).exec(function (err, docs) {
+  }).sort({_id:-1}).limit(1).exec(function (err, docs) {
 
     if (docs.length > 0) {
-      const doc = docs[Math.round(Math.random() * (docs.length-1))];
+      const doc = docs[0];
       const chromosome = doc.chromosome;
       res.end(`<!doctype html>
 <html>
