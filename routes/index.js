@@ -116,11 +116,12 @@ function renderWork (req, res)  {
     if (docs.length > 0) {
       const doc = docs[0];
       const chromosome = doc.chromosome;
+      const hash = sha1(chromosome;
       res.end(`<!doctype html>
 <html>
-<head><title>${docs.length} to go...</title><meta http-equiv="refresh" content="10"><script>
+<head><title>generating ${hash}</title><meta http-equiv="refresh" content="10"><script>
 window.chromosome = '${chromosome}';
-window.hash = '${sha1(chromosome)}';
+window.hash = '${hash}';
 </script></head>
 <body>
 <canvas id="canvas"></canvas>
