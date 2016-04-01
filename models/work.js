@@ -8,7 +8,8 @@ var WorkSchema = new Schema({
   filename: String,
   imageStatus: Number,
   parents: Array,
-  ts: Number
+  ts: Number,
+  enabled: false
 });
 
 module.exports = mongoose.model('Work', WorkSchema);
