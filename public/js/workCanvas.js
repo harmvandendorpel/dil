@@ -86,9 +86,12 @@ function createLayer(cssClass, elements, trans, done) {
 
     var imageData = imageContext.getImageData(0,0, tempCanvas.width, tempCanvas.height);
     if (!organ.fixedColor) {
-      console.log(setsGrayscale);
-      if (setsGrayscale) {
+
+      if (parseInt(setsGrayscale) == 1) {
+        console.log('set grayscale ' + grayScalePercentage);
         imageData = grayscale(imageData, grayScalePercentage);
+      } else {
+        console.log('do not adjust grayscale');
       }
       imageData = hueRotate(imageData, hueValue);
 
