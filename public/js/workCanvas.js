@@ -86,6 +86,7 @@ function createLayer(cssClass, elements, trans, done) {
 
     var imageData = imageContext.getImageData(0,0, tempCanvas.width, tempCanvas.height);
     if (!organ.fixedColor) {
+      console.log(setsGrayscale);
       if (setsGrayscale) {
         imageData = grayscale(imageData, grayScalePercentage);
       }
