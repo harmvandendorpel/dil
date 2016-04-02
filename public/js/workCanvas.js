@@ -112,6 +112,7 @@ function createLayer(cssClass, elements, trans, done) {
         console.log('flip vertical');
         ctx.scale(1, -1);
       } else {
+        console.log('rotate ' ,rotation , ' degrees');
         ctx.rotate(rotation * Math.PI / 180);
       }
       ctx.translate(-canvas.width / 2, -canvas.height / 2);
