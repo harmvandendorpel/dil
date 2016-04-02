@@ -162,42 +162,6 @@ function getN(maxValue) {
   return result;
 }
 
-function makePiece() {
-  cursor = 0;
-
-  ctx.fillStyle = 'white';
-
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  console.log('start');
-  createLayer('back-print', organs, false, function () {
-    createLayer('foil',       foils,  true, function () {
-      createLayer('organ-01',   organs, true, function () {
-        createLayer('organ-02',   organs, true, function () {
-          createLayer('organ-03',   organs, true, function () {
-            createLayer('things',     things, false, function () {
-              createLayer('cuts',       cuts,   false, function () {
-                var dataURL = canvas.toDataURL("image/jpeg", 0.9);
-                $.ajax({
-                  url: '/api/saveimage',
-                  dataType:'json',
-                  data: {
-                    image: dataURL,
-                    chromosome: window.chromosome,
-                    hash: window.hash
-                  },
-                  method:'post'
-                }).done(function (data) {
-                  console.log('???');
-                  location.href = location.href;
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  });
-}
 
 function hueRotate(imageData, degrees) {
   var data = imageData.data;
@@ -303,6 +267,44 @@ function rgbToHsl(r, g, b){
   return [h, s, l];
 }
 
+function makePiece() {
+  cursor = 0;
+
+  ctx.fillStyle = 'white';
+
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  console.log('start');
+  createLayer('back-print', organs, false, function () {
+    createLayer('foil',       foils,  true, function () {
+      createLayer('organ-01',   organs, true, function () {
+        createLayer('organ-02',   organs, true, function () {
+          createLayer('organ-03',   organs, true, function () {
+            createLayer('things',     things, false, function () {
+              createLayer('cuts',       cuts,   false, function () {
+                var dataURL = canvas.toDataURL("image/jpeg", 0.9);
+                $.ajax({
+                  url: '/api/saveimage',
+                  dataType:'json',
+                  data: {
+                    image: dataURL,
+                    chromosome: window.chromosome,
+                    hash: window.hash
+                  },
+                  method:'post'
+                }).done(function (data) {
+                  console.log('???');
+                  location.href = location.href;
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+}
+
+
 function run() {
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
@@ -322,6 +324,8 @@ function run() {
   //   console.log(dna);
   // }
 }
+
+
 
 
 $(document).ready(run);
