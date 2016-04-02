@@ -61,7 +61,6 @@ var rotateClasses = [
   135,
   180,
   -90,
-  180,
   1000, // mirror horizontal
   2000 // mirror vertical
 ];
