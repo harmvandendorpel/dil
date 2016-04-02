@@ -101,7 +101,7 @@ function createLayer(cssClass, elements, trans, done) {
 
     imageContext.putImageData(imageData,0,0);
 
-    if (organ.canRotate && rotation !== null ) {
+    if (rotation !== null ) {
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
       ctx.rotate(rotation * Math.PI/180);
