@@ -1,6 +1,7 @@
 var foils = [{
   fixedColor:true,
   folder:'foils',
+  canRotate: true,
   el:[
     {f:"000"},
     {f:"001"},
@@ -39,6 +40,7 @@ var things = [{
 var cuts = [
   {
     folder: 'cuts',
+    canRotate: true,
     el: [
       {f:"000"},
       {f:"001"},
