@@ -61,7 +61,7 @@ var rotateClasses = [
   135,
   180,
   -90,
-  null,
+  180,
   null
 ];
 
