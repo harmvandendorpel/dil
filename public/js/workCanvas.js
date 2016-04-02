@@ -70,6 +70,7 @@ function createLayer(cssClass, elements, trans, done) {
   var url = '/images/organs/' + organ.folder + '/' + filename + '.png';
   var rotationIndex = getN(rotateClasses.length-1, 'get rotation');
   var rotation = rotateClasses[rotationIndex];
+  console.log('rotate ', rotation);
   var hueValue = getN(360, 'get hue color value');
   var setsGrayscale = getN(1, 'set grayscale');
   var grayScalePercentage = getN(100, 'get grayscale value');
