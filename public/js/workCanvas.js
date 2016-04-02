@@ -105,9 +105,9 @@ function createLayer(cssClass, elements, trans, done) {
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
       if (rotation === 1000) {
-        context.scale(-1, 1);
+        ctx.scale(-1, 1);
       } if (rotation === 2000) {
-        context.scale(1, -1);
+        ctx.scale(1, -1);
       } else {
         ctx.rotate(rotation * Math.PI / 180);
       }
