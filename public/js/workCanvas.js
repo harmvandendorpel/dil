@@ -70,7 +70,7 @@ function createLayer(cssClass, elements, trans, done) {
   var url = '/images/organs/' + organ.folder + '/' + filename + '.png';
   var rotationIndex = getN(rotateClasses.length-1, 'get rotation');
   var rotation = rotateClasses[rotationIndex];
- 
+
   var hueValue = getN(360, 'get hue color value');
   var setsGrayscale = getN(1, 'set grayscale');
   var grayScalePercentage = getN(100, 'get grayscale value');
@@ -105,10 +105,10 @@ function createLayer(cssClass, elements, trans, done) {
     if (rotation !== null ) {
       ctx.save();
       ctx.translate(canvas.width / 2, canvas.height / 2);
-      if (rotation === 1000) {
+      if (parseInt(rotation) === 1000) {
         console.log('flip horizontal');
         ctx.scale(-1, 1);
-      } if (rotation === 2000) {
+      } if (parseInt(rotation) === 2000) {
         console.log('flip vertical');
         ctx.scale(1, -1);
       } else {
