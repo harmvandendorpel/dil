@@ -65,7 +65,10 @@ router.post('/work/new', (req, res) => {
   const parents = req.body.parents || [];
 
   saveOrganism(title, chromosome, parents).then(
-    () => res.send('done'),
+    () => res.send({
+      chromosome,
+      title
+    }),
     (err) => res.send(err)
   );
 });
