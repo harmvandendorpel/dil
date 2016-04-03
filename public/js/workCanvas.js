@@ -1,7 +1,9 @@
 
+var mutationRate = Math.pow(10, -8);
 var canvas = null;
 var ctx = null;
 
+var debugMode = false;
 var generate = false;
 // var parents = [
 //   "101000011000100001110100111000110000101101001110000100101100011011010100110011000011110101001101010101001100110100100111001111100010000010010101100101100110110101110101101010010001010101101000111010001111000000100010100110000100000110000011101101101000011100111000010101110100100011",
@@ -40,7 +42,6 @@ function pad(n) {
   return nString + '.png';
 }
 
-
 function grayscale(imageData, percentage) {
   var strength = percentage / 100;
   var data = imageData.data;
@@ -55,7 +56,8 @@ function grayscale(imageData, percentage) {
 }
 
 function createLayer(cssClass, elements, trans, done) {
-  var showLayer = getN(1, 'show this layer?');
+  console.log('-------');
+  var showLayer = getN(7, 'show this layer?') >= 3;
 
   if (trans) {
     ctx.globalCompositeOperation = "multiply";
@@ -71,11 +73,16 @@ function createLayer(cssClass, elements, trans, done) {
   var rotationIndex = getN(rotateClasses.length-1, 'get rotation');
   var rotation = rotateClasses[rotationIndex];
 
-  var hueValue = getN(360, 'get hue color value');
+
+  var hueValue = getN(255, 'get hue color value') / 255 * 360;
   var setsGrayscale = getN(1, 'set grayscale');
-  var grayScalePercentage = getN(100, 'get grayscale value');
-  var brightnessPercentage = getN(100, 'get brightness value') + 100;
-  var contrastPercentage = getN(100, 'get constrast value') + 100;
+  var grayScalePercentage = getN(127, 'get grayscale value') / 127 * 100;
+  var brightnessPercentage = getN(127, 'get brightness value') / 127 * 100 + 100;
+  var contrastPercentage = getN(127, 'get constrast value') / 127 * 100 + 100;
+  var mirrorHorizontal = getN(1, 'mirror horizontal');
+  var mirrorVertical = getN(1, 'mirror vertical');
+
+  var futureDNASpace = getN(1024  * 1024 * 1024 * 1024 * 128 , 'future dna pos');
 
   var img = new Image();
 
@@ -87,13 +94,7 @@ function createLayer(cssClass, elements, trans, done) {
 
     var imageData = imageContext.getImageData(0,0, tempCanvas.width, tempCanvas.height);
     if (!organ.fixedColor) {
-
-      if (parseInt(setsGrayscale) == 1) {
-        console.log('set grayscale ' + grayScalePercentage);
-        imageData = grayscale(imageData, grayScalePercentage);
-      } else {
-        console.log('do not adjust grayscale');
-      }
+      imageData = grayscale(imageData, grayScalePercentage);
       imageData = hueRotate(imageData, hueValue);
 
       imageData = brightness(imageData, brightnessPercentage);
@@ -102,34 +103,30 @@ function createLayer(cssClass, elements, trans, done) {
 
     imageContext.putImageData(imageData,0,0);
 
-    if (rotation !== null ) {
-      ctx.save();
-      ctx.translate(canvas.width / 2, canvas.height / 2);
-      if (parseInt(rotation) === 1000) {
-        console.log('flip horizontal');
-        ctx.scale(-1, 1);
-      } if (parseInt(rotation) === 2000) {
-        console.log('flip vertical');
-        ctx.scale(1, -1);
-      } else {
-        console.log('rotate ' ,rotation , ' degrees');
-        ctx.rotate(rotation * Math.PI / 180);
-      }
-      ctx.translate(-canvas.width / 2, -canvas.height / 2);
-      needsRestore = true;
+    ctx.save();
+    ctx.translate(canvas.width / 2, canvas.height / 2);
+    if (rotation != null && organ.canRotate) {
+      ctx.rotate(rotation * Math.PI / 180);
     }
+
+    if (mirrorHorizontal === 1) {
+      ctx.scale(-1, 1);
+    }
+
+    if (mirrorVertical === 1) {
+      ctx.scale(1, -1);
+    }
+
+    ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
     if (showLayer) {
       ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
     }
 
-    if (needsRestore) {
-      ctx.restore();
-    }
+    ctx.restore();
 
     done();
   };
-
 
   img.src = url;
 }
@@ -141,7 +138,6 @@ function createOffscreenCanvas(width,height){
   return canvas;
 }
 
-
 function dec2bin(dec){
   var s = (dec >>> 0).toString(2);
   while (s.length <= 16) {
@@ -150,7 +146,8 @@ function dec2bin(dec){
   return s;
 }
 
-function getN(maxValue) {
+function getN(maxValue, comment) {
+
   var bitsCount = Math.floor(Math.log(maxValue) / Math.LN2) + 1;
   bitsCount = Math.max(1, bitsCount);
   var result = null;
@@ -169,9 +166,9 @@ function getN(maxValue) {
     result = parseInt(value, 2);
     result = Math.min(result, maxValue);
   }
+  console.log(comment, result + ' / ' + maxValue + ' (' + bitsCount + ' bits)');
   return result;
 }
-
 
 function hueRotate(imageData, degrees) {
   var data = imageData.data;
@@ -236,7 +233,7 @@ function hslToRgb(h, s, l){
 
   if(s == 0){
     r = g = b = l; // achromatic
-  }else{
+  } else {
     var hue2rgb = function hue2rgb(p, q, t){
       if(t < 0) t += 1;
       if(t > 1) t -= 1;
@@ -292,19 +289,9 @@ function makePiece() {
             createLayer('things',     things, false, function () {
               createLayer('cuts',       cuts,   false, function () {
                 var dataURL = canvas.toDataURL("image/jpeg", 0.9);
-                $.ajax({
-                  url: '/api/saveimage',
-                  dataType:'json',
-                  data: {
-                    image: dataURL,
-                    chromosome: window.chromosome,
-                    hash: window.hash
-                  },
-                  method:'post'
-                }).done(function (data) {
-                  console.log('???');
-                  location.href = location.href;
-                });
+                if (!debugMode) {
+                  saveToServer(dataURL);
+                }
               });
             });
           });
@@ -314,28 +301,33 @@ function makePiece() {
   });
 }
 
+function saveToServer(dataURL) {
+  $.ajax({
+    url: '/api/saveimage',
+    dataType: 'json',
+    data: {
+      image: dataURL,
+      chromosome: window.chromosome,
+      hash: window.hash
+    },
+    method: 'post'
+  }).done(function (data) {
+    location.href = location.href;
+  });
+}
 
 function run() {
   canvas = document.getElementById('canvas');
   ctx = canvas.getContext('2d');
 
-  canvas.width = 1800;
-  canvas.height = 1800;
-  canvas.style.width = canvas.width / 1 + 'px';
+  canvas.width = canvas.height = 1800;
+  canvas.style.width  = canvas.width  / 1 + 'px';
   canvas.style.height = canvas.height / 1 + 'px';
 
-  // if (!generate) {
-  //   dna = newDna(parents);
-  dna = window.chromosome;
-    // console.log(dna);
+  if (!generate) {
+    dna = window.chromosome;
+  }
   makePiece();
-  // } else {
-  //   makePiece();
-  //   console.log(dna);
-  // }
 }
-
-
-
 
 $(document).ready(run);

@@ -1,7 +1,6 @@
 var foils = [{
   fixedColor:true,
   folder:'foils',
-  canRotate: true,
   el:[
     {f:"000"},
     {f:"001"},
@@ -55,14 +54,14 @@ var cuts = [
 ];
 
 var rotateClasses = [
-  null,
-  45,
+  0,
+  0,
   90,
-  135,
   180,
-  -90,
   180,
-  null
+  270,
+  180,
+  0
 ];
 
 
