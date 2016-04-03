@@ -107,22 +107,34 @@ router.get('/children/:p1/:p2', (req, res) =>{
 });
 
 function renderWork (req, res)  {
+  const debugMode = false;
 
   Work.find({
     enabled: true,
     imageStatus: WorkImageStatus.IMAGE_NONE
   }).sort({_id:-1}).limit(1).exec(function (err, docs) {
 
-    if (docs.length > 0) {
-      const doc = docs[0];
-      const chromosome = doc.chromosome;
+    if (docs.length > 0 || debugMode) {
+      let chromosome = null;
+      let refreshHTML = '';
+      if (debugMode) {
+        chromosome = '';
+        while (chromosome.length < 1024) {
+          chromosome += Math.random() > 0.5 ? '0' : '1';
+        }
+      } else {
+        const doc = docs[0];
+        chromosome = doc.chromosome;
+        refreshHTML = '<meta http-equiv="refresh" content="10">';
+      }
       const hash = sha1(chromosome);
+
       res.end(`<!doctype html>
 <html>
-<head><title>generating ${hash}</title><meta http-equiv="refresh" content="10"><script>
+<head><title>generating ${hash}</title>${refreshHTML}<script>
 window.chromosome = '${chromosome}';
 window.hash = '${hash}';
-</script></head>
+</script><style>body {background-color:#eee; margin:100px}</style></head>
 <body>
 <canvas id="canvas"></canvas>
 <script src="/js/jquery.js"></script>
