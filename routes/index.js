@@ -7,10 +7,12 @@ import { saveOrganism, breed } from '../organisms';
 import sha1 from 'sha1';
 
 router.get('/', function(req, res, next) {
-  Work.find({
-    enabled: true
-  }).sort({_id:-1}).exec((err, works) => {
-    res.render('index', { title: 'index', works });
+  Work
+    .find({enabled: true})
+    .sort({_id:-1})
+    .limit(25)
+    .exec((err, works) => {
+    res.render('index', { title: 'death imitates language', works });
   });
 
 });
