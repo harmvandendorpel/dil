@@ -20,6 +20,8 @@ router.get('/', function(req, res, next) {
 router.get('/work/render', renderWork);
 router.post('/api/delete/:hash', deleteWork);
 
+router.get('/:hash', detailPage);
+
 function deleteWork(req, res) {
   const hash = req.params.hash;
   Work.update(
@@ -32,6 +34,11 @@ function deleteWork(req, res) {
       })
     }
   );
+}
+
+function detailPage(req, res) {
+  const hash = req.params.hash;
+  res.render('detail', { title: hash });
 }
 
 router.get('/api/forceregenerate', (req, res) => {
