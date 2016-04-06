@@ -63,6 +63,9 @@ function detailPage(req, res) {
                 $ne: hash
               }
             },
+            {
+              enabled: true
+            },
             { parents }
           ]
         }).exec((err, docs) => {
