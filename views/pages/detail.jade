@@ -1,0 +1,23 @@
+extends ../layout
+include ../mixins/work
+
+block content
+  + workFull(current)
+
+  if parents.length > 0
+
+    .parents
+      h2 parents
+      + workMedium(parents[0])
+      + workMedium(parents[1])
+  else
+    h2 immaculate conception
+
+
+  .siblings
+    if siblings && siblings.length > 0
+      h2 siblings
+      each work in siblings
+        + workThumb(work)
+    else
+      h2 no siblings

@@ -1,0 +1,10 @@
+extends ../layout
+include ../mixins/work
+
+block content
+    p= p1
+    p= p2
+
+    each work in works
+      + workMedium(work)
+
