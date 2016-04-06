@@ -46,13 +46,26 @@ function detailPage(req, res) {
 
     Async.parallel({
       parents: (callback) => {
-        Work.find({hash: { $in: parents}}).exec((err, doc) => {
+        Work.find({
+          hash: {
+            $in: parents
+          }
+        }).exec((err, doc) => {
           callback(null, doc);
         });
       },
       siblings: (callback) => {
-        console.log(parents);
-        Work.find({parents}).exec((err, docs) => {
+        parents.sort();
+        Work.find({
+          $and: [
+            {
+              hash: {
+                $ne: hash
+              }
+            },
+            { parents }
+          ]
+        }).exec((err, docs) => {
           callback(null, docs);
         });
       }
