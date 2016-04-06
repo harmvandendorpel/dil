@@ -104,6 +104,10 @@ p.title {
     margin: 20px;
 }
 
+.recent .work {
+    margin:20px;
+}
+
 .work--remove-button {
     cursor: not-allowed;
 }

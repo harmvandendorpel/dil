@@ -2,6 +2,6 @@ extends ../layout
 include ../mixins/work
 
 block content
-  each work in works
-    + workMedium(work)
-    .clear
+  .recent
+    each work in works
+      + workMedium(work)
