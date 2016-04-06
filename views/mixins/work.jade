@@ -1,0 +1,29 @@
+mixin workThumb(work)
+  .work--thumb.work.work--has-tools(data-hash=work.hash)
+    + workTools(work)
+    + work(work, `/works/thumb/${work.filename}`)
+
+mixin workMedium(work)
+  .work--medium.work.work--has-tools(data-hash=work.hash)
+    + workTools(work)
+    + work(work, `/works/medium/${work.filename}`)
+
+mixin workFull(work)
+  .work--full.work.work--has-tools(data-hash=work.hash)
+    + workTools(work)
+    + work(work, `/works/full/${work.filename}`)
+
+mixin workTools(work)
+  .work__tools
+    button.btn.btn-breed(data-hash=work.hash) breed
+    button.btn.btn-kill(data-hash=work.hash) hide
+
+mixin work(work, URL)
+  a.no-link(href=`/language/${work.hash}`)
+    if work.imageStatus === 0
+      img.shadow(src='/images/rendering.png')
+      p.title= `${work.title} (rendering)`
+
+    else if work.imageStatus === 2
+      img.shadow(src=URL)
+      p.title= work.title

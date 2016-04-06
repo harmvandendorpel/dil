@@ -5,6 +5,7 @@ import Work from '../models/work';
 import saveWorkImage from '../saveWorkImage';
 import { saveOrganism, breed } from '../organisms';
 import sha1 from 'sha1';
+import Async from 'async';
 
 router.get('/', function(req, res, next) {
   Work
@@ -12,7 +13,7 @@ router.get('/', function(req, res, next) {
     .sort({_id:-1})
     .limit(25)
     .exec((err, works) => {
-    res.render('index', { title: 'death imitates language', works });
+    res.render('pages/index', { title: 'death imitates language', works });
   });
 
 });
@@ -20,7 +21,7 @@ router.get('/', function(req, res, next) {
 router.get('/work/render', renderWork);
 router.post('/api/delete/:hash', deleteWork);
 
-router.get('/:hash', detailPage);
+router.get('/language/:hash', detailPage);
 
 function deleteWork(req, res) {
   const hash = req.params.hash;
@@ -38,7 +39,32 @@ function deleteWork(req, res) {
 
 function detailPage(req, res) {
   const hash = req.params.hash;
-  res.render('detail', { title: hash });
+
+  Work.find({hash}).exec((err, doc) => {
+    const current = doc[0];
+    const parents = current.parents;
+
+    Async.parallel({
+      parents: (callback) => {
+        Work.find({hash: { $in: parents}}).exec((err, doc) => {
+          callback(null, doc);
+        });
+      },
+      siblings: (callback) => {
+        console.log(parents);
+        Work.find({parents}).exec((err, docs) => {
+          callback(null, docs);
+        });
+      }
+
+    }, (err, results) => {
+      res.render('pages/detail', {
+        current,
+        parents: results.parents,
+        siblings: results.siblings
+      });
+    });
+  });
 }
 
 router.get('/api/forceregenerate', (req, res) => {
@@ -93,7 +119,7 @@ router.post('/work/breed', (req, res) => {
   breed(parents, count).then((result) => res.send(result));
 });
 
-router.get('/breed/:p1/:p2', (req, res) =>{
+router.get('/pages/breed/:p1/:p2', (req, res) =>{
   const p1 = req.params.p1;
   const p2 = req.params.p2;
   const count = 6;
