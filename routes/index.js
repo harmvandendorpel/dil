@@ -11,9 +11,9 @@ router.get('/', function(req, res, next) {
   Work
     .find({enabled: true})
     .sort({_id:-1})
-    .limit(25)
+    .limit(100)
     .exec((err, works) => {
-    res.render('pages/index', { title: 'death imitates language', works });
+    res.render('pages/index', { title: 'hundred most recently born', works });
   });
 
 });
@@ -75,6 +75,7 @@ function detailPage(req, res) {
 
     }, (err, results) => {
       res.render('pages/detail', {
+        title: hash,
         current,
         parents: results.parents,
         siblings: results.siblings
