@@ -17,11 +17,11 @@ export default function saveWorkImage(req) {
 
       sharp(inputFullFilename)
         .resize(900, 900)
-        .quality(80)
+        .quality(90)
         .toFile(mediumFullFilename, function (err) {
           sharp(inputFullFilename)
             .resize(450, 450)
-            .quality(80)
+            .quality(90)
             .toFile(thumbFullFilename, function (err) {
 
               resolve({
