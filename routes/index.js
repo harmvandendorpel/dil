@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   Work
     .find({enabled: true})
     .sort({_id:-1})
-    .limit(25)
+    .limit(100)
     .exec((err, works) => {
     res.render('pages/index', { title: 'death imitates language', works });
   });
