@@ -5,28 +5,31 @@ import sha1 from 'sha1';
 class App {
 
   remember(hash) {
-
     window.state.remember(hash);
     this.render();
 
     if (window.state.data.memory.length == 2) {
-      setTimeout(function () {
-        const pair = clone(window.state.data.memory).sort();
-        location.href = `/breed/${pair[0]}/${pair[1]}`;
-        window.state.clearMemory();
-      },500);
+      const parents = clone(window.state.data.memory).sort();
+      $.post(`/work/breed`, {
+        parents,
+        count: 5
+      }).done(() => {
+        setTimeout(() => {
+          window.state.clearMemory();
+        }, 500);
+      });
     }
   }
 
   kill(hash) {
-    if (confirm('really?')) {
+    // if (confirm('really?')) {
       $.post(`/api/delete/${hash}`).done(() => {
         const $work = $(`.work[data-hash='${hash}']`);
         $work.slideUp(() => {
           $work.remove();
         });
       });
-    }
+    // }
   }
   
   render() {

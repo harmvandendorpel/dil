@@ -3,15 +3,16 @@ extends layout
 block content
   each work in works
     .work-medium.work(data-hash=work.hash)
-        .work-tools
-            button.btn.btn-breed(data-hash=work.hash) breed
-            button.btn.btn-kill(data-hash=work.hash) kill
+      .work-tools
+        button.btn.btn-breed(data-hash=work.hash) breed
+        button.btn.btn-kill(data-hash=work.hash) hide
+      a.no-link(href=`/${work.hash}`)
         if work.imageStatus === 0
-            img.shadow(src='/images/rendering.png')
-            p.title= `${work.title} (rendering)`
+          img.shadow(src='/images/rendering.png')
+          p.title= `${work.title} (rendering)`
 
         else if work.imageStatus === 2
-            img.shadow(src=`/works/medium/${work.filename}`)
-            p.title= work.title
+          img.shadow(src=`/works/medium/${work.filename}`)
+          p.title= work.title
 
-
+    .clear

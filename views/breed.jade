@@ -8,7 +8,7 @@ block content
         .work-medium.work(data-hash=work.hash)
             .work-tools
                 button.btn.btn-breed(data-hash=work.hash) breed
-                button.btn.btn-kill(data-hash=work.hash) kill
+                button.btn.btn-kill(data-hash=work.hash) hide
             if work.imageStatus === 0
                 img.shadow(src='/images/rendering.png')
                 p.title= `${work.title} (rendering)`

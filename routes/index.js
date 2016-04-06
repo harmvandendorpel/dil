@@ -7,16 +7,20 @@ import { saveOrganism, breed } from '../organisms';
 import sha1 from 'sha1';
 
 router.get('/', function(req, res, next) {
-  Work.find({
-    enabled: true
-  }).sort({_id:-1}).exec((err, works) => {
-    res.render('index', { title: 'index', works });
+  Work
+    .find({enabled: true})
+    .sort({_id:-1})
+    .limit(25)
+    .exec((err, works) => {
+    res.render('index', { title: 'death imitates language', works });
   });
 
 });
 
 router.get('/work/render', renderWork);
 router.post('/api/delete/:hash', deleteWork);
+
+router.get('/:hash', detailPage);
 
 function deleteWork(req, res) {
   const hash = req.params.hash;
@@ -30,6 +34,11 @@ function deleteWork(req, res) {
       })
     }
   );
+}
+
+function detailPage(req, res) {
+  const hash = req.params.hash;
+  res.render('detail', { title: hash });
 }
 
 router.get('/api/forceregenerate', (req, res) => {
