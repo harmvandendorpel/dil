@@ -86,7 +86,7 @@ function detailPage(req, res) {
 
 router.get('/api/forceregenerate', (req, res) => {
   Work.update(
-    {  },
+    { enabled: true },
     { imageStatus: WorkImageStatus.IMAGE_NONE },
     { multi:true },
     () => {
