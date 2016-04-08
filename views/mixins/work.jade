@@ -14,9 +14,10 @@ mixin workFull(work, links)
     + work(work, `/works/full/${work.filename}`, links)
 
 mixin workTools(work, links)
-  .work__tools
-    button.btn.btn-breed(data-hash=work.hash) breed
-    button.btn.btn-kill(data-hash=work.hash) hide
+  if authenticated
+    .work__tools
+      button.btn.btn-breed(data-hash=work.hash) breed
+      button.btn.btn-kill(data-hash=work.hash) hide
 
 mixin work(work, URL, links)
   if links
