@@ -11,9 +11,9 @@ router.get('/', function(req, res, next) {
   Work
     .find({enabled: true})
     .sort({_id:-1})
-    .limit(100)
+    .limit(250)
     .exec((err, works) => {
-    res.render('pages/index', { title: 'hundred most recently born', works });
+    res.render('pages/index', { title: 'two hundred fifty most recently born', works });
   });
 });
 
