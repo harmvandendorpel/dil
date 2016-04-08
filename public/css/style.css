@@ -1,18 +1,24 @@
 body, input, button, textarea, select {
     font-size:15px;
     font-family: 'karla';
+    line-height:20px;
 }
 
 body {
     padding: 100px 50px;
 
-    font-size:15px;
+    font-size:16px;
     background-color:#eee;
     text-align: center;
 }
 
 a {
-    color: #00B7FF;
+    color: black;
+    text-decoration: none;
+}
+
+a.text:hover {
+    border-bottom:2px solid black;
 }
 
 .work--thumb img {
@@ -118,4 +124,34 @@ p.title {
 
 p.title {
     display: none;
+}
+
+.nav {
+    position:fixed;
+    top: 0;
+    left:0;
+    padding:10px 30px 10px 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo {
+    background-image:url(../images/icon.png);
+    background-size:100% 100%;
+    width:50px;
+    height:50px;
+    float: left;
+}
+
+ul.buttons {
+    float: right;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.text-content {
+    max-width:600px;
+    text-align: left;
+    margin:auto;
 }

@@ -15,9 +15,11 @@ router.get('/', function(req, res, next) {
     .exec((err, works) => {
     res.render('pages/index', { title: 'hundred most recently born', works });
   });
-
 });
 
+router.get('/about', (req, res) => {
+  res.render('pages/about', { title: 'about' });
+});
 router.get('/work/render', renderWork);
 router.post('/api/delete/:hash', deleteWork);
 
