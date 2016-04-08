@@ -8,8 +8,8 @@ block content
 
     .parents
       h2 parents
-      + workMedium(parents[0])
-      + workMedium(parents[1])
+      + workMedium(parents[0], true)
+      + workMedium(parents[1], true)
   else
     h2 immaculate conception
 
@@ -18,6 +18,6 @@ block content
     if siblings && siblings.length > 0
       h2 siblings
       each work in siblings
-        + workThumb(work)
+        + workThumb(work, true)
     else
       h2 no siblings
