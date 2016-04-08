@@ -10,7 +10,21 @@ import routes from './routes/index';
 import mongoose from 'mongoose';
 const app = express();
 
+import session from 'express-session';
+import connectMongo from 'connect-mongo';
+
+const MongoStore = connectMongo(session);
+
 mongoose.connect('mongodb://localhost/dil');
+
+app.use(session({
+  name: 'DILCOOKIE',
+  secret: 'DIL16',
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

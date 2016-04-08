@@ -13,20 +13,72 @@ router.get('/', function(req, res, next) {
     .sort({_id:-1})
     .limit(250)
     .exec((err, works) => {
-    res.render('pages/index', { title: 'two hundred fifty most recently born', works });
+    render('pages/index', { title: 'two hundred fifty most recently born', works }, req, res);
   });
 });
 
 router.get('/about', (req, res) => {
-  res.render('pages/about', { title: 'about' });
+  render('pages/about', { title: 'about' }, req, res);
 });
+
 router.get('/work/render', renderWork);
 router.post('/api/delete/:hash', deleteWork);
 
 router.get('/language/:hash', detailPage);
 
+router.get('/login', (req, res) => {
+  const session = req.session;
+  let result = null;
+
+  if (session.authenticated) {
+    result = 'already authenticated';
+  } else {
+    result = 'newly authenticated';
+    session.authenticated = true;
+  }
+
+  res.send({
+    result
+  });
+});
+
+router.get('/logout', (req, res) => {
+  const session = req.session;
+  let result = null;
+
+  if (session.authenticated) {
+    session.authenticated = false;
+    result = 'logged out now';
+  } else {
+    result = 'not logged in yet';
+  }
+
+  res.send({
+    result
+  });
+});
+
+function render(page, data, req, res) {
+  data = data || {};
+  data.authenticated = req.session.authenticated;
+  res.render(page, data);
+}
+
+function auth(req) {
+  if (!req.session.authenticated) {
+    res.status(500).send({
+      status: 'access denied'
+    });
+    return false;
+  }
+  return true;
+}
+
 function deleteWork(req, res) {
+  if (!auth(req)) return;
+
   const hash = req.params.hash;
+
   Work.update(
     { hash },
     { enabled: false },
@@ -76,17 +128,19 @@ function detailPage(req, res) {
       }
 
     }, (err, results) => {
-      res.render('pages/detail', {
+      render('pages/detail', {
         title: hash,
         current,
         parents: results.parents,
         siblings: results.siblings
-      });
+      }, req, res);
     });
   });
 }
 
 router.get('/api/forceregenerate', (req, res) => {
+  if (!auth(req)) return;
+
   Work.update(
     { enabled: true },
     { imageStatus: WorkImageStatus.IMAGE_NONE },
@@ -99,8 +153,9 @@ router.get('/api/forceregenerate', (req, res) => {
 });
 
 router.post('/api/saveimage', (req, res) => {
-  saveWorkImage(req).then((data) => {
+  if (!auth(req)) return;
 
+  saveWorkImage(req).then((data) => {
     Work.update(
       { hash:data.hash },
       { imageStatus: WorkImageStatus.IMAGE_READY },
@@ -114,6 +169,8 @@ router.post('/api/saveimage', (req, res) => {
 });
 
 router.post('/work/new', (req, res) => {
+  if (!auth(req)) return;
+
   const chromosome = req.body.chromosome;
   const title = req.body.title;
   const parents = req.body.parents || [];
@@ -130,6 +187,8 @@ router.post('/work/new', (req, res) => {
 });
 
 router.post('/work/breed', (req, res) => {
+  if (!auth(req)) return;
+
   const parents = req.body.parents;
   const count = req.body.count;
 
@@ -138,20 +197,21 @@ router.post('/work/breed', (req, res) => {
   breed(parents, count).then((result) => res.send(result));
 });
 
-router.get('/pages/breed/:p1/:p2', (req, res) =>{
-  const p1 = req.params.p1;
-  const p2 = req.params.p2;
-  const count = 6;
-  const parents = [p1,p2].sort();
-
-  breed([p1, p2], count).then((result) => {
-    Work.find({
-      parents
-    }).exec(function (err, docs) {
-      res.render('breed', {p1, p2, works:docs});
-    });
-  });
-});
+// router.get('/pages/breed/:p1/:p2', (req, res) =>{
+//
+//   const p1 = req.params.p1;
+//   const p2 = req.params.p2;
+//   const count = 6;
+//   const parents = [p1,p2].sort();
+//
+//   breed([p1, p2], count).then((result) => {
+//     Work.find({
+//       parents
+//     }).exec(function (err, docs) {
+//       res.render('breed', {p1, p2, works:docs});
+//     });
+//   });
+// });
 
 router.get('/children/:p1/:p2', (req, res) =>{
   const p1 = req.params.p1;
@@ -166,6 +226,8 @@ router.get('/children/:p1/:p2', (req, res) =>{
 });
 
 function renderWork (req, res)  {
+  if (!auth(req)) return;
+
   const debugMode = false;
 
   Work.find({
