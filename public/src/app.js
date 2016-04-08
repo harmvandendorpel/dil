@@ -70,8 +70,7 @@ class App {
       const hash = $target.data().hash;
       this.kill(hash);
     });
-
-
+    
     this.render();
   }
 }

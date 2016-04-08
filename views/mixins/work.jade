@@ -1,29 +1,36 @@
-mixin workThumb(work)
+mixin workThumb(work, links)
   .work--thumb.work.work--has-tools(data-hash=work.hash)
     + workTools(work)
-    + work(work, `/works/thumb/${work.filename}`)
+    + work(work, `/works/thumb/${work.filename}`, links)
 
-mixin workMedium(work)
+mixin workMedium(work, links)
   .work--medium.work.work--has-tools(data-hash=work.hash)
     + workTools(work)
-    + work(work, `/works/medium/${work.filename}`)
+    + work(work, `/works/medium/${work.filename}`, links)
 
-mixin workFull(work)
+mixin workFull(work, links)
   .work--full.work.work--has-tools(data-hash=work.hash)
     + workTools(work)
-    + work(work, `/works/full/${work.filename}`)
+    + work(work, `/works/full/${work.filename}`, links)
 
-mixin workTools(work)
+mixin workTools(work, links)
   .work__tools
     button.btn.btn-breed(data-hash=work.hash) breed
     button.btn.btn-kill(data-hash=work.hash) hide
 
-mixin work(work, URL)
-  a.no-link(href=`/language/${work.hash}`)
-    if work.imageStatus === 0
-      img.shadow(src='/images/rendering.png')
-      p.title= `${work.title} (rendering)`
+mixin work(work, URL, links)
+  if links
+    a.no-link(href=`/language/${work.hash}`)
+      + workBody(work, URL, links)
+  else
+      + workBody(work, URL, links)
 
-    else if work.imageStatus === 2
-      img.shadow(src=URL)
-      p.title= work.title
+
+mixin workBody(work, URL)
+  if work.imageStatus === 0
+    img.shadow(src='/images/rendering.png')
+    p.title= `${work.title} (rendering)`
+
+  else if work.imageStatus === 2
+    img.shadow(src=URL)
+    p.title= work.title

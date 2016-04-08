@@ -56,14 +56,16 @@ function grayscale(imageData, percentage) {
 }
 
 function createLayer(cssClass, elements, trans, done) {
-  console.log('-------');
   var showLayer = getN(7, 'show this layer?') >= 3;
+
 
   if (trans) {
     ctx.globalCompositeOperation = "multiply";
   } else {
     ctx.globalCompositeOperation = "source-over";
   }
+
+  console.log('transparency ', ctx.globalCompositeOperation);
 
   var elementIndex = getN(elements.length - 1, 'figure out what kind of organ');
   var organ = elements[elementIndex];
@@ -166,7 +168,6 @@ function getN(maxValue, comment) {
     result = parseInt(value, 2);
     result = Math.min(result, maxValue);
   }
-  console.log(comment, result + ' / ' + maxValue + ' (' + bitsCount + ' bits)');
   return result;
 }
 
@@ -280,7 +281,6 @@ function makePiece() {
   ctx.fillStyle = 'white';
 
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-  console.log('start');
   createLayer('back-print', organs, false, function () {
     createLayer('foil',       foils,  true, function () {
       createLayer('organ-01',   organs, true, function () {
