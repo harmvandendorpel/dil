@@ -9,7 +9,7 @@ var WorkSchema = new Schema({
   imageStatus: Number,
   parents: Array,
   ts: Number,
-  enabled: false
+  enabled: Boolean
 });
 
 module.exports = mongoose.model('Work', WorkSchema);

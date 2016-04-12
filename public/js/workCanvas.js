@@ -55,8 +55,8 @@ function grayscale(imageData, percentage) {
   return imageData;
 }
 
-function createLayer(cssClass, elements, trans, done) {
-  var showLayer = getN(7, 'show this layer?') >= 3;
+function createLayer(layerName, elements, trans, done) {
+  var showLayer = getN(7, 'show this layer?') >= 2;
 
 
   if (trans) {
@@ -67,24 +67,24 @@ function createLayer(cssClass, elements, trans, done) {
 
   console.log('transparency ', ctx.globalCompositeOperation);
 
-  var elementIndex = getN(elements.length - 1, 'figure out what kind of organ');
+  var elementIndex    = getN(elements.length - 1, 'figure out what kind of organ');
   var organ = elements[elementIndex];
-  var layerIndex = getN(organ.el.length - 1, 'figure out which element from the organ type');
+  var layerIndex      = getN(organ.el.length - 1, 'figure out which element from the organ type');
   var filename = organ.el[layerIndex].f;
   var url = '/images/organs/' + organ.folder + '/' + filename + '.png';
-  var rotationIndex = getN(rotateClasses.length-1, 'get rotation');
+  var rotationIndex   = getN(rotateClasses.length-1, 'get rotation');
   var rotation = rotateClasses[rotationIndex];
 
 
-  var hueValue = getN(255, 'get hue color value') / 255 * 360;
-  var setsGrayscale = getN(1, 'set grayscale');
-  var grayScalePercentage = getN(127, 'get grayscale value') / 127 * 100;
-  var brightnessPercentage = getN(127, 'get brightness value') / 127 * 100 + 100;
-  var contrastPercentage = getN(127, 'get constrast value') / 127 * 100 + 100;
-  var mirrorHorizontal = getN(1, 'mirror horizontal');
-  var mirrorVertical = getN(1, 'mirror vertical');
+  var hueValue              = getN(255, 'get hue color value')  / 255 * 360;
+  var setsGrayscale         = getN(1,   'set grayscale');
+  var grayScalePercentage   = getN(127, 'get grayscale value')  / 127 * 100;
+  var brightnessPercentage  = getN(127, 'get brightness value') / 127 * 100 + 100;
+  var contrastPercentage    = getN(127, 'get constrast value')  / 127 * 100 + 100;
+  var mirrorHorizontal      = getN(1,   'mirror horizontal');
+  var mirrorVertical        = getN(1,   'mirror vertical');
 
-  var futureDNASpace = getN(1024  * 1024 * 1024 * 1024 * 128 , 'future dna pos');
+  var futureDNASpace        = getN(1024  * 1024 * 1024 * 1024 * 64 , 'future dna pos');
 
   var img = new Image();
 
@@ -121,7 +121,7 @@ function createLayer(cssClass, elements, trans, done) {
 
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
-    if (showLayer) {
+    if (showLayer && (window.layer===null || window.layer === layerName)) {
       ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
     }
 
@@ -282,16 +282,18 @@ function makePiece() {
 
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   createLayer('back-print', organs, false, function () {
-    createLayer('foil',       foils,  true, function () {
-      createLayer('organ-01',   organs, true, function () {
-        createLayer('organ-02',   organs, true, function () {
-          createLayer('organ-03',   organs, true, function () {
-            createLayer('things',     things, false, function () {
-              createLayer('cuts',       cuts,   false, function () {
-                var dataURL = canvas.toDataURL("image/jpeg", 0.9);
-                if (!debugMode) {
-                  saveToServer(dataURL);
-                }
+    createLayer('organ-00',   organs, true, function () {
+      createLayer('foil',       foils,  true, function () {
+        createLayer('organ-01',   organs, true, function () {
+          createLayer('organ-02',   organs, true, function () {
+            createLayer('organ-03',   organs, true, function () {
+              createLayer('things',     things, false, function () {
+                createLayer('cuts',       cuts,   false, function () {
+                  var dataURL = canvas.toDataURL("image/jpeg", 0.9);
+                  if (!debugMode) {
+                    saveToServer(dataURL);
+                  }
+                });
               });
             });
           });
@@ -302,6 +304,8 @@ function makePiece() {
 }
 
 function saveToServer(dataURL) {
+  if (!window.save) return;
+  
   $.ajax({
     url: '/api/saveimage',
     dataType: 'json',

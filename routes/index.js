@@ -22,9 +22,11 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/work/render', renderWork);
+router.get('/layer/render/:hash/:layer', renderLayer);
 router.post('/api/delete/:hash', deleteWork);
 
 router.get('/language/:hash', detailPage);
+router.get('/dissect/:hash', dissectPage);
 
 router.get('/login', (req, res) => {
   const session = req.session;
@@ -64,7 +66,7 @@ function render(page, data, req, res) {
   res.render(page, data);
 }
 
-function auth(req) {
+function auth(req, res) {
   if (!req.session.authenticated) {
     res.status(500).send({
       status: 'access denied'
@@ -75,7 +77,7 @@ function auth(req) {
 }
 
 function deleteWork(req, res) {
-  if (!auth(req)) return;
+  if (!auth(req, res)) return;
 
   const hash = req.params.hash;
 
@@ -138,8 +140,24 @@ function detailPage(req, res) {
   });
 }
 
+
+function dissectPage(req, res) {
+  const hash = req.params.hash;
+  Work.update(
+    { hash },
+    { needsDissecting: true },
+    {},
+    () => {
+      Work.find({hash}).exec((err, doc) => {
+        const current = doc[0]
+        render('pages/dissect', {current}, req, res);
+      });
+    }
+  );
+}
+
 router.get('/api/forceregenerate', (req, res) => {
-  if (!auth(req)) return;
+  if (!auth(req, res)) return;
 
   Work.update(
     { enabled: true },
@@ -153,7 +171,7 @@ router.get('/api/forceregenerate', (req, res) => {
 });
 
 router.post('/api/saveimage', (req, res) => {
-  if (!auth(req)) return;
+  if (!auth(req, res)) return;
 
   saveWorkImage(req).then((data) => {
     Work.update(
@@ -169,7 +187,7 @@ router.post('/api/saveimage', (req, res) => {
 });
 
 router.post('/work/new', (req, res) => {
-  if (!auth(req)) return;
+  if (!auth(req, res)) return;
 
   const chromosome = req.body.chromosome;
   const title = req.body.title;
@@ -187,7 +205,7 @@ router.post('/work/new', (req, res) => {
 });
 
 router.post('/work/breed', (req, res) => {
-  if (!auth(req)) return;
+  if (!auth(req, res)) return;
 
   const parents = req.body.parents;
   const count = req.body.count;
@@ -196,22 +214,6 @@ router.post('/work/breed', (req, res) => {
 
   breed(parents, count).then((result) => res.send(result));
 });
-
-// router.get('/pages/breed/:p1/:p2', (req, res) =>{
-//
-//   const p1 = req.params.p1;
-//   const p2 = req.params.p2;
-//   const count = 6;
-//   const parents = [p1,p2].sort();
-//
-//   breed([p1, p2], count).then((result) => {
-//     Work.find({
-//       parents
-//     }).exec(function (err, docs) {
-//       res.render('breed', {p1, p2, works:docs});
-//     });
-//   });
-// });
 
 router.get('/children/:p1/:p2', (req, res) =>{
   const p1 = req.params.p1;
@@ -225,37 +227,18 @@ router.get('/children/:p1/:p2', (req, res) =>{
   });
 });
 
-function renderWork (req, res)  {
-  if (!auth(req)) return;
+function displayRenderPage(options, res) {
+  const chromosome = options.chromosome;
+  const hash = sha1(chromosome);
 
-  const debugMode = false;
-
-  Work.find({
-    enabled: true,
-    imageStatus: WorkImageStatus.IMAGE_NONE
-  }).sort({_id:-1}).limit(1).exec(function (err, docs) {
-
-    if (docs.length > 0 || debugMode) {
-      let chromosome = null;
-      let refreshHTML = '';
-      if (debugMode) {
-        chromosome = '';
-        while (chromosome.length < 1024) {
-          chromosome += Math.random() > 0.5 ? '0' : '1';
-        }
-      } else {
-        const doc = docs[0];
-        chromosome = doc.chromosome;
-        refreshHTML = '<meta http-equiv="refresh" content="10">';
-      }
-      const hash = sha1(chromosome);
-
-      res.end(`<!doctype html>
+  res.end(`<!doctype html>
 <html>
-<head><title>generating ${hash}</title>${refreshHTML}<script>
+<head><title>generating ${hash}</title><script>
 window.chromosome = '${chromosome}';
-window.hash = '${hash}';
-</script><style>body {background-color:#eee; margin:100px}</style></head>
+window.hash       = '${hash}';
+window.layer      = ${options.layer ? "'" + options.layer + "'":null};
+window.save       = ${options.save ? 'true':'false'};
+</script><style>body {background-color:#eee; margin:0px}</style></head>
 <body>
 <canvas id="canvas"></canvas>
 <script src="/js/jquery.js"></script>
@@ -264,9 +247,46 @@ window.hash = '${hash}';
 </body>
 </html>
 `);
+}
+
+function renderWork (req, res)  {
+  if (!auth(req, res)) return;
+
+  Work.find({
+    enabled: true,
+    imageStatus: WorkImageStatus.IMAGE_NONE
+  }).sort({_id:-1}).limit(1).exec(function (err, docs) {
+
+    if (docs.length > 0) {
+      displayRenderPage({
+        chromosome: docs[0].chromosome,
+        save: true
+      }, res);
     } else {
-      res.end(`<!doctype html>
-<html><head><title>done</title><meta http-equiv="refresh" content="5"></head><body>completed</body></html>`);
+      res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title><meta http-equiv="refresh" content="5"></head><body>completed</body></html>`);
+    }
+  });
+}
+
+
+function renderLayer(req, res)  {
+  if (!auth(req, res)) return;
+
+  const hash  = req.params.hash;
+  const layer = req.params.layer;
+
+  Work.find({
+    hash
+  }).limit(1).exec(function (err, docs) {
+
+    if (docs.length > 0) {
+      displayRenderPage({
+        chromosome: docs[0].chromosome,
+        save: false,
+        layer
+      }, res);
+    } else {
+      res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title><meta http-equiv="refresh" content="5"></head><body>work or layer not found</body></html>`);
     }
   });
 }
