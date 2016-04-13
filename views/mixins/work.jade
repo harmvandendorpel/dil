@@ -24,7 +24,7 @@ mixin workTools(work, all)
       button.btn.btn-breed(data-hash=work.hash) breed
       button.btn.btn-link(data-link=`/dissect/${work.hash}#parents`) dissect
       button.btn.btn-kill(data-hash=work.hash) &times;
-      
+
 mixin work(work, URL, links)
   if links
     a.no-link(href=`/language/${work.hash}`)
