@@ -70,7 +70,12 @@ class App {
       const hash = $target.data().hash;
       this.kill(hash);
     });
-    
+  
+    $('.btn-link').bind('mousedown', (e) => {
+      const link = $(e.target).data().link;
+      location.href=link;
+    });
+  
     this.render();
   }
 }

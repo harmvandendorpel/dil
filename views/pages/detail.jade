@@ -6,7 +6,7 @@ block content
 
   if parents.length > 0
 
-    .parents
+    .parents#parents
       h2 parents
       + workMedium(parents[0], true)
       + workMedium(parents[1], true)
@@ -14,7 +14,7 @@ block content
     h2 immaculate conception
 
 
-  .siblings
+  .siblings#siblings
     if siblings && siblings.length > 0
       h2 siblings
       each work in siblings

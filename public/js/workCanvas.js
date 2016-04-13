@@ -1,4 +1,11 @@
 
+var layerGroups = {
+  backPrint : ['back-print','organ-00'],
+  foil :['foil'],
+  frontPrint: ['organ-01','organ-02','organ-03','things'],
+  CNC: ['cuts']
+};
+
 var mutationRate = Math.pow(10, -8);
 var canvas = null;
 var ctx = null;
@@ -76,6 +83,7 @@ function createLayer(layerName, elements, trans, done) {
   var rotation = rotateClasses[rotationIndex];
 
 
+
   var hueValue              = getN(255, 'get hue color value')  / 255 * 360;
   var setsGrayscale         = getN(1,   'set grayscale');
   var grayScalePercentage   = getN(127, 'get grayscale value')  / 127 * 100;
@@ -111,17 +119,22 @@ function createLayer(layerName, elements, trans, done) {
       ctx.rotate(rotation * Math.PI / 180);
     }
 
+    var scaleFactor = 1;
+    // if (rotation % 90 !== 0) {
+    //   scaleFactor = 1.52;
+    // }
+
     if (mirrorHorizontal === 1) {
-      ctx.scale(-1, 1);
+      ctx.scale(-scaleFactor, scaleFactor);
     }
 
     if (mirrorVertical === 1) {
-      ctx.scale(1, -1);
+      ctx.scale(scaleFactor, -scaleFactor);
     }
 
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
-    if (showLayer && (window.layer===null || window.layer === layerName)) {
+    if (showLayer && (window.layer === null || layerGroups[window.layer].indexOf(layerName) !== -1)) {
       ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
     }
 
@@ -279,6 +292,8 @@ function makePiece() {
   cursor = 0;
 
   ctx.fillStyle = 'white';
+
+
 
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   createLayer('back-print', organs, false, function () {
