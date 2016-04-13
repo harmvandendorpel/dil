@@ -305,8 +305,10 @@ function makePiece() {
               createLayer('things',     things, false, function () {
                 createLayer('cuts',       cuts,   false, function () {
                   var dataURL = canvas.toDataURL("image/jpeg", 0.9);
-                  if (!debugMode) {
+                  if (window.save) {
                     saveToServer(dataURL);
+                  } else {
+                    $('#btn-download').show();
                   }
                 });
               });
@@ -345,6 +347,16 @@ function run() {
 
   if (!generate) {
     dna = window.chromosome;
+  }
+
+  var button = document.getElementById('btn-download');
+
+  $(button).hide();
+  if (!window.save) {
+    button.addEventListener('click', function() {
+      this.href = canvas.toDataURL();
+      this.download = window.hash + '-' + window.layer + '.png';
+    }, false);
   }
   makePiece();
 }
