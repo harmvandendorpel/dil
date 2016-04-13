@@ -2,7 +2,7 @@ extends ../layout
 include ../mixins/work
 
 block content
-  each layerName in ['back-print','organ-00','foil','organ-01','organ-02','organ-03','things','cuts']
+  each layerName in layers
     .layer.work
       iframe(src='/layer/render/' + current.hash + '/' + layerName, scrolling="no")
     p= layerName

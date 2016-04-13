@@ -135,6 +135,11 @@
 	      _this.kill(hash);
 	    });
 
+	    $('.btn-link').bind('mousedown', function (e) {
+	      var link = $(e.target).data().link;
+	      location.href = link;
+	    });
+
 	    this.render();
 	  }
 

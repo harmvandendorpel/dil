@@ -150,7 +150,10 @@ function dissectPage(req, res) {
     () => {
       Work.find({hash}).exec((err, doc) => {
         const current = doc[0]
-        render('pages/dissect', {current}, req, res);
+        render('pages/dissect', {
+          layers:['backPrint','foil','frontPrint', 'CNC'],
+          current
+        }, req, res);
       });
     }
   );
