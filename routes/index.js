@@ -241,9 +241,13 @@ window.chromosome = '${chromosome}';
 window.hash       = '${hash}';
 window.layer      = ${options.layer ? "'" + options.layer + "'":null};
 window.save       = ${options.save ? 'true':'false'};
-</script><style>body {background-color:#eee; margin:0px}</style></head>
+</script><style>
+body {background-color:#eee; margin:0px}
+#btn-download {position:absolute;top:10px;left:10px;font-size:64px;}
+</style></head>
 <body>
 <canvas id="canvas"></canvas>
+<a href='#' id="btn-download">download</a>
 <script src="/js/jquery.js"></script>
 <script src="/js/props.js"></script>
 <script src="/js/workCanvas.js"></script>

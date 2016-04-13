@@ -15,14 +15,16 @@ mixin workFull(work, links)
 
 mixin workTools(work, all)
   .work__tools
-    if authenticated
-      button.btn.btn-breed(data-hash=work.hash) breed
-      button.btn.btn-kill(data-hash=work.hash) hide
-      button.btn.btn-link(data-link=`/dissect/${work.hash}#parents`) dissect
+
     if all
       button.btn.btn-link(data-link=`/language/${work.hash}#parents`) parents
       button.btn.btn-link(data-link=`/language/${work.hash}#siblings`) siblings
 
+    if authenticated
+      button.btn.btn-breed(data-hash=work.hash) breed
+      button.btn.btn-link(data-link=`/dissect/${work.hash}#parents`) dissect
+      button.btn.btn-kill(data-hash=work.hash) &times;
+      
 mixin work(work, URL, links)
   if links
     a.no-link(href=`/language/${work.hash}`)

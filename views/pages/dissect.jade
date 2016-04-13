@@ -2,6 +2,8 @@ extends ../layout
 include ../mixins/work
 
 block content
+  + workFull(current)
+  .clear
   each layerName in layers
     .layer.work
       iframe(src='/layer/render/' + current.hash + '/' + layerName, scrolling="no")
