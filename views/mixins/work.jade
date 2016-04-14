@@ -23,6 +23,10 @@ mixin workTools(work, all)
     if authenticated
       button.btn.btn-breed(data-hash=work.hash) breed
       button.btn.btn-link(data-link=`/dissect/${work.hash}#parents`) dissect
+      if work.frozen
+        button.btn.btn-freeze(data-hash=work.hash, data-frozen=false) unfreeze
+      else
+        button.btn.btn-freeze(data-hash=work.hash, data-frozen=true) freeze
       button.btn.btn-kill(data-hash=work.hash) &times;
 
 mixin work(work, URL, links)

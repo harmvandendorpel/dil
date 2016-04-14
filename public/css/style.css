@@ -57,6 +57,7 @@ a.no-link {
     right: 0;
     padding:10px;
     display:none;
+    text-align: right;
 }
 
 .work--has-tools:hover .work__tools {
@@ -75,6 +76,7 @@ button:focus {
     border:none;
     border-radius:0px;
     margin-left:5px;
+    margin-bottom:5px;
     cursor:pointer;
     padding:5px 8px;
 }
@@ -118,6 +120,10 @@ p.title {
 
 .recent .work {
     margin:20px;
+}
+
+.freezer .work {
+    margin:50px 0 100px 0;
 }
 
 .work--remove-button {
@@ -181,4 +187,9 @@ ul.buttons {
     height: 450px;
     overflow:hidden;
     margin-top:50px;
+}
+
+.nav-button {
+    float:right;
+    margin-left:20px;
 }

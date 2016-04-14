@@ -71,7 +71,7 @@
 
 	      if (window.state.data.memory.length == 2) {
 	        var parents = (0, _lodash.clone)(window.state.data.memory).sort();
-	        $.post('/work/breed', {
+	        $.post('/api/breed', {
 	          parents: parents,
 	          count: 5
 	        }).done(function () {
@@ -92,6 +92,16 @@
 	        });
 	      });
 	      // }
+	    }
+	  }, {
+	    key: 'freeze',
+	    value: function freeze(hash, frozen) {
+	      $.ajax({
+	        url: '/api/freeze/' + hash,
+	        method: frozen ? 'post' : 'delete'
+	      }).done(function () {
+	        console.log(hash, frozen);
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -138,6 +148,15 @@
 	    $('.btn-link').bind('mousedown', function (e) {
 	      var link = $(e.target).data().link;
 	      location.href = link;
+	    });
+
+	    $('.btn-freeze').bind('mousedown', function (e) {
+	      var $sender = $(e.target);
+	      var data = $sender.data();
+	      var hash = data.hash;
+	      var frozen = data.frozen;
+	      _this.freeze(hash, frozen);
+	      $sender.fadeOut();
 	    });
 
 	    this.render();
