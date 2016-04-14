@@ -62,6 +62,14 @@ function grayscale(imageData, percentage) {
   return imageData;
 }
 
+function alpha(imageData, value) {
+  var data = imageData.data;
+  for(var i = 0; i < data.length; i += 4) {
+    data[i + 3] = 0.1;//data[i + 3] * value;
+  }
+  return imageData;
+}
+
 function createLayer(layerName, elements, trans, done) {
   var showLayer = getN(7, 'show this layer?') >= 2;
 
@@ -72,7 +80,7 @@ function createLayer(layerName, elements, trans, done) {
     ctx.globalCompositeOperation = "source-over";
   }
 
-  console.log('transparency ', ctx.globalCompositeOperation);
+  console.log('blending mode ', ctx.globalCompositeOperation);
 
   var elementIndex    = getN(elements.length - 1, 'figure out what kind of organ');
   var organ = elements[elementIndex];
@@ -91,9 +99,10 @@ function createLayer(layerName, elements, trans, done) {
   var contrastPercentage    = getN(127, 'get constrast value')  / 127 * 100 + 100;
   var mirrorHorizontal      = getN(1,   'mirror horizontal');
   var mirrorVertical        = getN(1,   'mirror vertical');
-
+  var transparency          = getN(127, 'transparency') / 127;
   var futureDNASpace        = getN(1024  * 1024 * 1024 * 1024 * 64 , 'future dna pos');
 
+  console.log('transparency ', transparency);
   var img = new Image();
 
   img.onload = function () {
@@ -105,10 +114,12 @@ function createLayer(layerName, elements, trans, done) {
     var imageData = imageContext.getImageData(0,0, tempCanvas.width, tempCanvas.height);
     if (!organ.fixedColor) {
       imageData = grayscale(imageData, grayScalePercentage);
+      console.log('hueValue ', hueValue);
       imageData = hueRotate(imageData, hueValue);
 
       imageData = brightness(imageData, brightnessPercentage);
       imageData = contrast(imageData, contrastPercentage);
+
     }
 
     imageContext.putImageData(imageData,0,0);
@@ -133,6 +144,8 @@ function createLayer(layerName, elements, trans, done) {
     }
 
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
+
+    
 
     if (showLayer && (window.layer === null || layerGroups[window.layer].indexOf(layerName) !== -1)) {
       ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
