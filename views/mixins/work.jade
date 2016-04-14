@@ -5,20 +5,19 @@ mixin workThumb(work, links)
 
 mixin workMedium(work, links)
   .work--medium.work.work--has-tools(data-hash=work.hash)
-    + workTools(work, true)
+    + workTools(work)
     + work(work, `/works/medium/${work.filename}`, links)
 
 mixin workFull(work, links)
   .work--full.work.work--has-tools(data-hash=work.hash)
-    + workTools(work, true)
+    + workTools(work)
     + work(work, `/works/full/${work.filename}`, links)
 
-mixin workTools(work, all)
+mixin workTools(work)
   .work__tools
 
-    if all
-      button.btn.btn-link(data-link=`/language/${work.hash}#parents`) parents
-      button.btn.btn-link(data-link=`/language/${work.hash}#siblings`) siblings
+    button.btn.btn-link(data-link=`/language/${work.hash}#parents`) parents
+    button.btn.btn-link(data-link=`/language/${work.hash}#siblings`) siblings
 
     if authenticated
       button.btn.btn-breed(data-hash=work.hash) breed
