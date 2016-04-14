@@ -1,0 +1,7 @@
+extends ../layout
+include ../mixins/work
+
+block content
+  .freezer
+    each work in works
+      + workFull(work, true)

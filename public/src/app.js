@@ -10,7 +10,7 @@ class App {
 
     if (window.state.data.memory.length == 2) {
       const parents = clone(window.state.data.memory).sort();
-      $.post(`/work/breed`, {
+      $.post(`/api/breed`, {
         parents,
         count: 5
       }).done(() => {
@@ -30,6 +30,15 @@ class App {
         });
       });
     // }
+  }
+  
+  freeze(hash, frozen) {
+    $.ajax({
+      url: `/api/freeze/${hash}`,
+      method: frozen ? 'post' : 'delete'
+    }).done(() => {
+      console.log(hash, frozen)
+    });
   }
   
   render() {
@@ -74,6 +83,15 @@ class App {
     $('.btn-link').bind('mousedown', (e) => {
       const link = $(e.target).data().link;
       location.href=link;
+    });
+    
+    $('.btn-freeze').bind('mousedown', (e) => {
+      const $sender = $(e.target);
+      const data = $sender.data();
+      const hash = data.hash;
+      const frozen = data.frozen
+      this.freeze(hash, frozen)
+      $sender.fadeOut();
     });
   
     this.render();

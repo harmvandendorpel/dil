@@ -7,7 +7,7 @@ import { saveOrganism, breed } from '../organisms';
 import sha1 from 'sha1';
 import Async from 'async';
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   Work
     .find({enabled: true})
     .sort({_id:-1})
@@ -21,14 +21,35 @@ router.get('/about', (req, res) => {
   render('pages/about', { title: 'about' }, req, res);
 });
 
-router.get('/work/render', renderWork);
-router.get('/layer/render/:hash/:layer', renderLayer);
-router.post('/api/delete/:hash', deleteWork);
+router.get('/freezer', function(req, res) {
+  Work
+    .find({frozen: true})
+    .sort({_id:-1})
+    .exec((err, works) => {
+      render('pages/freezer', { title: 'freezer', works }, req, res);
+    });
+});
 
+router.get('/layer/render/:hash/:layer', renderLayer);
 router.get('/language/:hash', detailPage);
 router.get('/dissect/:hash', dissectPage);
 
-router.get('/login', (req, res) => {
+router.get('/work/render', renderWork);
+
+router.get('/api/login', login);
+router.get('/api/logout', logout);
+router.post('/api/delete/:hash', deleteWork);
+
+router.post('/api/freeze/:hash', (req, res) => {
+  freezeWork(req,res, true)
+});
+
+router.delete('/api/freeze/:hash', (req, res) => {
+  freezeWork(req,res, false);
+});
+router.post('/api/breed', createOffspring);
+
+function login(req, res) {
   const session = req.session;
   let result = null;
 
@@ -42,9 +63,9 @@ router.get('/login', (req, res) => {
   res.send({
     result
   });
-});
+}
 
-router.get('/logout', (req, res) => {
+function logout(req, res) {
   const session = req.session;
   let result = null;
 
@@ -58,7 +79,7 @@ router.get('/logout', (req, res) => {
   res.send({
     result
   });
-});
+}
 
 function render(page, data, req, res) {
   data = data || {};
@@ -88,6 +109,24 @@ function deleteWork(req, res) {
     () => {
       res.send({
         status: 'disabled'
+      })
+    }
+  );
+}
+
+function freezeWork(req, res, frozen) {
+  if (!auth(req, res)) return;
+
+  const hash = req.params.hash;
+
+  Work.update(
+    { hash },
+    { frozen },
+    {},
+    () => {
+      res.send({
+        status: 'done',
+        frozen
       })
     }
   );
@@ -139,7 +178,6 @@ function detailPage(req, res) {
     });
   });
 }
-
 
 function dissectPage(req, res) {
   const hash = req.params.hash;
@@ -207,7 +245,7 @@ router.post('/work/new', (req, res) => {
   );
 });
 
-router.post('/work/breed', (req, res) => {
+function createOffspring(req, res)  {
   if (!auth(req, res)) return;
 
   const parents = req.body.parents;
@@ -216,19 +254,7 @@ router.post('/work/breed', (req, res) => {
   parents.sort();
 
   breed(parents, count).then((result) => res.send(result));
-});
-
-router.get('/children/:p1/:p2', (req, res) =>{
-  const p1 = req.params.p1;
-  const p2 = req.params.p2;
-  const parents = [p1,p2].sort();
-
-  Work.find({
-    parents
-  }).exec(function (err, docs) {
-    res.render('breed', {p1, p2, works:docs});
-  });
-});
+}
 
 function displayRenderPage(options, res) {
   const chromosome = options.chromosome;

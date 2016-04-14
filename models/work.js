@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { WorkImageStatus } from '../const/const';
 const Schema = mongoose.Schema;
 
 var WorkSchema = new Schema({
@@ -6,10 +7,20 @@ var WorkSchema = new Schema({
   hash: String,
   chromosome: String,
   filename: String,
-  imageStatus: Number,
+  imageStatus: {
+    type: Number,
+    default: WorkImageStatus.IMAGE_NONE
+  },
   parents: Array,
   ts: Number,
-  enabled: Boolean
+  enabled: {
+    type: Boolean,
+    default: true
+  },
+  frozen: {
+    type: Boolean,
+    default: false
+  },
 });
 
 module.exports = mongoose.model('Work', WorkSchema);
