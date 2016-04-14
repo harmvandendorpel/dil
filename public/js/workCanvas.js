@@ -95,8 +95,8 @@ function createLayer(layerName, elements, trans, done) {
   var hueValue              = getN(255, 'get hue color value')  / 255 * 360;
   var setsGrayscale         = getN(1,   'set grayscale');
   var grayScalePercentage   = getN(127, 'get grayscale value')  / 127 * 100;
-  var brightnessPercentage  = getN(127, 'get brightness value') / 127 * 100 + 100;
-  var contrastPercentage    = getN(127, 'get constrast value')  / 127 * 100 + 100;
+  var brightnessPercentage  = getN(127, 'get brightness value') / 127 * 300;
+  var contrastPercentage    = getN(127, 'get constrast value')  / 127 * 300;
   var mirrorHorizontal      = getN(1,   'mirror horizontal');
   var mirrorVertical        = getN(1,   'mirror vertical');
   var transparency          = getN(127, 'transparency') / 127;
@@ -145,7 +145,7 @@ function createLayer(layerName, elements, trans, done) {
 
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
-    
+
 
     if (showLayer && (window.layer === null || layerGroups[window.layer].indexOf(layerName) !== -1)) {
       ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
