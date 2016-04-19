@@ -96,7 +96,7 @@ function createLayer(layerName, elements, trans, done) {
   var setsGrayscale         = getN(1,   'set grayscale');
   var grayScalePercentage   = getN(127, 'get grayscale value')  / 127 * 100;
   var brightnessPercentage  = getN(127, 'get brightness value') / 127 * 300;
-  var contrastPercentage    = getN(127, 'get constrast value')  / 127 * 300;
+  var contrastPercentage    = getN(127, 'get constrast value')  / 127 * 200;
   var mirrorHorizontal      = getN(1,   'mirror horizontal');
   var mirrorVertical        = getN(1,   'mirror vertical');
   var transparency          = getN(127, 'transparency') / 127;
