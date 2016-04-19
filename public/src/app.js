@@ -41,6 +41,15 @@ class App {
     });
   }
   
+  rerender(hash) {
+    $.ajax({
+      url: `/api/rerender/${hash}`,
+      method: 'post'
+    }).done(() => {
+      
+    });
+  }
+  
   render() {
     const $tools = $('<div></div>').addClass('tools');
     const $memory = $('<div></div>').addClass('memory');
@@ -72,6 +81,11 @@ class App {
     $('.btn-breed').bind('mousedown', (e) => {
       const hash = $(e.target).data().hash;
       this.remember(hash);
+    });
+  
+    $('.btn-rerender').bind('mousedown', (e) => {
+      const hash = $(e.target).data().hash;
+      this.rerender(hash);
     });
 
     $('.btn-kill').bind('mousedown', (e) => {

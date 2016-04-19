@@ -44,9 +44,14 @@ router.post('/api/freeze/:hash', (req, res) => {
   freezeWork(req,res, true)
 });
 
+router.post('/api/rerender/:hash', (req, res) => {
+  rerenderWork(req, res)
+});
+
 router.delete('/api/freeze/:hash', (req, res) => {
   freezeWork(req,res, false);
 });
+
 router.post('/api/breed', createOffspring);
 
 function login(req, res) {
@@ -131,6 +136,24 @@ function freezeWork(req, res, frozen) {
     }
   );
 }
+
+function rerenderWork(req, res) {
+  if (!auth(req, res)) return;
+
+  const hash = req.params.hash;
+
+  Work.update(
+    { hash },
+    { imageStatus: WorkImageStatus.IMAGE_NONE },
+    {},
+    () => {
+      res.send({
+        status: 'done'
+      })
+    }
+  );
+}
+
 
 function detailPage(req, res) {
   const hash = req.params.hash;
