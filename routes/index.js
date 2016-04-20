@@ -23,7 +23,10 @@ router.get('/about', (req, res) => {
 
 router.get('/freezer', function(req, res) {
   Work
-    .find({frozen: true})
+    .find({
+      frozen: true,
+      enabled: true
+    })
     .sort({_id:-1})
     .exec((err, works) => {
       render('pages/freezer', { title: 'freezer', works }, req, res);
@@ -126,7 +129,7 @@ function freezeWork(req, res, frozen) {
 
   Work.update(
     { hash },
-    { frozen, enabled: true },
+    { frozen },
     {},
     () => {
       res.send({
