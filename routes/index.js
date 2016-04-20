@@ -126,7 +126,7 @@ function freezeWork(req, res, frozen) {
 
   Work.update(
     { hash },
-    { frozen },
+    { frozen, enabled: true },
     {},
     () => {
       res.send({
