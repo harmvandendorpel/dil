@@ -311,7 +311,7 @@ function makePiece() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   createLayer('back-print', organs, false, function () {
     createLayer('organ-00',   organs, true, function () {
-      createLayer('foil',       foils,  true, function () {
+      createLayer('foil',       foils,  false, function () {
         createLayer('organ-01',   organs, true, function () {
           createLayer('organ-02',   organs, true, function () {
             createLayer('organ-03',   organs, true, function () {
