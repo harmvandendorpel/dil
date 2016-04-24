@@ -2,7 +2,10 @@
 var layerGroups = {
   backPrint : ['back-print','organ-00'],
   foil :['foil'],
-  frontPrint: ['organ-01','organ-02','organ-03','things'],
+  frontPrint1: ['organ-01'],
+  frontPrint2: ['organ-02'],
+  frontPrint3: ['organ-03'],
+  things:['things'],
   CNC: ['cuts']
 };
 
@@ -71,55 +74,49 @@ function alpha(imageData, value) {
 }
 
 function createLayer(layerName, elements, trans, done) {
-  var showLayer = getN(7, 'show this layer?') >= 2;
-
-
+  var layerProps = {
+  
+    scaleFactor           :  1,
+    showLayer             :  getN(7, 'show this layer?') >  2,
+    elementIndex          :  getN(elements.length - 1, 'figure out what kind of organ'),
+    layerIndex            :  getN(31, 'figure out which element from the organ type'),
+    rotationIndex         :  getN(rotateClasses.length - 1, 'get rotation'),
+    hueValue              :  getN(255, 'get hue color value')  / 255 * 360,
+    useWhiteChannel       :  getN(1,   'use whitechannel'),
+    grayScalePercentage   :  getN(127, 'get grayscale value')  / 127 * 100,
+    brightnessPercentage  :  getN(127, 'get brightness value') / 127 * 300,
+    contrastPercentage    :  getN(127, 'get constrast value')  / 127 * 200,
+    mirrorHorizontal      :  getN(1,   'mirror horizontal'),
+    mirrorVertical        :  getN(1,   'mirror vertical'),
+    transparency          :  getN(127, 'transparency') / 127,
+    futureDNASpace        :  getN(1024  * 1024 * 1024 * 1024 * 64 , 'future dna pos')
+  };
+  
   if (trans) {
     ctx.globalCompositeOperation = "multiply";
   } else {
     ctx.globalCompositeOperation = "source-over";
   }
 
-  console.log('blending mode ', ctx.globalCompositeOperation);
-
-  var elementIndex    = getN(elements.length - 1, 'figure out what kind of organ');
-  var organ = elements[elementIndex];
-  var layerIndex      = getN(organ.el.length - 1, 'figure out which element from the organ type');
-  var filename = organ.el[layerIndex].f;
+  var organ = elements[layerProps.elementIndex];
+  var filename = organ.el[layerProps.layerIndex].f;
   var url = '/images/organs/' + organ.folder + '/' + filename + '.png';
-  var rotationIndex   = getN(rotateClasses.length-1, 'get rotation');
-  var rotation = rotateClasses[rotationIndex];
+  var rotation = rotateClasses[layerProps.rotationIndex];
 
-
-
-  var hueValue              = getN(255, 'get hue color value')  / 255 * 360;
-  var setsGrayscale         = getN(1,   'set grayscale');
-  var grayScalePercentage   = getN(127, 'get grayscale value')  / 127 * 100;
-  var brightnessPercentage  = getN(127, 'get brightness value') / 127 * 300;
-  var contrastPercentage    = getN(127, 'get constrast value')  / 127 * 200;
-  var mirrorHorizontal      = getN(1,   'mirror horizontal');
-  var mirrorVertical        = getN(1,   'mirror vertical');
-  var transparency          = getN(127, 'transparency') / 127;
-  var futureDNASpace        = getN(1024  * 1024 * 1024 * 1024 * 64 , 'future dna pos');
-
-  console.log('transparency ', transparency);
   var img = new Image();
 
   img.onload = function () {
-    var needsRestore = false;
     var tempCanvas = createOffscreenCanvas(img.width, img.height);
     var imageContext = tempCanvas.getContext('2d');
     imageContext.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
 
     var imageData = imageContext.getImageData(0,0, tempCanvas.width, tempCanvas.height);
     if (!organ.fixedColor) {
-      imageData = grayscale(imageData, grayScalePercentage);
-      console.log('hueValue ', hueValue);
-      imageData = hueRotate(imageData, hueValue);
+      imageData = grayscale(imageData, layerProps.grayScalePercentage);
+      imageData = hueRotate(imageData, layerProps.hueValue);
 
-      imageData = brightness(imageData, brightnessPercentage);
-      imageData = contrast(imageData, contrastPercentage);
-
+      imageData = brightness(imageData, layerProps.brightnessPercentage);
+      imageData = contrast(imageData, layerProps.contrastPercentage);
     }
 
     imageContext.putImageData(imageData,0,0);
@@ -129,25 +126,18 @@ function createLayer(layerName, elements, trans, done) {
     if (rotation != null && organ.canRotate) {
       ctx.rotate(rotation * Math.PI / 180);
     }
-
-    var scaleFactor = 1;
-    // if (rotation % 90 !== 0) {
-    //   scaleFactor = 1.52;
-    // }
-
-    if (mirrorHorizontal === 1) {
-      ctx.scale(-scaleFactor, scaleFactor);
+    
+    if (layerProps.mirrorHorizontal === 1) {
+      ctx.scale(-layerProps.scaleFactor, layerProps.scaleFactor);
     }
 
-    if (mirrorVertical === 1) {
-      ctx.scale(scaleFactor, -scaleFactor);
+    if (layerProps.mirrorVertical === 1) {
+      ctx.scale(layerProps.scaleFactor, -layerProps.scaleFactor);
     }
 
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
-
-
-    if (showLayer && (window.layer === null || layerGroups[window.layer].indexOf(layerName) !== -1)) {
+    if (layerProps.showLayer && (window.layer === null || layerGroups[window.layer].indexOf(layerName) !== -1)) {
       ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
     }
 
@@ -311,7 +301,7 @@ function makePiece() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   createLayer('back-print', organs, false, function () {
     createLayer('organ-00',   organs, true, function () {
-      createLayer('foil',       foils,  false, function () {
+      createLayer('foil',       foils,  false , function () {
         createLayer('organ-01',   organs, true, function () {
           createLayer('organ-02',   organs, true, function () {
             createLayer('organ-03',   organs, true, function () {
