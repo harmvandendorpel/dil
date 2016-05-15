@@ -205,6 +205,16 @@ function detailPage(req, res) {
   });
 }
 
+
+// backPrint : ['back-print','organ-00'],
+// foil :['foil'],
+// frontPrint1: ['organ-01'],
+// frontPrint2: ['organ-02'],
+// frontPrint3: ['organ-03'],
+// things:['things'],
+// CNC: ['cuts']
+
+
 function dissectPage(req, res) {
   const hash = req.params.hash;
   Work.update(
@@ -215,7 +225,7 @@ function dissectPage(req, res) {
       Work.find({hash}).exec((err, doc) => {
         const current = doc[0]
         render('pages/dissect', {
-          layers:['backPrint','foil','frontPrint', 'CNC'],
+          layers:['backPrint','frontPrint1','frontPrint2','frontPrint3','things'],
           current
         }, req, res);
       });
