@@ -28,11 +28,8 @@
     "sha1": "^1.1.1",
     "sharp": "^0.13.1",
     "util": "^0.10.3",
-    "webpack": "^1.12.14"
-  },
-  "devDependencies": {
+    "webpack": "^1.12.14",
     "babel": "^5.8.38",
-    "babel-eslint": "^4.0.10",
     "eslint": "^1.1.0",
     "nodemon": "^1.4.1"
   }
