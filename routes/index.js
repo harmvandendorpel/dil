@@ -196,7 +196,7 @@ function detailPage(req, res) {
 
     }, (err, results) => {
       render('pages/detail', {
-        title: hash,
+        title: hash.substring(0,8),
         current,
         parents: results.parents,
         siblings: results.siblings
