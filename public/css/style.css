@@ -35,6 +35,10 @@ body,
     padding: 20px 8% 80px 8%;
 }
 
+.screen--siblings {
+    padding:20px;
+}
+
 .screen--parents {
     /*padding-top: 10%;*/
     /*padding-bottom: 10%;*/
@@ -51,10 +55,23 @@ a.text:hover {
     border-bottom:1px solid black;
 }
 
+
+
 .work--thumb img {
-    max-width:250px;
+    max-width:100%;
 }
 
+.work--thumb {
+    display: inline-block;
+    padding:1%;
+    max-width:20%;
+    box-sizing: border-box;
+}
+p.title--parent {
+    margin-top: 100%;
+    padding-top: 18px;
+    width:100%;
+}
 
 .work--medium {
     /*width: 40%;*/
@@ -85,8 +102,7 @@ a.text:hover {
 }
 
 .work--full img {
-    max-height:100%;
-    width: auto;
+    height:100%;
     display: block;
 }
 
@@ -184,7 +200,7 @@ p.title {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-direction: row;
+    /*flex-direction: row;*/
     flex-flow: row wrap;
 }
 
@@ -268,12 +284,12 @@ ul.buttons {
 
 .icon-arrow-down {
     background-image: url(/images/arrow-down.svg);
-    width:12px;
-    height:15px;
-    background-size: 12px 15px;
+    width:10px;
+    height:12px;
+    background-size: 10px 20px;
     background-repeat:no-repeat;
     display: inline-block;
-    background-position: 50% 50%;
+    background-position: 50% 100%;
     /*vertical-align:middle;*/
 }
 
