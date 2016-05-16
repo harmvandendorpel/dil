@@ -189,7 +189,7 @@ function detailPage(req, res) {
             },
             { parents }
           ]
-        }).exec((err, docs) => {
+        }).limit(8).exec((err, docs) => {
           callback(null, docs);
         });
       }
