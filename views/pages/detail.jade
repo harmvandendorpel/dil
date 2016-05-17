@@ -2,28 +2,29 @@ extends ../layout
 include ../mixins/work
 
 block content
-  .screen
-    .work--full.work(data-hash=current.hash)
-      img.work__image(src=`/works/full/${current.filename}`)
-      p.title= current.title
+  .slides-container
+    .slide
+      .work--full.work(data-hash=current.hash)
+        img.work__image(src=`/works/full/${current.filename}`)
+        p.title= current.title
 
-    .link-to-parent <i class='icon-arrow-down'></i> <u>parents</u> <i class='icon-arrow-down'></i>
+      .link-to-parent <i class='icon-arrow-down'></i> <u>parents</u> <i class='icon-arrow-down'></i>
 
-  .screen
-    .parents
-      + workParent(parents[0])
-      .parents__separator.rotate-90 parents
-      + workParent(parents[1])
-    .link-to-parent <i class='icon-arrow-down'></i> <u>siblings</u> <i class='icon-arrow-down'></i>
+    .slide
+      .parents
+        + workParent(parents[0])
+        .parents__separator.rotate-90 parents
+        + workParent(parents[1])
+      .link-to-parent <i class='icon-arrow-down'></i> <u>siblings</u> <i class='icon-arrow-down'></i>
 
-  .screen.screen--siblings
-    .siblings
-      .siblings__items
-        if siblings && siblings.length > 0
-          each work in siblings
-            .work--thumb.work(data-hash=work.hash)
-              a(href=`/language/${work.hash}`)
-                img.work__image(src=`/works/thumb/${work.filename}`)
+    .slide.screen--siblings
+      .siblings
+        .siblings__items
+          if siblings && siblings.length > 0
+            each work in siblings
+              .work--thumb.work(data-hash=work.hash)
+                a(href=`/language/${work.hash}`)
+                  img.work__image(src=`/works/thumb/${work.filename}`)
 
 
 mixin workParent(parent)

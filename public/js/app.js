@@ -139,7 +139,7 @@
 
 	    window.state = new _state2.default();
 	    window.state.on('change', function () {
-	      _this.render();
+	      return _this.render();
 	    });
 
 	    $('.btn-breed').bind('mousedown', function (e) {
@@ -172,13 +172,17 @@
 	      $sender.fadeOut();
 	    });
 
+	    // $('.slides-container').fullpage();
+
 	    this.render();
 	  }
 
 	  return App;
 	}();
 
-	new App();
+	$(document).ready(function () {
+	  new App();
+	});
 
 /***/ },
 /* 1 */

@@ -74,9 +74,7 @@ class App {
   
   constructor() {
     window.state = new State();
-    window.state.on('change', () => {
-      this.render();
-    });
+    window.state.on('change', () => this.render());
 
     $('.btn-breed').bind('mousedown', (e) => {
       const hash = $(e.target).data().hash;
@@ -103,13 +101,16 @@ class App {
       const $sender = $(e.target);
       const data = $sender.data();
       const hash = data.hash;
-      const frozen = data.frozen
-      this.freeze(hash, frozen)
+      const frozen = data.frozen;
+      this.freeze(hash, frozen);
       $sender.fadeOut();
     });
-  
+
+    // $('.slides-container').fullpage();
+
     this.render();
   }
 }
-
-new App();
+$(document).ready(() => {
+  new App();
+});
