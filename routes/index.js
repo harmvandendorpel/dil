@@ -157,7 +157,6 @@ function rerenderWork(req, res) {
   );
 }
 
-
 function detailPage(req, res) {
   const hash = req.params.hash;
 
@@ -196,6 +195,7 @@ function detailPage(req, res) {
 
     }, (err, results) => {
       render('pages/detail', {
+        script: 'DetailPage',
         title: hash.substring(0,8),
         current,
         parents: results.parents,

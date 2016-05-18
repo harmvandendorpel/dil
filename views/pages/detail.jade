@@ -3,21 +3,24 @@ include ../mixins/work
 
 block content
   .slides-container
-    .slide
+    .section.section--current
       .work--full.work(data-hash=current.hash)
-        img.work__image(src=`/works/full/${current.filename}`)
-        p.title= current.title
 
-      .link-to-parent <i class='icon-arrow-down'></i> <u>parents</u> <i class='icon-arrow-down'></i>
+        .work-full-image(style=`background-image:url(/works/full/${current.filename})`)
+          .full-image-title.rotate-90= current.title
 
-    .slide
+        .link-to-parent.left <i class='icon-arrow-down'></i> <u>parents</u> <i class='icon-arrow-down'></i>
+        .link-to-parent.right <i class='icon-arrow-down'></i> <u>parents</u> <i class='icon-arrow-down'></i>
+
+    .section.section--parents
       .parents
         + workParent(parents[0])
         .parents__separator.rotate-90 parents
         + workParent(parents[1])
-      .link-to-parent <i class='icon-arrow-down'></i> <u>siblings</u> <i class='icon-arrow-down'></i>
+      .link-to-siblings <i class='icon-arrow-down'></i> <u>siblings</u> <i class='icon-arrow-down'></i>
 
-    .slide.screen--siblings
+    .section.screen--siblings.section--siblings
+      p.siblings-title siblings
       .siblings
         .siblings__items
           if siblings && siblings.length > 0
@@ -26,6 +29,8 @@ block content
                 a(href=`/language/${work.hash}`)
                   img.work__image(src=`/works/thumb/${work.filename}`)
 
+  script(type='text/javascript').
+    window.pageClass = '#{script}';
 
 mixin workParent(parent)
   .work--medium.work.work--has-tools(data-hash=parent.hash, style=`background-image:url(/works/full/${parent.filename})`)

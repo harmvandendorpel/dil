@@ -1,4 +1,5 @@
 import State from './state';
+import DetailPage from './pages/DetailPage';
 import { clone } from 'lodash';
 import sha1 from 'sha1';
 
@@ -106,9 +107,18 @@ class App {
       $sender.fadeOut();
     });
 
-    // $('.slides-container').fullpage();
+    
 
     this.render();
+
+
+    if (window.pageClass) {
+      switch (window.pageClass) {
+        case 'DetailPage':
+          new DetailPage();
+          break;
+      }
+    }
   }
 }
 $(document).ready(() => {

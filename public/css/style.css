@@ -17,7 +17,7 @@ body {
 
 html,
 body,
-.slide,
+.section,
 .work--full,
 .slides-container,
 .parents,
@@ -33,14 +33,14 @@ body,
     display: block;
 }
 
-.slide {
+.section {
     box-sizing: border-box;
-    padding: 20px 8% 80px 8%;
+    /*padding: 20px 8% 80px 8%;*/
     width:100%;
 }
 
 .screen--siblings {
-    padding: 20px;
+    /*padding: 20px;*/
 }
 
 .parents__separator {
@@ -66,10 +66,23 @@ a.text:hover {
     max-width: 20%;
     box-sizing: border-box;
 }
+
 p.title--parent {
-    margin-top: 100%;
-    padding-top: 18px;
+    /*padding-top: 18px;*/
     width:100%;
+    /*margin-top:100%;*/
+}
+
+.section--siblings {
+    position:relative;
+}
+
+.siblings-title {
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    text-align: center;
 }
 
 .work--medium {
@@ -82,13 +95,14 @@ p.title--parent {
     background-size: contain ;
     background-repeat: no-repeat;
     background-position: 50% 50%;
+    cursor: pointer;
 }
 
 .work--full {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: column;
+    padding:0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .parents {
@@ -96,6 +110,15 @@ p.title--parent {
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
+    padding: 0 5%;
+
+}
+
+.work-full-image-container {
+    width:100%;
+    height:100%;
+    padding: 0px;
+    box-sizing: border-box;
 }
 
 .work--full img {
@@ -103,8 +126,30 @@ p.title--parent {
     display: block;
 }
 
+.full-image-title {
+    display: none;
+    position: absolute;
+    top: 50%;
+}
+
 .link-to-parent {
-    margin-top: 50px;
+    display: none;
+    position:absolute;
+    bottom:0;
+}
+
+.link-to-siblings {
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+.link-to-parent.left {
+    left:0;
+}
+
+.link-to-parent.right {
+    right:0;
 }
 
 u {
@@ -192,6 +237,7 @@ p.title {
 
 .siblings__items {
     width: 100%;
+    line-height:0;
 }
 
 .recent .work {
@@ -207,6 +253,7 @@ p.title {
 }
 
 .nav {
+    display:none;
     position: fixed;
     top: 0;
     right: 0;
@@ -276,4 +323,14 @@ ul.buttons {
     -ms-transform: rotate(-90deg);
     -o-transform: rotate(-90deg);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+
+.work-full-image {
+    background-size:contain;
+    width:100%;
+    height:100%;
+    background-repeat:no-repeat;
+    background-position: 50% 50%;
+    position:relative;
 }
