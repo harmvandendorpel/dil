@@ -1,15 +1,50 @@
 body, input, button, textarea, select {
-    font-size:15px;
-    font-family: 'karla';
-    line-height:20px;
+    font-size: 15px;
+    font-family: 'helvetica neue', 'karla', sans-serif;
+    line-height: 20px;
 }
 
 body {
-    padding: 100px 50px;
-
-    font-size:16px;
-    background-color:#eee;
+    font-size: 15px;
+    line-height: 20px;
+    background-color: #eee;
     text-align: center;
+    color: black;
+    padding: 0;
+    margin: 0;
+    font-weight:400;
+}
+
+html,
+body,
+.section,
+.work--full,
+.slides-container,
+.parents,
+.siblings {
+    height: 100%;
+}
+
+.slides-container {
+    width: 100%;
+}
+
+.work__image {
+    display: block;
+}
+
+.section {
+    box-sizing: border-box;
+    /*padding: 20px 8% 80px 8%;*/
+    width:100%;
+}
+
+.screen--siblings {
+    /*padding: 20px;*/
+}
+
+.parents__separator {
+    width: 33%;
 }
 
 a {
@@ -18,19 +53,107 @@ a {
 }
 
 a.text:hover {
-    border-bottom:2px solid black;
+    border-bottom: 1px solid black;
 }
 
 .work--thumb img {
-    max-width:250px;
+    max-width: 100%;
 }
 
-.work--medium img {
-    max-width:500px;
+.work--thumb {
+    display: inline-block;
+    padding: 1%;
+    max-width: 20%;
+    box-sizing: border-box;
+}
+
+p.title--parent {
+    /*padding-top: 18px;*/
+    width:100%;
+    /*margin-top:100%;*/
+}
+
+.section--siblings {
+    position:relative;
+}
+
+.siblings-title {
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    text-align: center;
+}
+
+.work--medium {
+    width: 100%;;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    vertical-align: middle;
+    background-size: contain ;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    cursor: pointer;
+}
+
+.work--full {
+    padding:0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.parents {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    padding: 0 5%;
+
+}
+
+.work-full-image-container {
+    width:100%;
+    height:100%;
+    padding: 0px;
+    box-sizing: border-box;
 }
 
 .work--full img {
-    max-width:750px;
+    height: 100%;
+    display: block;
+}
+
+.full-image-title {
+    display: none;
+    position: absolute;
+    top: 50%;
+}
+
+.link-to-parent {
+    display: none;
+    position:absolute;
+    bottom:0;
+}
+
+.link-to-siblings {
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+.link-to-parent.left {
+    left:0;
+}
+
+.link-to-parent.right {
+    right:0;
+}
+
+u {
+    text-decoration: none;
 }
 
 .shadow {
@@ -39,17 +162,8 @@ a.text:hover {
 }
 
 a.no-link {
-    color:black;
+    color: black;
     text-decoration: none;
-}
-
-.work {
-    position: relative;
-    display: inline-block;
-}
-
-.work--medium {
-    margin-bottom:80px;
 }
 
 .work__tools {
@@ -61,97 +175,97 @@ a.no-link {
 }
 
 .work--has-tools:hover .work__tools {
-    display:inline;
+    display: inline;
 }
 
 input:focus,
 button:focus {
-    outline:0;
+    outline: 0;
 }
 
 .btn {
     -webkit-appearance: none;
-    color:black;
-    background-color:white;
-    border:none;
-    border-radius:0px;
-    margin-left:5px;
-    margin-bottom:5px;
-    cursor:pointer;
-    padding:5px 8px;
+    color: black;
+    background-color: white;
+    border: none;
+    border-radius: 0px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    padding: 5px 8px;
 }
 
 .btn:active {
-    background-color:#888;
-    color:white;
-    outline:none;
+    background-color: #888;
+    color: white;
+    outline: none;
 }
 
 .btn:hover {
-    background-color:black;
+    background-color: black;
     color: white;
 }
 
 .work--icon {
-    width:100px;
-    height:100px;
-    margin-right:10px;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
 }
 
 .tools-container {
     position: fixed;
     left: 0;
     bottom: 0;
-    padding:10px;
+    padding: 10px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }
 
 p.title {
     text-align: center;
 }
 
-.parents .work {
-    margin: 20px;
+.siblings {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-flow: row wrap;
 }
 
-
-.siblings .work {
-    margin: 20px;
+.siblings__items {
+    width: 100%;
+    line-height:0;
 }
 
 .recent .work {
-    margin:20px;
+    margin: 20px;
 }
 
 .freezer .work {
-    margin:20px;
+    margin: 20px;
 }
 
 .work--remove-button {
     cursor: not-allowed;
 }
 
-.siblings, .parents {
-    margin-top:80px;
-}
-
-p.title {
-    display: none;
-}
-
 .nav {
-    position:fixed;
+    display:none;
+    position: fixed;
     top: 0;
-    left:0;
-    padding:10px 30px 10px 10px;
-    width: 100%;
+    right: 0;
+    padding: 20px 30px 10px 10px;
     box-sizing: border-box;
 }
 
 .logo {
-    background-image:url(../images/icon.png);
-    background-size:100% 100%;
-    width:50px;
-    height:50px;
+    background-image: url(../images/icon.png);
+    background-size: 100% 100%;
+    width: 50px;
+    height: 50px;
     float: left;
 }
 
@@ -163,16 +277,15 @@ ul.buttons {
 }
 
 .text-content {
-    max-width:600px;
+    max-width: 600px;
     text-align: left;
-    margin:auto;
+    margin: auto;
 }
 
-
 .layer iframe {
-    width:1800px;
-    height:1800px;
-    border:none;
+    width: 1800px;
+    height: 1800px;
+    border: none;
     -ms-zoom: 0.5;
     -moz-transform: scale(0.25);
     -moz-transform-origin: 0 0;
@@ -185,11 +298,39 @@ ul.buttons {
 .layer {
     width: 450px;
     height: 450px;
-    overflow:hidden;
-    margin-top:50px;
+    overflow: hidden;
+    margin-top: 50px;
 }
 
 .nav-button {
-    float:right;
-    margin-left:20px;
+    float: right;
+    margin-left: 20px;
+}
+
+.icon-arrow-down {
+    background-image: url(/images/arrow-down.svg);
+    width: 10px;
+    height: 12px;
+    background-size: 10px 20px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    background-position: 50% 100%;
+}
+
+.rotate-90 {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+
+.work-full-image {
+    background-size:contain;
+    width:100%;
+    height:100%;
+    background-repeat:no-repeat;
+    background-position: 50% 50%;
+    position:relative;
 }

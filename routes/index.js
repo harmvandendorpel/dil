@@ -157,7 +157,6 @@ function rerenderWork(req, res) {
   );
 }
 
-
 function detailPage(req, res) {
   const hash = req.params.hash;
 
@@ -189,14 +188,15 @@ function detailPage(req, res) {
             },
             { parents }
           ]
-        }).exec((err, docs) => {
+        }).limit(10).exec((err, docs) => {
           callback(null, docs);
         });
       }
 
     }, (err, results) => {
       render('pages/detail', {
-        title: hash,
+        script: 'DetailPage',
+        title: hash.substring(0,8),
         current,
         parents: results.parents,
         siblings: results.siblings

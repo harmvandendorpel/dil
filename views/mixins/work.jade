@@ -5,12 +5,12 @@ mixin workThumb(work, links)
 
 mixin workMedium(work, links)
   .work--medium.work.work--has-tools(data-hash=work.hash)
-    + workTools(work)
+    //+ workTools(work)
     + work(work, `/works/medium/${work.filename}`, links)
 
 mixin workFull(work, links)
   .work--full.work.work--has-tools(data-hash=work.hash)
-    + workTools(work)
+    //+ workTools(work)
     + work(work, `/works/full/${work.filename}`, links)
 
 mixin workTools(work)
@@ -39,9 +39,9 @@ mixin work(work, URL, links)
 
 mixin workBody(work, URL)
   if work.imageStatus === 0
-    img.shadow(src='/images/rendering.png')
+    img.work__image(src='/images/rendering.png')
     p.title= `${work.title} (rendering)`
 
   else if work.imageStatus === 2
-    img.shadow(src=URL)
+    img.work__image(src=URL)
     p.title= work.title

@@ -1,4 +1,5 @@
 import State from './state';
+import DetailPage from './pages/DetailPage';
 import { clone } from 'lodash';
 import sha1 from 'sha1';
 
@@ -74,9 +75,7 @@ class App {
   
   constructor() {
     window.state = new State();
-    window.state.on('change', () => {
-      this.render();
-    });
+    window.state.on('change', () => this.render());
 
     $('.btn-breed').bind('mousedown', (e) => {
       const hash = $(e.target).data().hash;
@@ -103,13 +102,25 @@ class App {
       const $sender = $(e.target);
       const data = $sender.data();
       const hash = data.hash;
-      const frozen = data.frozen
-      this.freeze(hash, frozen)
+      const frozen = data.frozen;
+      this.freeze(hash, frozen);
       $sender.fadeOut();
     });
-  
+
+    
+
     this.render();
+
+
+    if (window.pageClass) {
+      switch (window.pageClass) {
+        case 'DetailPage':
+          new DetailPage();
+          break;
+      }
+    }
   }
 }
-
-new App();
+$(document).ready(() => {
+  new App();
+});
