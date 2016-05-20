@@ -39,9 +39,11 @@ block content
   .slides-container
     .section.section--current
       .work--full.work.work--has-tools(data-hash=current.hash)
-        + workTools(work)
+
         .work-full-image(style=`background-image:url(/works/full/${current.filename})`)
           .full-image-title.rotate-90= current.title
+        + workTools(work)
+
         if parents.length == 2
           .link-to-parent.left <i class='icon-arrow-down'></i> <u>Parents</u> <i class='icon-arrow-down'></i>
           .link-to-parent.right <i class='icon-arrow-down'></i> <u>Parents</u> <i class='icon-arrow-down'></i>
