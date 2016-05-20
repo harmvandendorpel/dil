@@ -8,7 +8,10 @@ export default class DetailPage {
 
     $(window).resize(() => this.position());
     $('.slides-container').fullpage({
-      afterRender: () => this.position()
+      afterRender: () => this.position(),
+      onLeave: () => {
+        $('body').trigger('fakescroll');
+      }
     });
   }
 
