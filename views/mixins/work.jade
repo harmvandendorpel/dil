@@ -32,7 +32,7 @@ mixin workTools(work)
 
 mixin work(work, URL, links, noTitle)
   if links
-    a.no-link(href=`/language/${work.hash}`)
+    a.no-link(href=`/language/${work.hash.substring(0,8)}`)
       + workBody(work, URL, links, noTitle)
   else
       + workBody(work, URL, links, noTitle)

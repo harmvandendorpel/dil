@@ -160,8 +160,17 @@ function rerenderWork(req, res) {
 function detailPage(req, res) {
   const hash = req.params.hash;
 
-  Work.find({hash}).exec((err, doc) => {
+  Work.find({
+
+    hash: new RegExp('^' + hash,'i')
+
+
+  }).exec((err, doc) => {
     const current = doc[0];
+    if (!current) {
+      res.status(404).send('not found');
+      return;
+    }
     const parents = current.parents;
 
     Async.parallel({

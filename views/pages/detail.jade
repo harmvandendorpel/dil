@@ -9,8 +9,8 @@ block meta
 
   meta(content=`${current.title}`, property='twitter:title')
   meta(content=`${current.title}`, property='og:title')
-  meta(content='http://death.imitates.org/language/' + current.hash, property='og:url')
-  meta(content='http://death.imitates.org/language/' + current.hash, property='twitter:url')
+  meta(content='http://death.imitates.org/language/' + current.hash.substring(0,8), property='og:url')
+  meta(content='http://death.imitates.org/language/' + current.hash.substring(0,8), property='twitter:url')
   meta(content='http://death.imitates.org/works/medium/' + current.filename, property='og:image')
   meta(content='http://death.imitates.org/works/medium/' + current.filename, property='twitter:image')
   meta(content='http://death.imitates.org/works/full/' + current.filename, property='twitter:card')
@@ -63,7 +63,7 @@ block content
           .siblings__items
             each work in siblings
               .work--thumb.work(data-hash=work.hash)
-                a(href=`/language/${work.hash}`)
+                a(href=`/language/${work.hash.substring(0,8)}`)
                   img.work__image(src=`/works/thumb/${work.filename}`)
         if children && children.length > 0
           .link-to-children
@@ -80,12 +80,12 @@ block content
           .children__items
             each work in children
               .work--thumb.work(data-hash=work.hash)
-                a(href=`/language/${work.hash}`)
+                a(href=`/language/${work.hash.substring(0,8)}`)
                   img.work__image(src=`/works/thumb/${work.filename}`)
 
   script(type='text/javascript').
     window.pageClass = '#{script}';
 
 mixin workParent(parent)
-  .work--medium.work.work--has-tools(data-hash=parent.hash, style=`background-image:url(/works/full/${parent.filename})`)
+  .work--medium.work.work--has-tools(data-hash=parent.hash.substring(0,8), style=`background-image:url(/works/full/${parent.filename})`)
     p.title.title--parent= parent.title
