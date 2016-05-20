@@ -57,9 +57,8 @@ export default class MoreInfo {
       this.namespaceEvent('touchstart')
     ];
 
-    $('body').one('fakescroll', (e) => {
-      this.destructor();
-    });
+    $('body').one('fakescroll', () => this.destructor());
+    $(window).one(this.namespaceEvent('resize'), () => this.destructor());
 
     $('body').bind(this.outsideEvents.join(' '), (e) => {
       e.preventDefault();
@@ -72,7 +71,8 @@ export default class MoreInfo {
     each(this.outsideEvents, (event) => {
       $('body').off(event);
     });
-    $('body').off(this.namespaceEvent('scroll'));
+    //$('body').off(this.namespaceEvent('fakescroll'));
+    $(window).off(this.namespaceEvent('resize'));
     this.$element.remove();
     this.$tools.removeClass('active');
     this.$sender.removeClass('active');
