@@ -1,6 +1,26 @@
 extends ../layout
 include ../mixins/work
 
+
+block meta
+  link(href=`/works/thumb/${current.filename}`, rel='shortcut icon')
+  link(href=`/works/thumb/${current.filename}`, rel='icon')
+  meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no', name='viewport')
+
+  meta(content=`${current.title}`, property='twitter:title')
+  meta(content=`${current.title}`, property='og:title')
+  meta(content=`/language/${current.hash}`, property='og:url')
+  meta(content=`/language/${current.hash}`, property='twitter:url')
+  meta(content=`/works/medium/${current.filename}`, property='og:image')
+  meta(content=`/works/medium/${current.filename}`, property='twitter:image')
+  meta(content=`/works/full/${current.filename}`, property='twitter:card')
+  meta(content='Death Imitates Language', property='og:site_name')
+  meta(content='article', property='og:type')
+  meta(content='summary', property='twitter:card')
+  meta(content='@harmvddorpel', property='twitter:site')
+  meta(content='@harmvddorpel', property='twitter:creator')
+
+  
 block nav
   .nav
     ul.buttons
