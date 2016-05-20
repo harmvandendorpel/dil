@@ -12,7 +12,11 @@ module.exports = {
       {
         test: path.join(__dirname, 'public/src'),
         loader: 'babel-loader'
-      }
+      },
+      {
+        test: /\.handlebars$/,
+        loader: "handlebars-loader"
+      },
     ]
   }
 };

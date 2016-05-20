@@ -392,3 +392,11 @@ ul.buttons {
 
 
 
+.btn-more-info {
+    /*line-height: 100%;*/
+    /*width: 30px;*/
+    /*height: 30px;*/
+    background-color: rgba(255,255,255,0.5);
+    color: black;
+
+}
