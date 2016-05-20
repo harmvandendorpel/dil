@@ -1,6 +1,15 @@
 extends ../layout
 include ../mixins/work
 
+block nav
+  .nav
+    ul.buttons
+      li.nav-button
+        a.text(href='/about') About
+
+      li.nav-button
+        a.text(href='/') Population
+
 block content
   .slides-container
     .section.section--current

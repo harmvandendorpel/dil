@@ -26,21 +26,23 @@
     font-style:italic
 }
 
-body, input, button, textarea, select {
-    font-size: 15px;
+body, input, button, textarea, select,h1 {
+    font-size: 17px;
     font-family: 'Neue Haas Unica', 'helvetica neue', 'karla', sans-serif;
-    line-height: 20px;
+    line-height: 22px;
 }
 
 body {
-    font-size: 17px;
-    line-height: 20px;
     background-color: #eee;
     text-align: center;
     color: black;
     padding: 0;
     margin: 0;
     font-weight:400;
+}
+
+.text-content p {
+    margin-bottom:22px;
 }
 
 html,
@@ -288,7 +290,7 @@ p.title {
 
 
 .recent {
-    padding:1%;
+    padding:40px 1% 1% 1%;
 }
 .recent .work {
     /*margin: 20px;*/
@@ -303,11 +305,10 @@ p.title {
 }
 
 .nav {
-    display:none;
     position: fixed;
     top: 0;
     right: 0;
-    padding: 20px 30px 10px 10px;
+    padding: 20px 2% 10px 10px;
     box-sizing: border-box;
 }
 
@@ -330,6 +331,10 @@ ul.buttons {
     max-width: 600px;
     text-align: left;
     margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:100%;
 }
 
 .layer iframe {
