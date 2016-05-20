@@ -4,6 +4,7 @@ export default class DetailPage {
     this.initCurrent();
     this.initParents();
     this.initSiblings();
+    this.initChildren();
 
     $(window).resize(() => this.position());
     $('.slides-container').fullpage({
@@ -34,6 +35,13 @@ export default class DetailPage {
     this.$siblingsTitle = this.$siblingsSection.find('.siblings-title');
     this.$siblingsItems = this.$siblingsSection.find('.siblings__items');
   }
+
+  initChildren() {
+    this.$childrenSection = $('.section--children');
+    this.$childrenTitle = this.$childrenSection.find('.children-title');
+    this.$childrenItems = this.$childrenSection.find('.children__items');
+  }
+
 
   positionTitle() {
     const pos = (this.$currentSection.width() - this.$currentSection.height()) / 2 - this.$workTitle.width() / 2 - this.$workTitle.height() / 2;
@@ -71,9 +79,16 @@ export default class DetailPage {
   }
 
   positionSiblings() {
-    console.log(this.$siblingsItems.position().top);
+    if (!this.$siblingsTitle.length) return;
     this.$siblingsTitle.css({
       top: this.$siblingsItems.position().top/2 
+    });
+  }
+
+  positionChildren() {
+    if (!this.$childrenTitle.length) return;
+    this.$childrenTitle.css({
+      top: this.$childrenItems.position().top/2
     });
   }
 
@@ -81,5 +96,6 @@ export default class DetailPage {
     this.positionCurrent();
     this.positionParents();
     this.positionSiblings();
+    this.positionChildren();
   }
 }
