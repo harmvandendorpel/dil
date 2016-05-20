@@ -111,7 +111,7 @@ function deleteWork(req, res) {
   const hash = req.params.hash;
 
   Work.update(
-    { hash },
+    { hash, frozen:false },
     { enabled: false },
     {},
     () => {
@@ -252,7 +252,7 @@ router.get('/api/forceregenerate', (req, res) => {
   if (!auth(req, res)) return;
 
   Work.update(
-    { enabled: true },
+    { enabled: true, frozen: false },
     { imageStatus: WorkImageStatus.IMAGE_NONE },
     { multi:true },
     () => {
