@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
     .sort({_id:-1})
     .limit(1000)
     .exec((err, works) => {
-    render('pages/index', { title: 'entire population', works }, req, res);
+    render('pages/index', { title: 'Death Imitates Language', works }, req, res);
   });
 });
 
