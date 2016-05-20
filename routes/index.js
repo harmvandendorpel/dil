@@ -189,7 +189,7 @@ function detailPage(req, res) {
           $and: [
             {
               hash: {
-                $ne: hash
+                $ne: current.hash
               }
             },
             {
@@ -205,7 +205,7 @@ function detailPage(req, res) {
         Work.find({
           $and: [
             {
-              parents: hash
+              parents: current.hash
             },
             {
               enabled: true
