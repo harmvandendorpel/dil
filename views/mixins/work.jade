@@ -5,12 +5,12 @@ mixin workThumb(work, links, noTitle)
 
 mixin workMedium(work, links)
   .work--medium.work.work--has-tools(data-hash=work.hash)
-    //+ workTools(work)
+    + workTools(work)
     + work(work, `/works/medium/${work.filename}`, links)
 
 mixin workFull(work, links)
   .work--full.work.work--has-tools(data-hash=work.hash)
-    //+ workTools(work)
+    + workTools(work)
     + work(work, `/works/full/${work.filename}`, links)
 
 mixin workTools(work)
@@ -29,6 +29,8 @@ mixin workTools(work)
       else
         button.btn.btn-freeze(data-hash=work.hash, data-frozen=true) freeze
       button.btn.btn-kill(data-hash=work.hash) &times;
+    else
+      button.btn.btn-more-info ℹ
 
 mixin work(work, URL, links, noTitle)
   if links
