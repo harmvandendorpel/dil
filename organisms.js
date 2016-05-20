@@ -47,7 +47,7 @@ export function breed(parents, count) {
 
       for (let i = 0; i < count; i++) {
         const newChromosome = makeNewChromosome(docs.map((doc) => doc.chromosome));
-        newOrganismPromises.push(saveOrganism('untitled', newChromosome, parents));
+        newOrganismPromises.push(saveOrganism('Untitled', newChromosome, parents));
       }
 
       Promise.all(newOrganismPromises).then(() => {
