@@ -1,5 +1,6 @@
 import { each } from 'lodash';
-import template from './templates/work-info.handlebars';
+import templateWindow from './templates/work-info-window.handlebars';
+import templateContent from './templates/work-info-content.handlebars';
 
 export default class MoreInfo {
 
@@ -11,8 +12,10 @@ export default class MoreInfo {
     }
     MoreInfo.instance = this;
 
+    this.hash = hash;
     this.$sender = $sender;
-    this.$element = $(template());
+    this.$element = $(templateWindow());
+    this.$content = this.$element.find('.more-info__content');
 
     $('body').append(this.$element);
     const $arrow = this.$element.find('.more-info-arrow');
@@ -29,8 +32,21 @@ export default class MoreInfo {
       left: senderOffset.left - arrowOffset.left - 5,
       top: senderOffset.top + $sender.height() + $arrow.height()
     });
+
+    this.loadContent();
   }
 
+  loadContent() {
+    $.ajax({
+      url: this.url()
+    }).done((data) => {
+      this.$content.html(templateContent(data));
+    })
+  }
+  url() {
+    return `/api/work/${this.hash}`;  
+  }
+  
   namespaceEvent(eventname) {
     return `${eventname}.${this.namespace}`;
   }
