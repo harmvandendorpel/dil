@@ -1,5 +1,11 @@
 extends ../layout
 include ../mixins/work
+block nav
+  .nav
+    ul.buttons
+      li.nav-button
+        a.text(href='/about') About
+
 
 block content
   .recent

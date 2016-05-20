@@ -18,7 +18,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/about', (req, res) => {
-  render('pages/about', { title: 'about' }, req, res);
+  render('pages/about', { title: 'About' }, req, res);
 });
 
 router.get('/freezer', function(req, res) {
