@@ -57,7 +57,7 @@ block content
           .link-to-siblings
             i.icon-arrow-down
             &nbsp;
-            u= `siblings (${siblings.length})`
+            u= `Siblings (${siblings.length})`
             &nbsp;
             i.icon-arrow-down
 
@@ -74,13 +74,13 @@ block content
           .link-to-children
             i.icon-arrow-down
             &nbsp;
-            u= `children (${children.length})`
+            u= `Children (${children.length})`
             &nbsp;
             i.icon-arrow-down
 
     if children && children.length > 0
       .section.screen--children.section--children
-        p.children-title children
+        p.children-title Children
         .children
           .children__items
             each work in children
