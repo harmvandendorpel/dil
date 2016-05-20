@@ -219,7 +219,7 @@ function detailPage(req, res) {
     }, (err, results) => {
       render('pages/detail', {
         script: 'DetailPage',
-        title: hash.substring(0,8),
+        title: current.title,
         current,
         parents: results.parents,
         siblings: results.siblings,
