@@ -8,7 +8,10 @@ export default class DetailPage {
 
     $(window).resize(() => this.position());
     $('.slides-container').fullpage({
-      afterRender: () => this.position()
+      afterRender: () => this.position(),
+      onLeave: () => {
+        $('body').trigger('fakescroll');
+      }
     });
   }
 
@@ -24,10 +27,10 @@ export default class DetailPage {
     this.$parentsSection = $('.section--parents');
     this.$parents = this.$parentsSection.find('.work--medium');
 
-    this.$parents.bind('click touch', (e) => {
-      const hash = $(e.currentTarget).data().hash;
-      location.href = `/language/${hash}`;
-    });
+    // this.$parents.bind('click touch', (e) => {
+    //   const hash = $(e.currentTarget).data().hash;
+    //   location.href = `/language/${hash}`;
+    // });
   }
 
   initSiblings() {

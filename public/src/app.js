@@ -1,7 +1,8 @@
 import State from './state';
 import DetailPage from './pages/DetailPage';
 import { clone } from 'lodash';
-import sha1 from 'sha1';
+// import sha1 from 'sha1';
+import MoreInfo from './MoreInfo';
 
 class App {
 
@@ -72,33 +73,46 @@ class App {
     $('.tools-container').html('');
     $('.tools-container').append($tools);
   }
-  
+
+  requestMoreInfo(hash, $sender) {
+    new MoreInfo(hash, $sender);
+  }
+
   constructor() {
+
     window.state = new State();
     window.state.on('change', () => this.render());
 
-    $('.btn-breed').bind('mousedown', (e) => {
+    $('.btn-more-info').bind('mousedown', (e) => {
+      e.preventDefault();
+      const $sender = $(e.target);
+      const hash = $sender.data().hash;
+      this.requestMoreInfo(hash, $sender);
+      return false;
+    });
+
+    $('.btn-breed').bind('mousedown touchstart', (e) => {
       const hash = $(e.target).data().hash;
       this.remember(hash);
     });
   
-    $('.btn-rerender').bind('mousedown', (e) => {
+    $('.btn-rerender').bind('mousedown touchstart', (e) => {
       const hash = $(e.target).data().hash;
       this.rerender(hash);
     });
 
-    $('.btn-kill').bind('mousedown', (e) => {
+    $('.btn-kill').bind('mousedown touchstart', (e) => {
       const $target = $(e.target);
       const hash = $target.data().hash;
       this.kill(hash);
     });
   
-    $('.btn-link').bind('mousedown', (e) => {
+    $('.btn-link').bind('mousedown touchstart', (e) => {
       const link = $(e.target).data().link;
       location.href=link;
     });
     
-    $('.btn-freeze').bind('mousedown', (e) => {
+    $('.btn-freeze').bind('mousedown touchstart', (e) => {
       const $sender = $(e.target);
       const data = $sender.data();
       const hash = data.hash;
@@ -107,10 +121,7 @@ class App {
       $sender.fadeOut();
     });
 
-    
-
     this.render();
-
 
     if (window.pageClass) {
       switch (window.pageClass) {
@@ -121,6 +132,7 @@ class App {
     }
   }
 }
+
 $(document).ready(() => {
   new App();
 });

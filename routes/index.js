@@ -56,6 +56,12 @@ router.delete('/api/freeze/:hash', (req, res) => {
 });
 
 router.post('/api/breed', createOffspring);
+router.get('/api/work/:hash', (req, res) => {
+  const hash = req.params.hash;
+  workData(hash).then((results) => {
+    res.send(results);
+  });
+});
 
 function login(req, res) {
   const session = req.session;
@@ -157,75 +163,82 @@ function rerenderWork(req, res) {
   );
 }
 
-function detailPage(req, res) {
-  const hash = req.params.hash;
-
-  Work.find({
-
-    hash: new RegExp('^' + hash,'i')
-
-
-  }).exec((err, doc) => {
-    const current = doc[0];
-    if (!current) {
-      res.status(404).send('not found');
-      return;
-    }
-    const parents = current.parents;
-
-    Async.parallel({
-      parents: (callback) => {
-        Work.find({
-          hash: {
-            $in: parents
-          }
-        }).exec((err, doc) => {
-          callback(null, doc);
-        });
-      },
-      siblings: (callback) => {
-        parents.sort();
-        Work.find({
-          $and: [
-            {
-              hash: {
-                $ne: current.hash
-              }
-            },
-            {
-              enabled: true
-            },
-            { parents }
-          ]
-        }).limit(10).exec((err, docs) => {
-          callback(null, docs);
-        });
-      },
-      children: (callback) => {
-        Work.find({
-          $and: [
-            {
-              parents: current.hash
-            },
-            {
-              enabled: true
-            }
-          ]
-        }).limit(10).exec((err, docs) => {
-          callback(null, docs);
-        });
+function workData(hashPart) {
+  return new Promise((resolve, reject) => {
+    Work.find({
+      hash: new RegExp('^' + hashPart, 'i')
+    }).exec((err, doc) => {
+      const current = doc[0];
+      if (!current) {
+        res.status(404).send('not found');
+        return;
       }
+      const parents = current.parents;
 
-    }, (err, results) => {
-      render('pages/detail', {
-        script: 'DetailPage',
-        title: current.title,
-        current,
-        parents: results.parents,
-        siblings: results.siblings,
-        children: results.children
-      }, req, res);
+      Async.parallel({
+        current: (callback) => {
+          callback(null, current);
+        },
+        parents: (callback) => {
+          Work.find({
+            hash: {
+              $in: parents
+            }
+          }).exec((err, doc) => {
+            callback(null, doc);
+          });
+        },
+        siblings: (callback) => {
+          parents.sort();
+          Work.find({
+            $and: [
+              {
+                hash: {
+                  $ne: current.hash
+                }
+              },
+              {
+                enabled: true
+              },
+              {parents}
+            ]
+          }).limit(10).exec((err, docs) => {
+            callback(null, docs);
+          });
+        },
+        children: (callback) => {
+          Work.find({
+            $and: [
+              {
+                parents: current.hash
+              },
+              {
+                enabled: true
+              }
+            ]
+          }).limit(10).exec((err, docs) => {
+            callback(null, docs);
+          });
+        }
+      }, (err, results) => {
+        resolve(results);
+      });
     });
+  });
+}
+
+function detailPage(req, res) {
+  const hashPart = req.params.hash;
+
+  workData(hashPart).then((results) => {
+    render('pages/detail', {
+      script: 'DetailPage',
+      title: results.current.title,
+      current: results.current,
+      parents: results.parents,
+      siblings: results.siblings,
+      children: results.children
+    }, req, res);
   });
 }
 
