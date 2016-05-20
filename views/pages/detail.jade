@@ -11,6 +11,10 @@ block meta
   meta(content=`${current.title}`, property='og:title')
   meta(content='http://death.imitates.org/language/' + current.hash.substring(0,8), property='og:url')
   meta(content='http://death.imitates.org/language/' + current.hash.substring(0,8), property='twitter:url')
+  meta(content=current.hash, property='og:description')
+  meta(content=current.hash, property='twitter:description')
+  meta(content=current.hash, property='description')
+
   meta(content='http://death.imitates.org/works/medium/' + current.filename, property='og:image')
   meta(content='http://death.imitates.org/works/medium/' + current.filename, property='twitter:image')
   meta(content='http://death.imitates.org/works/full/' + current.filename, property='twitter:card')
@@ -19,6 +23,7 @@ block meta
   meta(content='summary', property='twitter:card')
   meta(content='@harmvddorpel', property='twitter:site')
   meta(content='@harmvddorpel', property='twitter:creator')
+
 
   
 block nav
