@@ -11,7 +11,7 @@ var WorkSchema = new Schema({
     type: Number,
     default: WorkImageStatus.IMAGE_NONE
   },
-  parents: Array,
+  parents: [String],
   ts: Number,
   enabled: {
     type: Boolean,

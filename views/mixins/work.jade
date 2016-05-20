@@ -1,7 +1,7 @@
-mixin workThumb(work, links)
+mixin workThumb(work, links, noTitle)
   .work--thumb.work.work--has-tools(data-hash=work.hash)
     + workTools(work)
-    + work(work, `/works/thumb/${work.filename}`, links)
+    + work(work, `/works/thumb/${work.filename}`, links, noTitle)
 
 mixin workMedium(work, links)
   .work--medium.work.work--has-tools(data-hash=work.hash)
@@ -16,10 +16,11 @@ mixin workFull(work, links)
 mixin workTools(work)
   .work__tools
 
-    button.btn.btn-link(data-link=`/language/${work.hash}#parents`) parents
-    button.btn.btn-link(data-link=`/language/${work.hash}#siblings`) siblings
-
     if authenticated
+      button.btn.btn-link(data-link=`/language/${work.hash}#parents`) parents
+      button.btn.btn-link(data-link=`/language/${work.hash}#siblings`) siblings
+
+
       button.btn.btn-breed(data-hash=work.hash) breed
       button.btn.btn-rerender(data-hash=work.hash) re
       button.btn.btn-link(data-link=`/dissect/${work.hash}#parents`) dissect
@@ -29,19 +30,21 @@ mixin workTools(work)
         button.btn.btn-freeze(data-hash=work.hash, data-frozen=true) freeze
       button.btn.btn-kill(data-hash=work.hash) &times;
 
-mixin work(work, URL, links)
+mixin work(work, URL, links, noTitle)
   if links
     a.no-link(href=`/language/${work.hash}`)
-      + workBody(work, URL, links)
+      + workBody(work, URL, links, noTitle)
   else
-      + workBody(work, URL, links)
+      + workBody(work, URL, links, noTitle)
 
 
-mixin workBody(work, URL)
+mixin workBody(work, URL, noTitle)
   if work.imageStatus === 0
     img.work__image(src='/images/rendering.png')
-    p.title= `${work.title} (rendering)`
+    if !noTitle
+      p.title= `${work.title} (rendering)`
 
   else if work.imageStatus === 2
     img.work__image(src=URL)
-    p.title= work.title
+    if !noTitle
+      p.title= work.title

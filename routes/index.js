@@ -191,6 +191,20 @@ function detailPage(req, res) {
         }).limit(10).exec((err, docs) => {
           callback(null, docs);
         });
+      },
+      children: (callback) => {
+        Work.find({
+          $and: [
+            {
+              parents: hash
+            },
+            {
+              enabled: true
+            }
+          ]
+        }).limit(10).exec((err, docs) => {
+          callback(null, docs);
+        });
       }
 
     }, (err, results) => {
@@ -199,7 +213,8 @@ function detailPage(req, res) {
         title: hash.substring(0,8),
         current,
         parents: results.parents,
-        siblings: results.siblings
+        siblings: results.siblings,
+        children: results.children
       }, req, res);
     });
   });

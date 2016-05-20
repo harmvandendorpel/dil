@@ -33,7 +33,7 @@ body, input, button, textarea, select {
 }
 
 body {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 20px;
     background-color: #eee;
     text-align: center;
@@ -49,7 +49,8 @@ body,
 .work--full,
 .slides-container,
 .parents,
-.siblings {
+.siblings,
+.children {
     height: 100%;
 }
 
@@ -65,10 +66,6 @@ body,
     box-sizing: border-box;
     /*padding: 20px 8% 80px 8%;*/
     width:100%;
-}
-
-.screen--siblings {
-    /*padding: 20px;*/
 }
 
 .parents__separator {
@@ -90,9 +87,11 @@ a.text:hover {
 
 .work--thumb {
     display: inline-block;
-    padding: 1%;
-    max-width: 20%;
+    /*float:left;*/
+    margin: 1%;
+    max-width: 18%;
     box-sizing: border-box;
+    position:relative;
 }
 
 p.title--parent {
@@ -101,11 +100,12 @@ p.title--parent {
     /*margin-top:100%;*/
 }
 
-.section--siblings {
+.section--siblings,
+.section--children {
     position:relative;
 }
 
-.siblings-title {
+.siblings-title, .children-title {
     position:absolute;
     left:0;
     top:0;
@@ -167,6 +167,12 @@ p.title--parent {
 }
 
 .link-to-siblings {
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+.link-to-children{
     position:absolute;
     bottom:0;
     width:100%;
@@ -268,8 +274,24 @@ p.title {
     line-height:0;
 }
 
+.children {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-flow: row wrap;
+}
+
+.children__items {
+    width: 100%;
+    line-height:0;
+}
+
+
+.recent {
+    padding:1%;
+}
 .recent .work {
-    margin: 20px;
+    /*margin: 20px;*/
 }
 
 .freezer .work {
