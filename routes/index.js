@@ -294,13 +294,14 @@ router.get('/api/forcerename', (req, res) => {
   
   fs.readFile('data/unique.txt', 'utf8', function(err, contents) {
     const lines = contents.split('\n');
-
+    const linesCount = lines.length;
 
     Work.find({}).exec((err, docs) => {
 
       docs.forEach((doc) => {
         if (doc.title && doc.title.toLowerCase() !== 'adam' && doc.title.toLowerCase() !== 'eve') {
-          const title = lines[parseInt(Math.random() * (lines.length-1))];
+          const chromosomeNumber = parseInt(doc.chromosome, 2);
+          const title = lines[chromosomeNumber % linesCount];
 
           Work.update(
             { hash: doc.hash },
