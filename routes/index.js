@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
     render('pages/index', {
       script: 'IndexPage',
       title: 'Death Imitates Language',
-      description: 'A series of works exploring the emergence of meaning in generative aesthetics using micro feedback and a genetic algorithm. By Harm van den Dorpel, 2016.',
+      metaDescription: 'A series of works exploring the emergence of meaning in generative aesthetics using micro feedback and a genetic algorithm. By Harm van den Dorpel, 2016.',
       works
     }, req, res);
   });
