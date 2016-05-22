@@ -6,7 +6,7 @@ import saveWorkImage from '../saveWorkImage';
 import { saveOrganism, breed } from '../organisms';
 import sha1 from 'sha1';
 import Async from 'async';
-
+import fs from 'fs';
 import moment from 'moment';
 
 
@@ -286,6 +286,39 @@ router.get('/api/forceregenerate', (req, res) => {
         result: {'status':'done'}
       });
     });
+});
+
+router.get('/api/forcerename', (req, res) => {
+  if (!auth(req, res)) return;
+
+  
+  fs.readFile('data/unique.txt', 'utf8', function(err, contents) {
+    const lines = contents.split('\n');
+
+
+    Work.find({}).exec((err, docs) => {
+
+      docs.forEach((doc) => {
+        if (doc.title.toLowerCase() !== 'adam' && doc.title.toLowerCase() !== 'eve') {
+          const title = lines[parseInt(Math.random() * (lines.length-1))];
+
+          Work.update(
+            { hash: doc.hash },
+            { title },
+            { },
+            () => {
+              console.log(title);
+            }
+          );
+        }
+      });
+
+      res.send({
+        result: {'status':'done'}
+      });
+    });
+  });
+
 });
 
 router.post('/api/saveimage', (req, res) => {

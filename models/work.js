@@ -3,7 +3,6 @@ import { WorkImageStatus } from '../const/const';
 const Schema = mongoose.Schema;
 
 var WorkSchema = new Schema({
-  name: String,
   title: String,
   hash: String,
   chromosome: String,
