@@ -3,11 +3,9 @@
     <img src="/works/thumb/{{ current.filename }}" class="work-info__thumb">
   </a>
   <div class="work-info__parents">
-    <a href="/language/{{parents.0.hash}}">
+    <a href="/language/{{current.hash}}#parents">
       <img src="/works/thumb/{{ parents.0.filename }}" class="work-info__parent">
-    </a>
-    <div class="work-info__heart">♥</div>
-    <a href="/language/{{parents.1.hash}}">
+      <div class="work-info__heart">♥</div>
       <img src="/works/thumb/{{ parents.1.filename }}" class="work-info__parent">
     </a>
   </div>
@@ -15,7 +13,9 @@
 
 <div class="work-info__props">
   <h3>{{ current.title }} {{ parents.0.title }} {{ parents.1.title }}</h3>
-  <div><img class='icon' src="/images/icon-calendar.png">Born {{current.ago}}</div>
+  <div><img class='icon' src="/images/icon-calendar.png">
+    Born {{current.ago}}
+  </div>
   <div><img class='icon' src="/images/icon-stats.png">
     {{current.hits}} Views
   </div>
@@ -28,12 +28,12 @@
   </div>
 
   <div class="work-info__buttons">
-    <button type="button" class="btn"> Siblings ({{ siblings.length }})</button>
+    <a href="/language/{{current.hash}}#siblings" class="btn"> Siblings ({{ siblings.length }})</a>
 
       {{#if children.length}}
-      <button type="button" class="btn">Children ({{ children.length}})</button>
+      <a href="/language/{{current.hash}}#children" class="btn">Children ({{ children.length}})</a>
       {{else}}
-        <button type="button" disabled class="btn">Virgin</button>
+        <a href="#" disabled class="btn">Virgin</a>
       {{/if}}
 
   </div>

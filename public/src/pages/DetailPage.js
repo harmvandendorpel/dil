@@ -14,7 +14,7 @@ export default class DetailPage {
       }
     });
   }
-
+  
   initCurrent() {
     this.$currentSection = $('.section--current');
     this.$workTitle   = this.$currentSection.find('.full-image-title').show();
@@ -91,6 +91,11 @@ export default class DetailPage {
       top: this.$childrenItems.position().top/2
     });
   }
+
+  // scrollToSection(section) {
+  //   console.log('scroll to', section);
+  //   $.fn.fullpage.silentMoveTo(section);
+  // }
 
   position() {
     this.positionCurrent();

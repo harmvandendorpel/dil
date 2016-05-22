@@ -252,13 +252,18 @@ button:focus {
     margin-left: 5px;
     margin-bottom: 5px;
     cursor: pointer;
-    padding: 5px 8px;
+    padding: 8px 10px;
 }
 
 .btn:active {
     background-color: #888;
     color: white;
     outline: none;
+}
+
+.btn[disabled] {
+    pointer-events: none;
+    color:#888;
 }
 
 .btn:hover {
@@ -420,6 +425,9 @@ ul.buttons {
     /*height: 30px;*/
     background-color: rgba(255,255,255,0.5);
     color: black;
+    width:30px;
+    height:30px;
+    line-height: 0;
 }
 
 .btn-more-info.active {
@@ -505,5 +513,5 @@ ul.buttons {
     position:absolute;
     bottom:0;
     right:0;
-    padding: 0 20px 15px 0;
+    padding: 0 20px 20px 0;
 }

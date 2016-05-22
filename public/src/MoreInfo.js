@@ -30,8 +30,8 @@ export default class MoreInfo {
     this.initClickOutside();
 
     this.$element.css({
-      left: senderOffset.left - arrowOffset.left - 5,
-      top: senderOffset.top + $sender.height() + $arrow.height()
+      left: senderOffset.left - arrowOffset.left -3,
+      top: senderOffset.top + $sender.height() + $arrow.height()+3
     });
 
     this.loadContent();
