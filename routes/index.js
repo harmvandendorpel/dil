@@ -3,7 +3,7 @@ var router = express.Router();
 import { WorkImageStatus } from '../const/const';
 import Work from '../models/work';
 import saveWorkImage from '../saveWorkImage';
-import { saveOrganism, breed } from '../organisms';
+import { saveOrganism, breed, getNames, getNames } from '../organisms';
 import sha1 from 'sha1';
 import Async from 'async';
 import fs from 'fs';
@@ -288,28 +288,18 @@ router.get('/api/forceregenerate', (req, res) => {
     });
 });
 
-function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
-
 router.get('/api/forcerename', (req, res) => {
   if (!auth(req, res)) return;
 
   
-  fs.readFile('data/unique.txt', 'utf8', function(err, contents) {
-    const lines = contents.split('\n');
-    const linesCount = lines.length;
-
+  getNames((contents) => {
     Work.find({}).exec((err, docs) => {
 
       docs.forEach((doc) => {
         if (doc.title && doc.title.toLowerCase() !== 'adam' && doc.title.toLowerCase() !== 'eve') {
-          const chromosomeNumber = parseInt(doc.chromosome, 2);
-          const title = toTitleCase(lines[chromosomeNumber % linesCount]);
-
           Work.update(
             { hash: doc.hash },
-            { title },
+            { title: generateName(contents, doc.chromosome) },
             { },
             () => {
               console.log(title);
@@ -346,10 +336,9 @@ router.post('/work/new', (req, res) => {
   if (!auth(req, res)) return;
 
   const chromosome = req.body.chromosome;
-  const title = req.body.title;
   const parents = req.body.parents || [];
 
-  saveOrganism(title, chromosome, parents).then(
+  saveOrganism(chromosome, parents).then(
     (err) => res.send({
       status: 'ok',
       chromosome,
