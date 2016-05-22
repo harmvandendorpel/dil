@@ -7,6 +7,9 @@ import { saveOrganism, breed } from '../organisms';
 import sha1 from 'sha1';
 import Async from 'async';
 
+import moment from 'moment';
+
+
 router.get('/', function(req, res) {
   Work
     .find({enabled: true})
@@ -167,12 +170,17 @@ function workData(hashPart) {
   return new Promise((resolve, reject) => {
     Work.find({
       hash: new RegExp('^' + hashPart, 'i')
-    }).exec((err, doc) => {
+    }).lean().exec((err, doc) => {
       const current = doc[0];
+      const ts = current._id.getTimestamp();
+
+      current.ago = moment(ts).fromNow();
+
       if (!current) {
         res.status(404).send('not found');
         return;
       }
+
       const parents = current.parents;
 
       Async.parallel({
@@ -184,7 +192,7 @@ function workData(hashPart) {
             hash: {
               $in: parents
             }
-          }).exec((err, doc) => {
+          }).lean().exec((err, doc) => {
             callback(null, doc);
           });
         },
@@ -202,7 +210,7 @@ function workData(hashPart) {
               },
               {parents}
             ]
-          }).limit(10).exec((err, docs) => {
+          }).limit(10).lean().exec((err, docs) => {
             callback(null, docs);
           });
         },
@@ -216,11 +224,12 @@ function workData(hashPart) {
                 enabled: true
               }
             ]
-          }).limit(10).exec((err, docs) => {
+          }).limit(10).lean().exec((err, docs) => {
             callback(null, docs);
           });
         }
       }, (err, results) => {
+
         resolve(results);
       });
     });
@@ -231,14 +240,12 @@ function detailPage(req, res) {
   const hashPart = req.params.hash;
 
   workData(hashPart).then((results) => {
-    render('pages/detail', {
-      script: 'DetailPage',
-      title: results.current.title,
-      current: results.current,
-      parents: results.parents,
-      siblings: results.siblings,
-      children: results.children
-    }, req, res);
+    results.script = 'DetailPage';
+    results.title = results.current.title;
+  
+
+
+    render('pages/detail', results, req, res);
   });
 }
 

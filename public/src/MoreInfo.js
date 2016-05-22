@@ -18,6 +18,7 @@ export default class MoreInfo {
     this.$content = this.$element.find('.more-info__content');
 
     $('body').append(this.$element);
+    this.$element.css({opacity:0});
     const $arrow = this.$element.find('.more-info-arrow');
     const arrowOffset = $arrow.offset();
     const senderOffset = $sender.offset();
@@ -41,6 +42,7 @@ export default class MoreInfo {
       url: this.url()
     }).done((data) => {
       this.$content.html(templateContent(data));
+      this.$element.css({opacity:1});
     })
   }
   url() {

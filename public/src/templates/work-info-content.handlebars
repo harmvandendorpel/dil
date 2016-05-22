@@ -15,12 +15,12 @@
 
 <div class="work-info__props">
   <h3>{{ current.title }}</h3>
-  <div><img class='icon' src="/images/icon-calendar.png">12 days old</div>
+  <div><img class='icon' src="/images/icon-calendar.png">born {{current.ago}}</div>
   <div><img class='icon' src="/images/icon-stats.png">76 views</div>
   <div><img class='icon' src="/images/icon-pulse.png">frozen</div>
 
   <div class="work-info__buttons">
-    <button type="button" class="btn">12 siblings</button>
+    <button type="button" class="btn"> siblings ({{ siblings.length }})</button>
     <button type="button" class="btn">virgin</button>
   </div>
 </div>
