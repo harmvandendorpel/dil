@@ -49,14 +49,13 @@ block content
           .link-to-parent.right <i class='icon-arrow-down'></i> <u>Parents</u> <i class='icon-arrow-down'></i>
 
 
-    if parents.length > 0
+    if parents.length == 2
 
       .section.section--parents
         .parents
           + workParent(parents[0])
-          if parents.length > 1
-            .parents__separator.rotate-90 Parents
-            + workParent(parents[1])
+          .parents__separator.rotate-90 Parents
+          + workParent(parents[1])
         if siblings && siblings.length > 0
 
           .link-to-siblings
