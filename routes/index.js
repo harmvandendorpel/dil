@@ -185,6 +185,8 @@ function workData(hashPart) {
 
       current.ago = moment(ts).fromNow();
 
+      current.birthday = moment(ts).format('MMMM Do YYYY');
+
       if (!current) {
         res.status(404).send('not found');
         return;
@@ -268,6 +270,7 @@ function detailPage(req, res) {
     oneHit(results.current.hash);
     results.script = 'DetailPage';
     results.title = `${results.current.title} ${results.parents[0].title} ${results.parents[1].title} `;
+    results.metaDescription = `Born ${results.current.birthday}`;
     render('pages/detail', results, req, res);
   });
 }
