@@ -29,13 +29,13 @@
 
   <div class="work-info__buttons">
     {{#if siblings.length}}
-      <a href="/language/{{current.hash}}#siblings" class="btn"> Siblings ({{ siblings.length }})</a>
+      <a href="/language/{{current.hash}}#siblings" class="btn"> {{ siblings.length }} Siblings</a>
     {{else}}
       <a href="#" disabled class="btn">Only Child</a>
     {{/if}}
 
     {{#if children.length}}
-      <a href="/language/{{current.hash}}#children" class="btn">Children ({{ children.length}})</a>
+      <a href="/language/{{current.hash}}#children" class="btn">{{ children.length}} Children</a>
     {{else}}
       <a href="#" disabled class="btn">Virgin</a>
     {{/if}}
