@@ -288,6 +288,10 @@ router.get('/api/forceregenerate', (req, res) => {
     });
 });
 
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 router.get('/api/forcerename', (req, res) => {
   if (!auth(req, res)) return;
 
@@ -301,7 +305,7 @@ router.get('/api/forcerename', (req, res) => {
       docs.forEach((doc) => {
         if (doc.title && doc.title.toLowerCase() !== 'adam' && doc.title.toLowerCase() !== 'eve') {
           const chromosomeNumber = parseInt(doc.chromosome, 2);
-          const title = lines[chromosomeNumber % linesCount];
+          const title = toTitleCase(lines[chromosomeNumber % linesCount]);
 
           Work.update(
             { hash: doc.hash },
