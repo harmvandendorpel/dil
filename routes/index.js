@@ -13,7 +13,7 @@ import moment from 'moment';
 router.get('/', function(req, res) {
   Work
     .find({enabled: true})
-    .sort({_id:-1})
+    .sort({ts:-1})
     .limit(1000)
     .exec((err, works) => {
     render('pages/index', { title: 'Death Imitates Language', works }, req, res);
