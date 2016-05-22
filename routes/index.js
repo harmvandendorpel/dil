@@ -14,9 +14,13 @@ router.get('/', function(req, res) {
   Work
     .find({enabled: true})
     .sort({ts:-1})
-    .limit(1000)
+    //.limit(1000)
     .exec((err, works) => {
-    render('pages/index', { title: 'Death Imitates Language', works }, req, res);
+    render('pages/index', {
+      script: 'IndexPage',
+      title: 'Death Imitates Language',
+      works
+    }, req, res);
   });
 });
 
