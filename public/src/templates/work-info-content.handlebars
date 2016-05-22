@@ -15,13 +15,19 @@
 
 <div class="work-info__props">
   <h3>{{ current.title }}</h3>
-  <div><img class='icon' src="/images/icon-calendar.png">born {{current.ago}}</div>
-  <div><img class='icon' src="/images/icon-stats.png">76 views</div>
-  <div><img class='icon' src="/images/icon-pulse.png">frozen</div>
+  <div><img class='icon' src="/images/icon-calendar.png">Born {{current.ago}}</div>
+  <div><img class='icon' src="/images/icon-stats.png">76 Views</div>
+  <div><img class='icon' src="/images/icon-pulse.png">Frozen</div>
 
   <div class="work-info__buttons">
-    <button type="button" class="btn"> siblings ({{ siblings.length }})</button>
-    <button type="button" class="btn">virgin</button>
+    <button type="button" class="btn"> Siblings ({{ siblings.length }})</button>
+    <button type="button" class="btn">
+      {{#if children.length}}
+        Children ({{ children.length}})
+      {{else}}
+        Virgin
+      {{/if}}
+    </button>
   </div>
 </div>
 
