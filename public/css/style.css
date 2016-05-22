@@ -470,7 +470,7 @@ ul.buttons {
     width:100%;
     height:100%;
     background-image:url(/images/spinner.gif);
-    background-size: 24px;
+    background-size: 24px 24px;
     background-repeat: no-repeat;
     background-position: 50% 50%;
 }
@@ -513,5 +513,13 @@ ul.buttons {
     position:absolute;
     bottom:0;
     right:0;
-    padding: 0 20px 20px 0;
+    padding: 0 25px 25px 0;
+}
+
+.work__image--loading {
+    background-color:white;
+    background-image: url(/images/spinner.gif);
+    background-position:50% 50%;
+    background-repeat:no-repeat;
+    background-size: 24px 24px;
 }

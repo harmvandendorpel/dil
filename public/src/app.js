@@ -1,10 +1,9 @@
 import { clone } from 'lodash';
 
 import State from './State';
+import IndexPage from './pages/IndexPage';
 import DetailPage from './pages/DetailPage';
 import MoreInfo from './MoreInfo';
-import Router from './Router';
-import Backbone from 'backbone';
 
 class App {
 
@@ -147,8 +146,10 @@ class App {
     
     if (window.pageClass) {
       switch (window.pageClass) {
+        case 'IndexPage':
+          new IndexPage();
         case 'DetailPage':
-          this.detailsPage = new DetailPage();
+          new DetailPage();
           break;
       }
     }

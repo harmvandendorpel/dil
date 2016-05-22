@@ -1,7 +1,7 @@
-mixin workThumb(work, links, noTitle)
+mixin workThumb(work, links, noTitle, lazyload)
   .work--thumb.work.work--has-tools(data-hash=work.hash)
     + workTools(work)
-    + work(work, `/works/thumb/${work.filename}`, links, noTitle)
+    + work(work, `/works/thumb/${work.filename}`, links, noTitle, lazyload)
 
 mixin workMedium(work, links)
   .work--medium.work.work--has-tools(data-hash=work.hash)
@@ -32,21 +32,24 @@ mixin workTools(work)
     else
       button.btn.btn-more-info(data-hash=work.hash) ℹ
 
-mixin work(work, URL, links, noTitle)
+mixin work(work, URL, links, noTitle, lazyload)
   if links
     a.no-link(href=`/language/${work.hash.substring(0,8)}`)
-      + workBody(work, URL, links, noTitle)
+      + workBody(work, URL, links, noTitle, lazyload)
   else
-      + workBody(work, URL, links, noTitle)
+      + workBody(work, URL, links, noTitle, lazyload)
 
 
-mixin workBody(work, URL, noTitle)
+mixin workBody(work, URL, noTitle, lazyload)
   if work.imageStatus === 0
     img.work__image(src='/images/rendering.png')
     if !noTitle
       p.title= `${work.title} (rendering)`
 
   else if work.imageStatus === 2
-    img.work__image(src=URL)
+    if lazyload
+      img.work__image.work__image--loading(src='/images/rendering.png', data-src=URL)
+    else
+      img.work__image(src=URL)
     if !noTitle
       p.title= work.title
