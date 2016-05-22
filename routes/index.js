@@ -129,7 +129,7 @@ function deleteWork(req, res) {
   const hash = req.params.hash;
 
   Work.update(
-    { hash, frozen:false },
+    { hash, frozen: {$ne: true}},
     { enabled: false },
     {},
     () => {
@@ -240,7 +240,7 @@ function workData(hashPart) {
           });
         }
       }, (err, results) => {
-
+        console.log('resolved');
         resolve(results);
       });
     });
@@ -269,7 +269,15 @@ function detailPage(req, res) {
   workData(hashPart).then((results) => {
     oneHit(results.current.hash);
     results.script = 'DetailPage';
-    results.title = `${results.current.title} ${results.parents[0].title} ${results.parents[1].title} `;
+
+    const names = [results.current.title];
+
+    if (results.parents.length > 0) {
+      names.push(results.parents[0].title);
+      names.push(results.parents[1].title);
+    }
+
+    results.title = names.join(' ');
     results.metaDescription = `Born ${results.current.birthday}`;
     render('pages/detail', results, req, res);
   });
