@@ -7,13 +7,13 @@ block meta
   link(href=`/works/thumb/${current.filename}`, rel='icon')
   meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no', name='viewport')
 
-  meta(content=`${current.title}`, property='twitter:title')
-  meta(content=`${current.title}`, property='og:title')
+  meta(content=`${title}`, property='twitter:title')
+  meta(content=`${title}`, property='og:title')
   meta(content='http://death.imitates.org/language/' + current.hash.substring(0,8), property='og:url')
   meta(content='http://death.imitates.org/language/' + current.hash.substring(0,8), property='twitter:url')
-  meta(content=current.chromosome, property='og:description')
-  meta(content=current.chromosome, property='twitter:description')
-  meta(content=current.chromosome, property='description')
+  meta(content=metaDescription, property='og:description')
+  meta(content=metaDescription, property='twitter:description')
+  meta(content=metaDescription, property='description')
 
   meta(content='http://death.imitates.org/works/medium/' + current.filename, property='og:image')
   meta(content='http://death.imitates.org/works/medium/' + current.filename, property='twitter:image')
