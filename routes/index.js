@@ -242,9 +242,6 @@ function detailPage(req, res) {
   workData(hashPart).then((results) => {
     results.script = 'DetailPage';
     results.title = results.current.title;
-  
-
-
     render('pages/detail', results, req, res);
   });
 }
