@@ -41,7 +41,7 @@ block content
       .work--full.work.work--has-tools(data-hash=current.hash)
 
         .work-full-image(style=`background-image:url(/works/full/${current.filename})`)
-          .full-image-title.rotate-90= current.title
+          .full-image-title.rotate-90= `${current.title}`
         + workTools(current)
 
         if parents.length == 2

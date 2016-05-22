@@ -236,10 +236,27 @@ function workData(hashPart) {
   });
 }
 
+function oneHit(hash) {
+  Work.update(
+    { hash },
+    {
+      $inc: {
+        hits: 1
+      }
+    },
+    {},
+    () => {
+
+    }
+  );
+}
+
 function detailPage(req, res) {
   const hashPart = req.params.hash;
 
+
   workData(hashPart).then((results) => {
+    oneHit(results.current.hash);
     results.script = 'DetailPage';
     results.title = results.current.title;
     render('pages/detail', results, req, res);
