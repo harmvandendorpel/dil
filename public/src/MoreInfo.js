@@ -20,7 +20,6 @@ export default class MoreInfo {
     $('body').append(this.$element);
     this.$element.css({opacity:0});
     const $arrow = this.$element.find('.more-info-arrow');
-    const arrowOffset = $arrow.offset();
     const senderOffset = $sender.offset();
   
     this.$tools = $sender.closest('.work__tools');
@@ -29,8 +28,22 @@ export default class MoreInfo {
 
     this.initClickOutside();
 
+    if (senderOffset.left < $(window).width()/2) {
+      $arrow.css({
+        left: 25,
+        right: 'auto'
+      });
+
+    } else {
+      $arrow.css({
+        left: 'auto',
+        right: 25
+      });
+
+    }
+
     this.$element.css({
-      left: senderOffset.left - arrowOffset.left -3,
+      left: senderOffset.left - $arrow.offset().left -3,
       top: senderOffset.top + $sender.height() + $arrow.height()+3
     });
 
