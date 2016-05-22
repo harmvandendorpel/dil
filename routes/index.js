@@ -3,7 +3,7 @@ var router = express.Router();
 import { WorkImageStatus } from '../const/const';
 import Work from '../models/work';
 import saveWorkImage from '../saveWorkImage';
-import { saveOrganism, breed, getNames, getNames } from '../organisms';
+import { saveOrganism, breed, getNames, generateName } from '../organisms';
 import sha1 from 'sha1';
 import Async from 'async';
 import fs from 'fs';
