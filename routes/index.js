@@ -38,6 +38,10 @@ router.get('/freezer', function(req, res) {
 
 router.get('/layer/render/:hash/:layer', renderLayer);
 router.get('/language/:hash', detailPage);
+// router.get('/language/:hash/siblings', detailPage);
+// router.get('/language/:hash/parents', detailPage);
+// router.get('/language/:hash/children', detailPage);
+// router.get('/language/:hash/partners', detailPage);
 router.get('/dissect/:hash', dissectPage);
 
 router.get('/work/render', renderWork);

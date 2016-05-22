@@ -1,8 +1,10 @@
-import State from './state';
-import DetailPage from './pages/DetailPage';
 import { clone } from 'lodash';
-// import sha1 from 'sha1';
+
+import State from './State';
+import DetailPage from './pages/DetailPage';
 import MoreInfo from './MoreInfo';
+import Router from './Router';
+import Backbone from 'backbone';
 
 class App {
 
@@ -78,10 +80,30 @@ class App {
     new MoreInfo(hash, $sender);
   }
 
+  initRouter() {
+    const router = new Router();
+
+    router.on('route:showWork', () => {
+    });
+
+    router.on('route:showChildren', ()  => {
+    });
+
+    router.on('route:showSiblings', () => {
+    });
+
+    Backbone.history.start({
+      pushState: true
+      // silent: true
+    });
+  }
+  
   constructor() {
 
     window.state = new State();
     window.state.on('change', () => this.render());
+
+
 
     $('.btn-more-info').bind('mousedown', (e) => {
       e.preventDefault();
@@ -122,14 +144,16 @@ class App {
     });
 
     this.render();
-
+    
     if (window.pageClass) {
       switch (window.pageClass) {
         case 'DetailPage':
-          new DetailPage();
+          this.detailsPage = new DetailPage();
           break;
       }
     }
+
+    // this.initRouter();
   }
 }
 

@@ -25,7 +25,6 @@ block meta
   meta(content='@harmvddorpel', property='twitter:creator')
 
 
-  
 block nav
   .nav
     ul.buttons
@@ -37,7 +36,7 @@ block nav
 
 block content
   .slides-container
-    .section.section--current
+    .section.section--current(data-anchor="top")
       .work--full.work.work--has-tools(data-hash=current.hash)
 
         .work-full-image(style=`background-image:url(/works/full/${current.filename})`)
@@ -51,7 +50,7 @@ block content
 
     if parents.length == 2
 
-      .section.section--parents
+      .section.section--parents(data-anchor="parents")
         .parents
           + workParent(parents[0])
           .parents__separator.rotate-90 Parents
@@ -73,7 +72,7 @@ block content
 
 
     if siblings && siblings.length > 0
-      .section.screen--siblings.section--siblings
+      .section.screen--siblings.section--siblings(data-anchor="siblings")
         p.siblings-title Siblings
         .siblings
           .siblings__items
@@ -92,7 +91,7 @@ block content
             i.icon-arrow-down
 
     if children && children.length > 0
-      .section.screen--children.section--children
+      .section.screen--children.section--children(data-anchor="children")
         p.children-title Children
         .children
           .children__items
