@@ -20,6 +20,10 @@ var WorkSchema = new Schema({
   frozen: {
     type: Boolean,
     default: false
+  },
+  hits: {
+    type: Number,
+    default: 0
   }
 });
 
