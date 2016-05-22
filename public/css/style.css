@@ -478,6 +478,7 @@ ul.buttons {
 }
 .work-info__props {
     float:left;
+    max-width:220px;
 }
 
 .work-info__parent {
