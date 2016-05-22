@@ -48,7 +48,9 @@ block content
           .link-to-parent.left <i class='icon-arrow-down'></i> <u>Parents</u> <i class='icon-arrow-down'></i>
           .link-to-parent.right <i class='icon-arrow-down'></i> <u>Parents</u> <i class='icon-arrow-down'></i>
 
+      code= parents.length
     if parents.length == 2
+
       .section.section--parents
         .parents
           + workParent(parents[0])
