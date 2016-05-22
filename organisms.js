@@ -2,11 +2,10 @@ import sha1 from 'sha1';
 import Work from './models/work';
 import { WorkImageStatus } from './const/const';
 
-export function saveOrganism(title, chromosome, parents = []) {
+export function saveOrganism(chromosome, parents = []) {
   const work = new Work();
   const hash = sha1(chromosome);
   
-  work.title = title;
   work.hash = hash;
   work.chromosome = chromosome;
   work.filename = `${hash}.jpg`;
@@ -14,10 +13,30 @@ export function saveOrganism(title, chromosome, parents = []) {
   work.ts = new Date().getTime();
   
   return new Promise((resolve, reject) => {
-    work.save(function(err) {
-      resolve(err);
-    });
+  
+    getNames((names) => {
+      work.title = generateName(names, chromosome);
+      work.save(function(err) {
+        resolve(err);
+      });
+    })
   });
+}
+
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+export function getNames(callback) {
+  fs.readFile('data/unique.txt', 'utf8', function(err, contents) {
+    const lines = contents.split('\n');
+    callback(lines);
+  });
+}
+
+export function generateName(names, chromosome) {
+  const chromosomeNumber = parseInt(chromosome, 2);
+  return toTitleCase(names[chromosomeNumber % names.length]);
 }
 
 function makeNewChromosome(parents) {
@@ -47,7 +66,7 @@ export function breed(parents, count) {
 
       for (let i = 0; i < count; i++) {
         const newChromosome = makeNewChromosome(docs.map((doc) => doc.chromosome));
-        newOrganismPromises.push(saveOrganism('Untitled', newChromosome, parents));
+        newOrganismPromises.push(saveOrganism(newChromosome, parents));
       }
 
       Promise.all(newOrganismPromises).then(() => {
