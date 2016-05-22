@@ -258,7 +258,7 @@ function detailPage(req, res) {
   workData(hashPart).then((results) => {
     oneHit(results.current.hash);
     results.script = 'DetailPage';
-    results.title = results.current.title;
+    results.title = `${results.current.title} ${results.parents[0].title} ${results.parents[1].title} `;
     render('pages/detail', results, req, res);
   });
 }
