@@ -299,7 +299,7 @@ router.get('/api/forcerename', (req, res) => {
     Work.find({}).exec((err, docs) => {
 
       docs.forEach((doc) => {
-        if (doc.title.toLowerCase() !== 'adam' && doc.title.toLowerCase() !== 'eve') {
+        if (doc.title && doc.title.toLowerCase() !== 'adam' && doc.title.toLowerCase() !== 'eve') {
           const title = lines[parseInt(Math.random() * (lines.length-1))];
 
           Work.update(
