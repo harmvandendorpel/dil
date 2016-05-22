@@ -111,13 +111,17 @@ p.title--parent {
     /*margin-top:100%;*/
     position:absolute;
     bottom:0;
-    margin-bottom: -24px;
+    margin-bottom: -18px;
     left:0;
 }
 
 .section--siblings,
 .section--children {
     position:relative;
+}
+
+.title--thumb {
+    margin-top:14px;
 }
 
 .siblings-title, .children-title {
