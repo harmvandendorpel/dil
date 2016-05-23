@@ -1,5 +1,7 @@
 import sha1 from 'sha1';
 import Work from './models/work';
+import fs from 'fs';
+
 import { WorkImageStatus } from './const/const';
 
 export function saveOrganism(chromosome, parents = []) {
@@ -11,11 +13,15 @@ export function saveOrganism(chromosome, parents = []) {
   work.filename = `${hash}.jpg`;
   work.parents = parents;
   work.ts = new Date().getTime();
-  
+
+  console.log('new work...');
   return new Promise((resolve, reject) => {
-  
+
+    console.log('getNames');
     getNames((names) => {
+      console.log('generateName...');
       work.title = generateName(names, chromosome);
+      console.log(work.title);
       work.save(function(err) {
         resolve(err);
       });
@@ -28,6 +34,7 @@ function toTitleCase(str) {
 }
 
 export function getNames(callback) {
+  console.log('organism getNames');
   fs.readFile('data/unique.txt', 'utf8', function(err, contents) {
     const lines = contents.split('\n');
     callback(lines);

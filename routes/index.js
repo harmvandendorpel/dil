@@ -6,7 +6,6 @@ import saveWorkImage from '../saveWorkImage';
 import { saveOrganism, breed, getNames, generateName } from '../organisms';
 import sha1 from 'sha1';
 import Async from 'async';
-import fs from 'fs';
 import moment from 'moment';
 
 
