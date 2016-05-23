@@ -23,7 +23,11 @@
     {{#if current.frozen}}
       Frozen
     {{else}}
-      Alive
+      {{#if current.enabled}}
+        Alive
+      {{else}}
+        Killed
+      {{/if}}
     {{/if}}
   </div>
 
