@@ -18,9 +18,10 @@ export default class DetailPage {
   initCurrent() {
     this.$currentSection = $('.section--current');
     this.$workTitle   = this.$currentSection.find('.full-image-title').show();
+    this.$tools       = this.$currentSection.find('.work__tools');
+
     this.$parentLeft  = this.$currentSection.find('.link-to-parent.left').show();
     this.$parentRight = this.$currentSection.find('.link-to-parent.right').show();
-    this.$tools       = this.$currentSection.find('.work__tools');
   }
 
   initParents() {
@@ -46,11 +47,22 @@ export default class DetailPage {
   }
 
   positionTitle() {
-    const pos = (this.$currentSection.width() - this.$currentSection.height()) / 2 - this.$workTitle.width() / 2 - this.$workTitle.height() / 2;
+    if (this.isMobile()) {
+      const pos = this.$currentSection.width() / 2;
+      this.$workTitle.css({
+        right: 'auto',
+        width: '100%',
+        marginTop: pos
 
-    this.$workTitle.css({
-      right: pos
-    });
+      }).removeClass('rotate-90');
+    } else {
+      const pos = (this.$currentSection.width() - this.$currentSection.height()) / 2 - this.$workTitle.width() / 2 - this.$workTitle.height() / 2;
+
+      this.$workTitle.css({
+        right: pos,
+        marginTop: 0
+      }).addClass('rotate-90');;
+    }
   }
 
   positionTools() {
@@ -60,9 +72,24 @@ export default class DetailPage {
     });
   }
 
+  isMobile() {
+    return $(window).width() > 320 && $(window).width() < 480;
+  }
+
   positionParentLinks() {
+    if (this.isMobile()) {
+      this.$parentLeft.hide();
+      this.$parentRight.css({
+        left: 'auto',
+        right: 'auto',
+        display: 'inherit'
+      });
+      return;
+    }
+
     const workWidth = $(window).height(); // this is not an error
 
+    this.$parentLeft.show();
     this.$parentLeft.css({
       left: (this.$currentSection.width() - workWidth) / 4 - this.$parentLeft.width()/2
     });

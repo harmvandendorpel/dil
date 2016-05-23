@@ -81,7 +81,7 @@ block content
                 + workTools(work)
                 a(href=`/language/${work.hash.substring(0,8)}`)
                   img.work__image(src=`/works/thumb/${work.filename}`)
-                  p.title.title--thumb= work.title
+                  p.title.title--thumb.hide-phone= work.title
         if children && children.length > 0
           .link-to-children
             i.icon-arrow-down
@@ -100,7 +100,7 @@ block content
                 + workTools(work)
                 a(href=`/language/${work.hash.substring(0,8)}`)
                   img.work__image(src=`/works/thumb/${work.filename}`)
-                  p.title.title--thumb= work.title
+                  p.title.title--thumb.hide-phone= work.title
 
 
 

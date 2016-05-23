@@ -523,3 +523,20 @@ ul.buttons {
     background-repeat:no-repeat;
     background-size: 24px 24px;
 }
+
+@media only screen
+and (min-width: 320px)
+and (max-width: 480px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: portrait) {
+    .hide-phone {
+        display: none !important;
+    }
+
+    .link-to-parent.right {
+        display: block;
+        width: 100%;
+        text-align: center;
+        left: 0;
+    }
+}
