@@ -324,6 +324,22 @@ router.get('/api/forceregenerate', (req, res) => {
     });
 });
 
+router.get('/api/forceregenerate/:hash', (req, res) => {
+  if (!auth(req, res)) return;
+  const hash = req.params.hash;
+
+  Work.update(
+    { enabled: true, frozen: false, hash },
+    { imageStatus: WorkImageStatus.IMAGE_NONE },
+    { multi:false },
+    () => {
+      res.send({
+        result: {'status':'done'}
+      });
+    });
+});
+
+
 router.get('/api/forcerename', (req, res) => {
   if (!auth(req, res)) return;
 
