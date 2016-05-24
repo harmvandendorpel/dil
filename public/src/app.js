@@ -148,6 +148,7 @@ class App {
       switch (window.pageClass) {
         case 'IndexPage':
           new IndexPage();
+          break;
         case 'DetailPage':
           new DetailPage();
           break;
