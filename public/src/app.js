@@ -98,11 +98,8 @@ class App {
   }
   
   constructor() {
-
     window.state = new State();
     window.state.on('change', () => this.render());
-
-
 
     $('.btn-more-info').bind('mousedown', (e) => {
       e.preventDefault();
