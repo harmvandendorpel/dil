@@ -117,6 +117,11 @@ function createLayer(layerName, elements, trans, done) {
     imageContext.drawImage(img, 0, 0, tempCanvas.width, tempCanvas.height);
 
     var imageData = imageContext.getImageData(0,0, tempCanvas.width, tempCanvas.height);
+
+    if (layerProps.doInvert) {
+      imageData = invert(imageData);
+    }
+    
     if (!organ.fixedColor) {
       imageData = grayscale(imageData, layerProps.grayScalePercentage);
       imageData = hueRotate(imageData, layerProps.hueValue);
@@ -126,9 +131,7 @@ function createLayer(layerName, elements, trans, done) {
 
     }
 
-    if (layerProps.doInvert) {
-      imageData = invert(imageData);
-    }
+
 
     imageContext.putImageData(imageData,0,0);
 
