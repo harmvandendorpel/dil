@@ -176,8 +176,8 @@ var organs = [
     canRotate: true,
     canBlur: true,
     el:[
-      {f:"000", no45:true},
-      {f:"001"},
+      {f:"000"},
+      {f:"001", no45:true},
       {f:"002", no45:true},
       {f:"003"},
       {f:"004"},
