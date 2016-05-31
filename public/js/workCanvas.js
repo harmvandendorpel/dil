@@ -88,7 +88,7 @@ function createLayer(layerName, elements, trans, done) {
     contrastPercentage    :  getN(127, 'get constrast value')  / 127 * 200,
     mirrorHorizontal      :  getN(1,   'mirror horizontal'),
     mirrorVertical        :  getN(1,   'mirror vertical'),
-    doInvert              :  getN(3,  'invert') > 1,
+    doInvert              :  getN(3,  'invert') > 2,
     unknown1              :  getN(3,  'unknown1'),
     unknown2              :  getN(3,  'unknown2'),
     unknown3              :  getN(1,  'unknown3'),
@@ -123,11 +123,12 @@ function createLayer(layerName, elements, trans, done) {
 
       imageData = brightness(imageData, layerProps.brightnessPercentage);
       imageData = contrast(imageData, layerProps.contrastPercentage);
+      if (layerProps.doInvert) {
+        imageData = invert(imageData);
+      }
     }
 
-    if (layerProps.doInvert) {
-      imageData = invert(imageData);
-    }
+
 
     imageContext.putImageData(imageData,0,0);
 
