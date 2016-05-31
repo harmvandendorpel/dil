@@ -130,7 +130,9 @@ function createLayer(layerName, elements, trans, done) {
 
     }
 
-
+    if (layerProps.blur > 4) {
+      imageData = blur(imageData, layerProps.blur);
+    }
 
     imageContext.putImageData(imageData,0,0);
 
