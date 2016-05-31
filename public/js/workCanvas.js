@@ -89,7 +89,8 @@ function createLayer(layerName, elements, trans, done) {
     mirrorHorizontal      :  getN(1,   'mirror horizontal'),
     mirrorVertical        :  getN(1,   'mirror vertical'),
     transparency          :  getN(127, 'transparency') / 127,
-    futureDNASpace        :  getN(1024  * 1024 * 1024 * 1024 * 64 , 'future dna pos')
+    doInvert              :  getN(7,   'invert?') > 5,
+    futureDNASpace        :  getN(1024  * 1024 * 1024 * 1024 * 64 - 3, 'future dna pos')
   };
   
   if (trans) {
@@ -119,6 +120,10 @@ function createLayer(layerName, elements, trans, done) {
       imageData = contrast(imageData, layerProps.contrastPercentage);
     }
 
+    if (doInvert) {
+      imageData = invert(imageData);
+    }
+    
     imageContext.putImageData(imageData,0,0);
 
     ctx.save();
@@ -217,6 +222,16 @@ function contrast(imageData, percentage) {
     if(d[i]   < 0)   d[i  ] = 0;
     if(d[i+1] < 0)   d[i+1] = 0;
     if(d[i+2] < 0)   d[i+2] = 0;
+  }
+  return imageData;
+}
+
+function invert(imageData) {
+  var d = imageData.data;
+  for(var i = 0;i < d.length; i += 4){
+    d[i  ] = 255 - d[i  ];
+    d[i+1] = 255 - d[i+1];
+    d[i+2] = 255 - d[i+2];
   }
   return imageData;
 }
