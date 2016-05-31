@@ -130,7 +130,7 @@ function createLayer(layerName, elements, trans, done) {
 
     }
 
-    if (layerProps.blur > 24) {
+    if (layerProps.blur > 24 && organ.canBlur) {
       imageData = blur(imageData, (layerProps.blur - 24)*5);
     }
 
