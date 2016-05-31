@@ -105,7 +105,7 @@ function createLayer(layerName, elements, trans, done) {
 
   var organ = elements[layerProps.elementIndex];
   var filename = organ.el[layerProps.layerIndex].f;
-  var noRotation =  organ.el[layerProps.layerIndex].noRotation;
+  var no45 =  organ.el[layerProps.layerIndex].no45;
   var url = '/images/organs/' + organ.folder + '/' + filename + '.png';
   var rotation = rotateClasses[layerProps.rotationIndex];
 
@@ -139,7 +139,8 @@ function createLayer(layerName, elements, trans, done) {
 
     ctx.save();
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    if (rotation != null && organ.canRotate && !noRotation) {
+    if (rotation != null && organ.canRotate) {
+      if (no45) rotation = rotation * 2; 
       ctx.rotate(rotation * Math.PI / 180);
     }
     
