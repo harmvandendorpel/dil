@@ -88,10 +88,10 @@ function createLayer(layerName, elements, trans, done) {
     contrastPercentage    :  getN(127, 'get constrast value')  / 127 * 200,
     mirrorHorizontal      :  getN(1,   'mirror horizontal'),
     mirrorVertical        :  getN(1,   'mirror vertical'),
-    doInvert              :  getN(15,  'invert') > 10,
-    unknown1              :  getN(15,  'unknown1'),
-    unknown2              :  getN(15,  'unknown2'),
-    unknown3              :  getN(15,  'unknown3'),
+    doInvert              :  getN(3,  'invert') > 1,
+    unknown1              :  getN(3,  'unknown1'),
+    unknown2              :  getN(3,  'unknown2'),
+    unknown3              :  getN(1,  'unknown3'),
     futureDNASpace        :  getN(1024  * 1024 * 1024 * 1024 * 64, 'future dna pos')
   };
 
