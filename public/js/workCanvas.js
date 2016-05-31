@@ -90,7 +90,7 @@ function createLayer(layerName, elements, trans, done) {
     mirrorVertical        :  getN(1,   'mirror vertical'),
     transparency          :  getN(127, 'transparency') / 127,
     doInvert              :  getN(7,   'invert?') > 5,
-    futureDNASpace        :  getN(1024  * 1024 * 1024 * 1024 * 64 - 7, 'future dna pos')
+    futureDNASpace        :  getN(1024  * 1024 * 1024 * 1024 * 64 - 8, 'future dna pos')
   };
   
   if (trans) {
