@@ -123,12 +123,12 @@ function createLayer(layerName, elements, trans, done) {
 
       imageData = brightness(imageData, layerProps.brightnessPercentage);
       imageData = contrast(imageData, layerProps.contrastPercentage);
-      if (layerProps.doInvert) {
-        imageData = invert(imageData);
-      }
+
     }
 
-
+    if (layerProps.doInvert) {
+      imageData = invert(imageData);
+    }
 
     imageContext.putImageData(imageData,0,0);
 
