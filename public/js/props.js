@@ -134,6 +134,7 @@ var organs = [
   {
     folder: 'gradient-glow',
     canRotate: true,
+    canBlur: true,
     el: [
       {f:"000"},
       {f:"001"},
@@ -173,6 +174,7 @@ var organs = [
   {
     folder: 'shapes',
     canRotate: true,
+    canBlur: true,
     el:[
       {f:"000"},
       {f:"001"},
@@ -213,6 +215,7 @@ var organs = [
   {
     folder: 'surfaces',
     canRotate: true,
+    canBlur: true,
     el: [
       {f:"000"},
       {f:"001"},
