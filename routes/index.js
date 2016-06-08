@@ -80,13 +80,23 @@ router.get('/api/works', (req, res) => {
   });
 });
 
+function stripMongoNoise(o) {
+  delete o._id;
+  delete o.__v;
 
+  each(o, (el) => {
+    delete el._id;
+    delete el.__v;
+  });
+
+  return o;
+}
 
 function theWorks() {
   return new Promise(resolve => {
     Work.find({
     }).lean().exec((err, docs) => {
-      resolve(docs);
+      resolve(stripMongoNoise(docs));
     });
   });
 }
