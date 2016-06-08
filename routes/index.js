@@ -74,6 +74,23 @@ router.get('/api/work/:hash', (req, res) => {
   });
 });
 
+router.get('/api/works', (req, res) => {
+  theWorks().then((results) => {
+    res.send(results);
+  });
+});
+
+
+
+function theWorks() {
+  return new Promise(resolve => {
+    Work.find({
+    }).lean().exec((err, docs) => {
+      resolve(docs);
+    });
+  });
+}
+
 function login(req, res) {
   const session = req.session;
   let result = null;
