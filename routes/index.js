@@ -7,6 +7,7 @@ import { saveOrganism, breed, getNames, generateName } from '../organisms';
 import sha1 from 'sha1';
 import Async from 'async';
 import moment from 'moment';
+import { each } from 'lodash';
 
 
 router.get('/', function(req, res) {
