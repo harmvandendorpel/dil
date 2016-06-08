@@ -88,6 +88,7 @@ function stripMongoNoise(o) {
   each(o, (el) => {
     delete el._id;
     delete el.__v;
+    delete el.chromosome;
   });
 
   return o;
