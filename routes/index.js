@@ -501,7 +501,7 @@ function renderWork (req, res)  {
   })
   .lean()
   .sort({_id:-1})
-  .limit(1).exec(function (err, docs) {
+  .limit(1000).exec(function (err, docs) {
 
     if (docs.length > 0) {
       docs = shuffle(docs);
