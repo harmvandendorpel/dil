@@ -8,6 +8,7 @@ import sha1 from 'sha1';
 import Async from 'async';
 import moment from 'moment';
 import { each } from 'lodash';
+import path from 'path';
 
 
 router.get('/', function(req, res) {
@@ -53,17 +54,20 @@ router.get('/work/render', renderWork);
 
 router.get('/api/login', login);
 router.get('/api/logout', logout);
+
 router.get('/images/random.jpg', (req, res) => {
   Work
-      .findOne({
+      .find({
         frozen: true,
         enabled: true
       })
       .sort({_id:-1})
-      .exec((err, work) => {
+      .exec((err, works) => {
+        const work = works[Math.floor(works.length * Math.random())];
         const fullPath = [__dirname, '../public/works/full', work.filename].join('/');
+
         // res.send(fullPath);
-        res.sendFile(fullPath);
+        res.sendFile(path.resolve(fullPath));
       });
 });
 
