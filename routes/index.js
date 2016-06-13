@@ -7,7 +7,7 @@ import { saveOrganism, breed, getNames, generateName } from '../organisms';
 import sha1 from 'sha1';
 import Async from 'async';
 import moment from 'moment';
-import { each } from 'lodash';
+import { each, shuffle } from 'lodash';
 import path from 'path';
 
 
@@ -498,9 +498,13 @@ function renderWork (req, res)  {
   Work.find({
     enabled: true,
     imageStatus: WorkImageStatus.IMAGE_NONE
-  }).sort({_id:-1}).limit(1).exec(function (err, docs) {
+  })
+  .lean()
+  .sort({_id:-1})
+  .limit(1).exec(function (err, docs) {
 
     if (docs.length > 0) {
+      docs = shuffle(docs);
       displayRenderPage({
         chromosome: docs[0].chromosome,
         save: true
