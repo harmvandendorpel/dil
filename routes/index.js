@@ -53,6 +53,20 @@ router.get('/work/render', renderWork);
 
 router.get('/api/login', login);
 router.get('/api/logout', logout);
+router.get('/images/random.jpg', (req, res) => {
+  Work
+      .findOne({
+        frozen: true,
+        enabled: true
+      })
+      .sort({_id:-1})
+      .exec((err, work) => {
+        const fullPath = [__dirname, '../public/works/full', work.filename].join('/');
+        // res.send(fullPath);
+        res.sendFile(fullPath);
+      });
+});
+
 router.post('/api/delete/:hash', deleteWork);
 
 router.post('/api/freeze/:hash', (req, res) => {
@@ -97,7 +111,9 @@ function stripMongoNoise(o) {
 function theWorks() {
   return new Promise(resolve => {
     Work.find({
-    }).lean().exec((err, docs) => {
+    })
+    .sort({_id: -1})
+    .lean().exec((err, docs) => {
       resolve(stripMongoNoise(docs));
     });
   });
