@@ -55,7 +55,7 @@ router.get('/work/render', renderWork);
 router.get('/api/login', login);
 router.get('/api/logout', logout);
 
-router.get('/images/random.jpg', (req, res) => {
+function randomWork(size, req, res) {
   Work
       .find({
         frozen: true,
@@ -64,11 +64,16 @@ router.get('/images/random.jpg', (req, res) => {
       .sort({_id:-1})
       .exec((err, works) => {
         const work = works[Math.floor(works.length * Math.random())];
-        const fullPath = [__dirname, '../public/works/full', work.filename].join('/');
+        const fullPath = [__dirname, '../public/works',size, work.filename].join('/');
 
         // res.send(fullPath);
         res.sendFile(path.resolve(fullPath));
       });
+}
+
+router.get('/images/:size/random.jpg', (req, res) => {
+  const size = req.params.size;
+  randomWork(size, req, res)
 });
 
 router.post('/api/delete/:hash', deleteWork);
