@@ -15,7 +15,7 @@ class App {
       const parents = clone(window.state.data.memory).sort();
       $.post(`/api/breed`, {
         parents,
-        count: Math.round(Math.random() * 8 + 1)
+        count: Math.round(Math.random() * 3 + 6)
       }).done(() => {
         setTimeout(() => {
           window.state.clearMemory();
