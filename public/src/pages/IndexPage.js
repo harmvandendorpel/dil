@@ -2,13 +2,11 @@ export default class IndexPage {
   
   constructor() {
     $(window).bind('scroll', () => {
-
       this.updateLazyLoadedImages();
     });
 
     this.updateLazyLoadedImages();
   }
-
 
   updateLazyLoadedImages() {
     $('img[data-src]').each((index, image)=> {

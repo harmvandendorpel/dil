@@ -4,7 +4,7 @@ import State from './State';
 import IndexPage from './pages/IndexPage';
 import DetailPage from './pages/DetailPage';
 import MoreInfo from './MoreInfo';
-
+import { touchDown } from './events';
 class App {
 
   remember(hash) {
@@ -61,7 +61,7 @@ class App {
         .attr('src', `/works/thumb/${hash}.jpg`)
         .addClass('work--icon work shadow work--remove-button')
         .attr('data-hash', hash)
-        .bind('mousedown', (e) => {
+        .bind(touchDown, (e) => {
           const hash = $(e.target).data().hash;
           window.state.forget(hash);
         });
@@ -101,7 +101,7 @@ class App {
     window.state = new State();
     window.state.on('change', () => this.render());
 
-    $('.btn-more-info').bind('mousedown', (e) => {
+    $('.btn-more-info').bind(touchDown, (e) => {
       e.preventDefault();
       const $sender = $(e.target);
       const hash = $sender.data().hash;
@@ -109,28 +109,28 @@ class App {
       return false;
     });
 
-    $('.btn-breed').bind('mousedown touchstart', (e) => {
+    $('.btn-breed').bind(touchDown, (e) => {
       const hash = $(e.target).data().hash;
       this.remember(hash);
     });
   
-    $('.btn-rerender').bind('mousedown touchstart', (e) => {
+    $('.btn-rerender').bind(touchDown, (e) => {
       const hash = $(e.target).data().hash;
       this.rerender(hash);
     });
 
-    $('.btn-kill').bind('mousedown touchstart', (e) => {
+    $('.btn-kill').bind(touchDown, (e) => {
       const $target = $(e.target);
       const hash = $target.data().hash;
       this.kill(hash);
     });
   
-    $('.btn-link').bind('mousedown touchstart', (e) => {
+    $('.btn-link').bind(touchDown, (e) => {
       const link = $(e.target).data().link;
       location.href=link;
     });
     
-    $('.btn-freeze').bind('mousedown touchstart', (e) => {
+    $('.btn-freeze').bind(touchDown, (e) => {
       const $sender = $(e.target);
       const data = $sender.data();
       const hash = data.hash;
@@ -151,8 +151,6 @@ class App {
           break;
       }
     }
-
-    // this.initRouter();
   }
 }
 
