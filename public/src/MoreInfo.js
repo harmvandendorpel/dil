@@ -1,6 +1,7 @@
 import { each } from 'lodash';
 import templateWindow from './templates/work-info-window.handlebars';
 import templateContent from './templates/work-info-content.handlebars';
+import { touchDown } from './events';
 
 export default class MoreInfo {
 
@@ -68,8 +69,7 @@ export default class MoreInfo {
 
   initClickOutside() {
     this.outsideEvents = [
-      this.namespaceEvent('mousedown'),
-      this.namespaceEvent('touchstart')
+      this.namespaceEvent(touchDown)
     ];
 
     $('body').one('fakescroll', () => this.destructor());
