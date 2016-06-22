@@ -431,6 +431,9 @@ ul.buttons {
     line-height: 0;
 }
 
+
+
+
 .btn-more-info.active {
     background-color: black;
     color: white;
@@ -449,6 +452,8 @@ ul.buttons {
     box-sizing: border-box;
     padding:20px;
 }
+
+
 
 .more-info-arrow {
     content: "";
@@ -574,4 +579,15 @@ ul.buttons {
         background-color: transparent;
     }
 
+    .more-info {
+        left: 0;
+        top: 0;
+        width: 100%;
+        position: fixed;
+    }
+
+    .work-info__buttons .btn {
+        float: right;
+        margin-bottom:0;
+    }
 }
