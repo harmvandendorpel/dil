@@ -238,6 +238,7 @@ a.no-link {
     display: inline;
 }
 
+
 input:focus,
 button:focus {
     outline: 0;
@@ -524,6 +525,10 @@ ul.buttons {
     background-size: 24px 24px;
 }
 
+.work-info__parents a {
+    float: left;
+}
+
 @media only screen and (orientation: portrait) {
     .hide-phone {
         display: none !important;
@@ -535,4 +540,38 @@ ul.buttons {
         text-align: center;
         left: 0;
     }
+}
+
+@media (max-width:720px) {
+    .work--has-tools .work__tools {
+        display: inline;
+    }
+
+    .work--has-tools:hover .work__tools {
+        display: inherit;
+    }
+    .btn-more-info {
+        background-color: transparent;
+        text-align:center;
+        width:30px;
+        height:30px;
+    }
+
+    .work__tools {
+        padding:0;
+    }
+
+    .btn.btn-more-info {
+        padding:0;
+    }
+
+    .btn.btn-more-info:hover {
+        background-color: transparent;
+    }
+
+
+    .btn-more-info.active {
+        background-color: transparent;
+    }
+
 }
