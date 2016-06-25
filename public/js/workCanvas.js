@@ -90,11 +90,15 @@ function createLayer(layerName, elements, trans, done) {
     mirrorVertical        :  getN(1,   'mirror vertical'),
     doInvert              :  getN(3,  'invert') > 2,
     blur                  :  getN(31,  'blur'),
+    doMove                :  getN(15,  'move?'),   // 4 bits
+    moveX                 :  getN(31,  'move x')/32,       // 5 bits
+    moveY                 :  getN(31,  'move y')/32,       // 5 bits
+    unused                :  getN(15,  'unused'),
+    scaleX                :  getN(31,  'scale x')/32 + 1,      // 5 bits
+    scaleY                :  getN(31,  'scale y')/32 + 1,      // 5 bits
 
-    futureDNASpace        :  getN(1024  * 1024 * 1024 * 1024 * 64, 'future dna pos')
+    futureDNASpace        :  getN(Math.pow(2, 18), 'future dna pos') // 46 bits
   };
-
-
 
 
   if (trans) {
@@ -128,11 +132,10 @@ function createLayer(layerName, elements, trans, done) {
 
       imageData = brightness(imageData, layerProps.brightnessPercentage);
       imageData = contrast(imageData, layerProps.contrastPercentage);
-
     }
 
     if (layerProps.blur > 24 && organ.canBlur) {
-      imageData = blur(imageData, (layerProps.blur - 24)*20);
+      imageData = blur(imageData, (layerProps.blur - 24) * 20);
     }
 
     imageContext.putImageData(imageData,0,0);
@@ -143,16 +146,45 @@ function createLayer(layerName, elements, trans, done) {
       if (no45) rotation = rotation * 2; 
       ctx.rotate(rotation * Math.PI / 180);
     }
-    
+
+    var xScale = layerProps.scaleFactor;
+    var yScale = layerProps.scaleFactor;
+
     if (layerProps.mirrorHorizontal === 1) {
-      ctx.scale(-layerProps.scaleFactor, layerProps.scaleFactor);
+      xScale *= -1;
     }
 
     if (layerProps.mirrorVertical === 1) {
-      ctx.scale(layerProps.scaleFactor, -layerProps.scaleFactor);
+      yScale *= -1;
     }
 
-    ctx.translate(-canvas.width / 2, -canvas.height / 2);
+    var dx = 0;
+    var dy = 0;
+
+    if (organ.canScale && layerProps.doMove > 8) {
+      xScale *= layerProps.scaleX;
+      yScale *= layerProps.scaleY;
+
+      if (layerProps.doMove > 11) {
+
+        var maxXTranslate = canvas.width  - xScale * canvas.width;
+        var maxYTranslate = canvas.height - yScale * canvas.height;
+        dx = (layerProps.moveX - 0.5) * maxXTranslate;
+        dy = (layerProps.moveY - 0.5) * maxYTranslate;
+
+        console.log('window.hash', window.hash);
+        console.log('scale', xScale, yScale);
+        console.log('trans', dx, dy);
+      }
+
+
+
+    }
+
+
+
+    ctx.scale(xScale, yScale);
+    ctx.translate(-canvas.width / 2 + dx, -canvas.height / 2 + dy);
 
     if (layerProps.showLayer && (window.layer === null || layerGroups[window.layer].indexOf(layerName) !== -1)) {
       ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
