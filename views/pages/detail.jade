@@ -40,7 +40,7 @@ block content
       .work--full.work.work--has-tools(data-hash=current.hash)
 
         .work-full-image(style=`background-image:url(/works/full/${current.filename})`)
-          .full-image-title.rotate-90= `${current.title}`
+          .full-image-title.rotate-90= `${current.title} ${parents[0].title} ${parents[1].title}`
         + workTools(current)
 
         if parents.length == 2
@@ -81,7 +81,7 @@ block content
                 + workTools(work)
                 a(href=`/language/${work.hash.substring(0,8)}`)
                   img.work__image(src=`/works/thumb/${work.filename}`)
-                  p.title.title--thumb.hide-phone= `${work.title} ${work.parents[0].title} ${work.parents[0].title}`
+                  p.title.title--thumb.hide-phone= work.title
         if children && children.length > 0
           .link-to-children
             i.icon-arrow-down
