@@ -24,6 +24,7 @@ mixin workTools(work)
       button.btn.btn-breed(data-hash=work.hash) breed
       button.btn.btn-rerender(data-hash=work.hash) re
       button.btn.btn-link(data-link=`/dissect/${work.hash}#parents`) dissect
+      button.btn.btn-add-sibling(data-parent1=work.parents[0], data-parent2=work.parents[1]) add sibling
       if work.frozen
         button.btn.btn-freeze(data-hash=work.hash, data-frozen=false) unfreeze
       else

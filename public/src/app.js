@@ -13,15 +13,25 @@ class App {
 
     if (window.state.data.memory.length == 2) {
       const parents = clone(window.state.data.memory).sort();
-      $.post(`/api/breed`, {
-        parents,
-        count: 9//Math.round(Math.random() * 3 + 6)
-      }).done(() => {
-        setTimeout(() => {
-          window.state.clearMemory();
-        }, 500);
+      this.breed(parents, 9).then(() => {
+        window.state.clearMemory();
       });
     }
+  }
+
+  breed(parents, count) {
+    return new Promise(resolve => {
+      console.log(parents);
+      resolve();
+      $.post(`/api/breed`, {
+        parents,
+        count
+      }).done(() => {
+        setTimeout(() => {
+          resolve();
+        }, 500);
+      });
+    });
   }
 
   kill(hash) {
@@ -124,7 +134,17 @@ class App {
       const hash = $target.data().hash;
       this.kill(hash);
     });
-  
+
+    $('.btn-add-sibling').bind(touchDown, (e) => {
+      const $target = $(e.target);
+      const parents = [
+        $target.data().parent1,
+        $target.data().parent2
+      ].sort();
+
+      this.breed(parents, 1);
+    });
+
     $('.btn-link').bind(touchDown, (e) => {
       const link = $(e.target).data().link;
       location.href=link;
