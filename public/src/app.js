@@ -21,8 +21,6 @@ class App {
 
   breed(parents, count) {
     return new Promise(resolve => {
-      console.log(parents);
-      resolve();
       $.post(`/api/breed`, {
         parents,
         count
