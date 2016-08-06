@@ -1,4 +1,14 @@
-var foils = [{
+export const layerGroups = {
+  backPrint: ['back-print', 'organ-00'],
+  foil: ['foil'],
+  frontPrint1: ['organ-01'],
+  frontPrint2: ['organ-02'],
+  frontPrint3: ['organ-03'],
+  things: ['things'],
+  CNC: ['cuts']
+};
+
+export const foils = [{
   fixedColor:true,
   folder:'foils',
   el:[
@@ -37,7 +47,7 @@ var foils = [{
   ]
 }];
 
-var things = [{
+export const things = [{
   folder: 'things',
 
   el:[
@@ -76,7 +86,7 @@ var things = [{
   ]
 }];
 
-var cuts = [
+export const cuts = [
   {
     folder: 'cuts',
     canRotate: true,
@@ -117,7 +127,7 @@ var cuts = [
   }
 ];
 
-var rotateClasses = [
+export const rotateClasses = [
   0,
   -45,
   90,
@@ -128,8 +138,7 @@ var rotateClasses = [
   45
 ];
 
-
-var organs = [
+export const organs = [
 
   {
     folder: 'gradient-glow',
@@ -255,4 +264,3 @@ var organs = [
     ]
   }
 ];
-

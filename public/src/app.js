@@ -42,7 +42,7 @@ class App {
       });
     // }
   }
-  
+
   freeze(hash, frozen) {
     $.ajax({
       url: `/api/freeze/${hash}`,
@@ -51,7 +51,7 @@ class App {
       console.log(hash, frozen)
     });
   }
-  
+
   rerender(hash) {
     $.ajax({
       url: `/api/rerender/${hash}`,
