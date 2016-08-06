@@ -118,6 +118,7 @@ function getN(maxValue) {
 }
 
 function createLayer(layerName, elements, trans) {
+  console.log(`- create layer ${layerName}`);
   const layerProps = {
     scaleFactor: 1,
     showLayer: getN(7, 'show this layer?') > 2,
@@ -151,7 +152,7 @@ function createLayer(layerName, elements, trans) {
   const img = new Image();
 
   return new Promise(resolve => {
-    img.onload = function () {
+    img.onload = () => {
       constructLayer(img, layerProps, organ, layerName);
       resolve();
     };
@@ -171,13 +172,16 @@ function saveToServer(dataURL) {
       },
       method: 'post'
     }).done(() => {
+      console.log('...sent');
       resolve();
     });
   });
 }
 
 function allDone() {
+  console.log('send to server...');
   const dataURL = canvas.toDataURL('image/jpeg', 0.9);
+  console.log(dataURL.length);
   return saveToServer(dataURL);
 }
 
@@ -198,11 +202,11 @@ function makePiece() {
     ['cuts', cuts, false]
   ];
 
-  const allLayersCreated = reduce(newLayers, (p, newLayer) => {
-    return p.then(() => createLayer(...newLayer));
-  }, Promise.resolve());
+  const allLayersCreated = reduce(newLayers, (p, newLayer) =>
+    p.then(() => createLayer(...newLayer))
+  , Promise.resolve());
 
-  allLayersCreated.then(allDone);
+  allLayersCreated.then(allDone).then(() => console.log('ready'));
 }
 
 function run() {

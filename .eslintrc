@@ -4,6 +4,7 @@
   },
   "extends": "airbnb/base",
   "rules": {
+    "no-console":0,
     "no-mixed-operators": 0,
     "comma-dangle": [
       2,
