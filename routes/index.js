@@ -272,7 +272,7 @@ function workData(hashPart) {
               {
                 enabled: true
               },
-              {parents}
+              { parents }
             ]
           }).limit(10).lean().exec((err, docs) => {
             callback(null, docs);
@@ -484,8 +484,8 @@ body {background-color:#eee; margin:0px}
 <body>
 <canvas id="canvas"></canvas>
 <a href='#' id="btn-download">download</a>
-<script src="/js/jquery.js"></script>
-<script src="/js/props.js"></script>
+<!-- script src="/js/jquery.js"></script -->
+<!-- script src="/js/props.js"></script -->
 <script src="/js/workCanvas.js"></script>
 </body>
 </html>

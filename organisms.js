@@ -30,7 +30,9 @@ export function saveOrganism(chromosome, parents = []) {
 }
 
 function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  return str.replace(/\w\S*/g, function(txt){
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 }
 
 export function getNames(callback) {
@@ -47,15 +49,16 @@ export function generateName(names, chromosome) {
 }
 
 function makeNewChromosome(parents) {
-  let result = '';
   if (parents[0].length !== parents[1].length) {
     throw "chromosome lengths do not match";
   }
 
+  let result = '';
+
   for (let i = 0; i < parents[0].length;i++) {
-    const gen1 = parents[0].charAt(i);
-    const gen2 = parents[1].charAt(i);
-    result += Math.random() > 0.5 ? gen1 : gen2;
+    const gene1 = parents[0].charAt(i);
+    const gene2 = parents[1].charAt(i);
+    result += Math.random() > 0.5 ? gene1 : gene2;
   }
 
   return result;
@@ -65,7 +68,6 @@ export function breed(parents, count) {
   parents.sort();
 
   return new Promise((resolve) => {
-
     Work.find({
       hash:  {$in:parents}
     }).exec(function (err, docs) {
