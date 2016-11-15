@@ -223,13 +223,13 @@ function rerenderWork(req, res) {
     () => {
       res.send({
         status: 'done'
-      })
+      });
     }
   );
 }
 
 function workData(hashPart) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     Work.find({
       hash: new RegExp('^' + hashPart, 'i')
     }).lean().exec((err, doc) => {

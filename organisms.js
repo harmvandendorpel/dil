@@ -2,12 +2,19 @@ import sha1 from 'sha1';
 import Work from './models/work';
 import fs from 'fs';
 
-import { WorkImageStatus } from './const/const';
+// import { WorkImageStatus } from './const/const';
+export function getNames(callback) {
+  console.log('organism getNames');
+  fs.readFile('data/unique.txt', 'utf8', function(err, contents) {
+    const lines = contents.split('\n');
+    callback(lines);
+  });
+}
 
 export function saveOrganism(chromosome, parents = []) {
   const work = new Work();
   const hash = sha1(chromosome);
-  
+
   work.hash = hash;
   work.chromosome = chromosome;
   work.filename = `${hash}.jpg`;
@@ -15,7 +22,7 @@ export function saveOrganism(chromosome, parents = []) {
   work.ts = new Date().getTime();
 
   console.log('new work...');
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
 
     console.log('getNames');
     getNames((names) => {
@@ -25,21 +32,13 @@ export function saveOrganism(chromosome, parents = []) {
       work.save(function(err) {
         resolve(err);
       });
-    })
+    });
   });
 }
 
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, function(txt){
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  });
-}
-
-export function getNames(callback) {
-  console.log('organism getNames');
-  fs.readFile('data/unique.txt', 'utf8', function(err, contents) {
-    const lines = contents.split('\n');
-    callback(lines);
   });
 }
 
