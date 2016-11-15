@@ -1,4 +1,4 @@
-import { each, reduce } from 'lodash';
+import { reduce } from 'lodash';
 import $ from 'jquery';
 import {
   hueRotate,
