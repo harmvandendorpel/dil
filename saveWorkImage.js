@@ -11,7 +11,7 @@ export default function saveWorkImage(req) {
     const mediumFullFilename = `${WORK_PATH}/medium/${hash}.jpg`;
     const thumbFullFilename  = `${WORK_PATH}/thumb/${hash}.jpg`;
 
-    const base64Data = image.replace(/^data:image\/jpeg;base64,/, "");
+    const base64Data = image.replace(/^data:image\/jpeg;base64,/, '');
 
     require('fs').writeFile(inputFullFilename, base64Data, 'base64', function(err) {
 
