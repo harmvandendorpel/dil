@@ -272,7 +272,7 @@ function workData(hashPart) {
               {
                 enabled: true
               },
-              {parents}
+              { parents }
             ]
           }).limit(10).lean().exec((err, docs) => {
             callback(null, docs);

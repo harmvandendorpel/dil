@@ -18,11 +18,12 @@ import {
   layerGroups
 } from './props';
 
-let canvas = null;
-let ctx = null;
-
-let dna = '';
-let cursor = 0;
+const state = {
+  canvas: null,
+  ctx: null,
+  dna: '',
+  cursor: 0
+};
 
 function createOffScreenCanvas(width, height) {
   const offScreenCanvas = document.createElement('canvas');
@@ -58,11 +59,11 @@ function constructLayer(img, layerProps, organ, layerName) {
 
   imageContext.putImageData(imageData, 0, 0);
 
-  ctx.save();
-  ctx.translate(canvas.width / 2, canvas.height / 2);
+  state.ctx.save();
+  state.ctx.translate(state.canvas.width / 2, state.canvas.height / 2);
   if (rotation != null && organ.canRotate) {
     rotation = no45 ? rotation * 2 : rotation;
-    ctx.rotate(rotation * Math.PI / 180);
+    state.ctx.rotate(rotation * Math.PI / 180);
   }
 
   let xScale = layerProps.scaleFactor;
@@ -84,34 +85,34 @@ function constructLayer(img, layerProps, organ, layerName) {
     yScale *= layerProps.scaleY;
 
     if (layerProps.doMove > 11) {
-      const maxXTranslate = canvas.width - xScale * canvas.width;
-      const maxYTranslate = canvas.height - yScale * canvas.height;
+      const maxXTranslate = state.canvas.width - xScale * state.canvas.width;
+      const maxYTranslate = state.canvas.height - yScale * state.canvas.height;
       dx = (layerProps.moveX - 0.5) * maxXTranslate;
       dy = (layerProps.moveY - 0.5) * maxYTranslate;
     }
   }
 
-  ctx.scale(xScale, yScale);
-  ctx.translate(-canvas.width / 2 + dx, -canvas.height / 2 + dy);
+  state.ctx.scale(xScale, yScale);
+  state.ctx.translate(-state.canvas.width / 2 + dx, -state.canvas.height / 2 + dy);
 
   if (layerProps.showLayer &&
     (
       window.layer === null ||
       layerGroups[window.layer].indexOf(layerName) !== -1)
     ) {
-    ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
+    state.ctx.drawImage(tempCanvas, 0, 0, state.canvas.width, state.canvas.height);
   }
 
-  ctx.restore();
+  state.ctx.restore();
 }
 
 function getN(maxValue) {
   let bitsCount = Math.floor(Math.log(maxValue) / Math.LN2) + 1;
   bitsCount = Math.max(1, bitsCount);
 
-  const value = dna.substring(cursor, cursor + bitsCount);
+  const value = state.dna.substring(state.cursor, state.cursor + bitsCount);
 
-  cursor += bitsCount;
+  state.cursor += bitsCount;
   let result = parseInt(value, 2);
   result = Math.min(result, maxValue);
   return result;
@@ -143,7 +144,7 @@ function createLayer(layerName, elements, trans) {
     futureDNASpace: getN(Math.pow(2, 18), 'future dna pos') // 46 bits
   };
 
-  ctx.globalCompositeOperation = trans ? 'multiply' : 'source-over';
+  state.ctx.globalCompositeOperation = trans ? 'multiply' : 'source-over';
 
   const organ = elements[layerProps.elementIndex];
   const filename = organ.el[layerProps.layerIndex].f;
@@ -180,16 +181,16 @@ function saveToServer(dataURL) {
 
 function allDone() {
   console.log('send to server...');
-  const dataURL = canvas.toDataURL('image/jpeg', 0.9);
+  const dataURL = state.canvas.toDataURL('image/jpeg', 0.9);
   console.log(dataURL.length);
   return saveToServer(dataURL);
 }
 
 function makePiece() {
-  cursor = 0;
+  state.cursor = 0;
 
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  state.ctx.fillStyle = 'white';
+  state.ctx.fillRect(0, 0, state.canvas.width, state.canvas.height);
 
   const newLayers = [
     ['back-print', organs, false],
@@ -210,24 +211,15 @@ function makePiece() {
 }
 
 function run() {
-  canvas = document.getElementById('canvas');
-  ctx = canvas.getContext('2d');
+  state.canvas = document.getElementById('canvas');
+  state.ctx = state.canvas.getContext('2d');
 
-  canvas.width = canvas.height = 1800;
-  canvas.style.width = `${canvas.width / 1}px`;
-  canvas.style.height = `${canvas.height / 1}px`;
+  state.canvas.width = state.canvas.height = 1800;
+  state.canvas.style.width = `${state.canvas.width}px`;
+  state.canvas.style.height = `${state.canvas.height}px`;
 
-  dna = window.chromosome;
+  state.dna = window.chromosome;
 
-  const button = document.getElementById('btn-download');
-
-  $(button).hide();
-  if (!window.save) {
-    button.addEventListener('click', () => {
-      this.href = canvas.toDataURL();
-      this.download = `${window.hash}-${window.layer}.png`;
-    }, false);
-  }
   makePiece();
 }
 
