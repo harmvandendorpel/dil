@@ -207,7 +207,10 @@ function makePiece() {
     p.then(() => createLayer(...newLayer))
   , Promise.resolve());
 
-  allLayersCreated.then(allDone).then(() => console.log('ready'));
+  allLayersCreated.then(allDone).then(() => {
+    console.log('ready');
+    location.href = location.href;
+  });
 }
 
 function run() {
