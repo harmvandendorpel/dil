@@ -42,18 +42,7 @@ router.get('/freezer', function(req, res) {
     });
 });
 
-router.get('/layer/render/:hash/:layer', renderLayer);
-router.get('/language/:hash', detailPage);
-// router.get('/language/:hash/siblings', detailPage);
-// router.get('/language/:hash/parents', detailPage);
-// router.get('/language/:hash/children', detailPage);
-// router.get('/language/:hash/partners', detailPage);
-router.get('/dissect/:hash', dissectPage);
 
-router.get('/work/render', renderWork);
-
-router.get('/api/login', login);
-router.get('/api/logout', logout);
 
 function randomWork(size, req, res) {
   Work
@@ -353,10 +342,10 @@ function dissectPage(req, res) {
     { needsDissecting: true },
     {},
     () => {
-      Work.find({hash}).exec((err, doc) => {
-        const current = doc[0]
+      Work.find({ hash }).exec((err, doc) => {
+        const current = doc[0];
         render('pages/dissect', {
-          layers:['backPrint','frontPrint1','frontPrint2','frontPrint3','things'],
+          layers: ['backPrint', 'frontPrint1', 'frontPrint2', 'frontPrint3', 'things'],
           current
         }, req, res);
       });
@@ -445,13 +434,12 @@ router.post('/work/new', (req, res) => {
   const parents = req.body.parents || [];
 
   saveOrganism(chromosome, parents).then(
-    (err) => res.send({
+    err => res.send({
       status: 'ok',
       chromosome,
-      title,
       err
     }),
-    (err) => res.send(err)
+    err => res.send(err)
   );
 });
 
@@ -492,7 +480,7 @@ body {background-color:#eee; margin:0px}
 `);
 }
 
-function renderWork (req, res)  {
+function renderWork(req, res)  {
   if (!auth(req, res)) return;
 
   Work.find({
@@ -514,7 +502,6 @@ function renderWork (req, res)  {
     }
   });
 }
-
 
 function renderLayer(req, res)  {
   if (!auth(req, res)) return;
@@ -538,6 +525,11 @@ function renderLayer(req, res)  {
   });
 }
 
-
+router.get('/layer/render/:hash/:layer', renderLayer);
+router.get('/language/:hash', detailPage);
+router.get('/dissect/:hash', dissectPage);
+router.get('/work/render', renderWork);
+router.get('/api/login', login);
+router.get('/api/logout', logout);
 
 module.exports = router;

@@ -93,20 +93,20 @@ export function brightness(imageData, percent) {
   const mul = percent / 100;
 
   for (let i = 0; i < d.length; i += 4) {
-    let r = d[i    ];
-    let g = d[i + 1];
-    let b = d[i + 2];
+    const r = d[i    ];
+    const g = d[i + 1];
+    const b = d[i + 2];
 
     d[i    ] = r * mul;
     d[i + 1] = g * mul;
     d[i + 2] = b * mul;
 
-    if (d[i]   > 255) d[i] = 255;
+    if (d[i]     > 255) d[i    ] = 255;
     if (d[i + 1] > 255) d[i + 1] = 255;
     if (d[i + 2] > 255) d[i + 2] = 255;
-    if (d[i]   < 0) d[i  ] = 0;
-    if (d[i + 1] < 0) d[i + 1] = 0;
-    if (d[i + 2] < 0) d[i + 2] = 0;
+    if (d[i]     < 0)   d[i    ] = 0;
+    if (d[i + 1] < 0)   d[i + 1] = 0;
+    if (d[i + 2] < 0)   d[i + 2] = 0;
   }
 
   return imageData;
@@ -117,10 +117,10 @@ export function grayscale(imageData, percentage) {
   const strength = percentage / 100;
   const data = imageData.data;
   for (let i = 0; i < data.length; i += 4) {
-    let brightness = 0.34 * data[i] + 0.5 * data[i + 1] + 0.16 * data[i + 2];
-    data[i] = brightness * strength + data[i] * (1 - strength);
-    data[i + 1] = brightness * strength + data[i + 1] * (1 - strength);
-    data[i + 2] = brightness * strength + data[i + 2] * (1 - strength);
+    let b = 0.34 * data[i] + 0.5 * data[i + 1] + 0.16 * data[i + 2];
+    data[i] = b * strength + data[i] * (1 - strength);
+    data[i + 1] = b * strength + data[i + 1] * (1 - strength);
+    data[i + 2] = b * strength + data[i + 2] * (1 - strength);
     data[i + 3] = data[i + 3];
   }
   return imageData;
@@ -134,7 +134,7 @@ export function alpha(imageData, value) {
   return imageData;
 }
 
-const mul_table = [
+const mulTable = [
   512,512,456,512,328,456,335,512,405,328,271,456,388,335,292,512,
   454,405,364,328,298,271,496,456,420,388,360,335,312,292,273,512,
   482,454,428,405,383,364,345,328,312,298,284,271,259,496,475,456,
@@ -153,7 +153,7 @@ const mul_table = [
   289,287,285,282,280,278,275,273,271,269,267,265,263,261,259];
 
 
-const shg_table = [
+const shgTable = [
   9, 11, 12, 13, 13, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 17,
   17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19,
   19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20,
@@ -216,9 +216,6 @@ export function blur(imageData,  radius) {
 
   const pixels = imageData.data;
 
-  let x;
-  let y;
-  let i;
   let p;
   let yp;
   let yi;
@@ -241,13 +238,13 @@ export function blur(imageData,  radius) {
   let pa;
   let rbs;
 
-  let div = radius + radius + 1;
-  let widthMinus1 = width - 1;
-  let heightMinus1 = height - 1;
-  let radiusPlus1 = radius + 1;
-  let sumFactor = radiusPlus1 * (radiusPlus1 + 1) * 0.5;
+  const div = radius + radius + 1;
+  const widthMinus1 = width - 1;
+  const heightMinus1 = height - 1;
+  const radiusPlus1 = radius + 1;
+  const sumFactor = radiusPlus1 * (radiusPlus1 + 1) * 0.5;
 
-  let stackStart = new BlurStack();
+  const stackStart = new BlurStack();
   let stack = stackStart;
   let stackEnd = null;
 
@@ -261,8 +258,8 @@ export function blur(imageData,  radius) {
 
   yw = yi = 0;
 
-  let mulSum = mul_table[radius];
-  let shgSum = shg_table[radius];
+  let mulSum = mulTable[radius];
+  let shgSum = shgTable[radius];
 
   for (let y = 0; y < height; y++) {
     redInSum = greenInSum = blueInSum = alphaInSum = redSum = greenSum = blueSum = alphaSum = 0;
@@ -279,7 +276,7 @@ export function blur(imageData,  radius) {
 
     stack = stackStart;
 
-    for(let i = 0; i < radiusPlus1; i++ ) {
+    for (let i = 0; i < radiusPlus1; i++ ) {
       stack.r = pr;
       stack.g = pg;
       stack.b = pb;
@@ -287,7 +284,7 @@ export function blur(imageData,  radius) {
       stack = stack.next;
     }
 
-    for(let i = 1; i < radiusPlus1; i++) {
+    for (let i = 1; i < radiusPlus1; i++) {
       p = yi + ((widthMinus1 < i ? widthMinus1 : i) << 2);
       redSum += (stack.r = (pr = pixels[p + 0])) * (rbs = radiusPlus1 - i);
       greenSum += (stack.g = (pg = pixels[p + 1])) * rbs;
