@@ -27943,7 +27943,9 @@ function makePiece() {
 
   allLayersCreated.then(allDone).then(function () {
     console.log('ready');
-    location.href = location.href;
+    if (window.save !== undefined && window.save) {
+      location.href = location.href;
+    }
   });
 }
 
