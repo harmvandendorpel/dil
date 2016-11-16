@@ -27796,12 +27796,12 @@ function constructLayer(img, layerProps, organ, layerName) {
     imageData = (0, _color.grayscale)(imageData, layerProps.grayScalePercentage);
     imageData = (0, _color.hueRotate)(imageData, layerProps.hueValue);
 
-    imageData = (0, _color.brightness)(imageData, layerProps.brightnessPercentage);
-    imageData = (0, _color.contrast)(imageData, layerProps.contrastPercentage);
+    imageData = (0, _color.brightness)(imageData, layerProps.brightnessPercentage * 2);
+    imageData = (0, _color.contrast)(imageData, layerProps.contrastPercentage * 2);
   }
 
-  if (layerProps.blur > 24 && organ.canBlur) {
-    imageData = (0, _color.blur)(imageData, (layerProps.blur - 24) * 20);
+  if (layerProps.blur > 22 && organ.canBlur) {
+    imageData = (0, _color.blur)(imageData, (layerProps.blur - 22) * 25);
   }
 
   imageContext.putImageData(imageData, 0, 0);
