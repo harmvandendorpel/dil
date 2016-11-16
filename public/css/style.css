@@ -368,8 +368,8 @@ ul.buttons {
 }
 
 .layer iframe {
-    width: 3200px;
-    height: 3200px;
+    width: 4800px;
+    height: 4800px;
     border: none;
     -ms-zoom: 0.5;
     -moz-transform: scale(0.25);
