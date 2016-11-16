@@ -152,7 +152,7 @@ function createLayer(layerName, elements, trans) {
 
   const img = new Image();
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     img.onload = () => {
       constructLayer(img, layerProps, organ, layerName);
       resolve();
@@ -162,7 +162,7 @@ function createLayer(layerName, elements, trans) {
 }
 
 function saveToServer(dataURL) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     $.ajax({
       url: '/api/saveimage',
       dataType: 'json',
@@ -180,6 +180,7 @@ function saveToServer(dataURL) {
 }
 
 function allDone() {
+  if (window.save === undefined || window.save === false) return;
   console.log('send to server...');
   const dataURL = state.canvas.toDataURL('image/jpeg', 0.9);
   console.log(dataURL.length);

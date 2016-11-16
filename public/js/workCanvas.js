@@ -27441,10 +27441,10 @@ function grayscale(imageData, percentage) {
   var strength = percentage / 100;
   var data = imageData.data;
   for (var i = 0; i < data.length; i += 4) {
-    var _brightness = 0.34 * data[i] + 0.5 * data[i + 1] + 0.16 * data[i + 2];
-    data[i] = _brightness * strength + data[i] * (1 - strength);
-    data[i + 1] = _brightness * strength + data[i + 1] * (1 - strength);
-    data[i + 2] = _brightness * strength + data[i + 2] * (1 - strength);
+    var b = 0.34 * data[i] + 0.5 * data[i + 1] + 0.16 * data[i + 2];
+    data[i] = b * strength + data[i] * (1 - strength);
+    data[i + 1] = b * strength + data[i + 1] * (1 - strength);
+    data[i + 2] = b * strength + data[i + 2] * (1 - strength);
     data[i + 3] = data[i + 3];
   }
   return imageData;
@@ -27458,9 +27458,9 @@ function alpha(imageData, value) {
   return imageData;
 }
 
-var mul_table = [512, 512, 456, 512, 328, 456, 335, 512, 405, 328, 271, 456, 388, 335, 292, 512, 454, 405, 364, 328, 298, 271, 496, 456, 420, 388, 360, 335, 312, 292, 273, 512, 482, 454, 428, 405, 383, 364, 345, 328, 312, 298, 284, 271, 259, 496, 475, 456, 437, 420, 404, 388, 374, 360, 347, 335, 323, 312, 302, 292, 282, 273, 265, 512, 497, 482, 468, 454, 441, 428, 417, 405, 394, 383, 373, 364, 354, 345, 337, 328, 320, 312, 305, 298, 291, 284, 278, 271, 265, 259, 507, 496, 485, 475, 465, 456, 446, 437, 428, 420, 412, 404, 396, 388, 381, 374, 367, 360, 354, 347, 341, 335, 329, 323, 318, 312, 307, 302, 297, 292, 287, 282, 278, 273, 269, 265, 261, 512, 505, 497, 489, 482, 475, 468, 461, 454, 447, 441, 435, 428, 422, 417, 411, 405, 399, 394, 389, 383, 378, 373, 368, 364, 359, 354, 350, 345, 341, 337, 332, 328, 324, 320, 316, 312, 309, 305, 301, 298, 294, 291, 287, 284, 281, 278, 274, 271, 268, 265, 262, 259, 257, 507, 501, 496, 491, 485, 480, 475, 470, 465, 460, 456, 451, 446, 442, 437, 433, 428, 424, 420, 416, 412, 408, 404, 400, 396, 392, 388, 385, 381, 377, 374, 370, 367, 363, 360, 357, 354, 350, 347, 344, 341, 338, 335, 332, 329, 326, 323, 320, 318, 315, 312, 310, 307, 304, 302, 299, 297, 294, 292, 289, 287, 285, 282, 280, 278, 275, 273, 271, 269, 267, 265, 263, 261, 259];
+var mulTable = [512, 512, 456, 512, 328, 456, 335, 512, 405, 328, 271, 456, 388, 335, 292, 512, 454, 405, 364, 328, 298, 271, 496, 456, 420, 388, 360, 335, 312, 292, 273, 512, 482, 454, 428, 405, 383, 364, 345, 328, 312, 298, 284, 271, 259, 496, 475, 456, 437, 420, 404, 388, 374, 360, 347, 335, 323, 312, 302, 292, 282, 273, 265, 512, 497, 482, 468, 454, 441, 428, 417, 405, 394, 383, 373, 364, 354, 345, 337, 328, 320, 312, 305, 298, 291, 284, 278, 271, 265, 259, 507, 496, 485, 475, 465, 456, 446, 437, 428, 420, 412, 404, 396, 388, 381, 374, 367, 360, 354, 347, 341, 335, 329, 323, 318, 312, 307, 302, 297, 292, 287, 282, 278, 273, 269, 265, 261, 512, 505, 497, 489, 482, 475, 468, 461, 454, 447, 441, 435, 428, 422, 417, 411, 405, 399, 394, 389, 383, 378, 373, 368, 364, 359, 354, 350, 345, 341, 337, 332, 328, 324, 320, 316, 312, 309, 305, 301, 298, 294, 291, 287, 284, 281, 278, 274, 271, 268, 265, 262, 259, 257, 507, 501, 496, 491, 485, 480, 475, 470, 465, 460, 456, 451, 446, 442, 437, 433, 428, 424, 420, 416, 412, 408, 404, 400, 396, 392, 388, 385, 381, 377, 374, 370, 367, 363, 360, 357, 354, 350, 347, 344, 341, 338, 335, 332, 329, 326, 323, 320, 318, 315, 312, 310, 307, 304, 302, 299, 297, 294, 292, 289, 287, 285, 282, 280, 278, 275, 273, 271, 269, 267, 265, 263, 261, 259];
 
-var shg_table = [9, 11, 12, 13, 13, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24];
+var shgTable = [9, 11, 12, 13, 13, 14, 14, 15, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 17, 17, 17, 17, 18, 18, 18, 18, 18, 18, 18, 18, 18, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24, 24];
 
 function BlurStack() {
   this.r = 0;
@@ -27507,9 +27507,6 @@ function blur(imageData, radius) {
 
   var pixels = imageData.data;
 
-  var x = void 0;
-  var y = void 0;
-  var i = void 0;
   var p = void 0;
   var yp = void 0;
   var yi = void 0;
@@ -27542,9 +27539,9 @@ function blur(imageData, radius) {
   var stack = stackStart;
   var stackEnd = null;
 
-  for (var _i = 1; _i < div; _i++) {
+  for (var i = 1; i < div; i++) {
     stack = stack.next = new BlurStack();
-    if (_i === radiusPlus1) stackEnd = stack;
+    if (i === radiusPlus1) stackEnd = stack;
   }
   stack.next = stackStart;
   var stackIn = null;
@@ -27552,10 +27549,10 @@ function blur(imageData, radius) {
 
   yw = yi = 0;
 
-  var mulSum = mul_table[radius];
-  var shgSum = shg_table[radius];
+  var mulSum = mulTable[radius];
+  var shgSum = shgTable[radius];
 
-  for (var _y = 0; _y < height; _y++) {
+  for (var y = 0; y < height; y++) {
     redInSum = greenInSum = blueInSum = alphaInSum = redSum = greenSum = blueSum = alphaSum = 0;
 
     redOutSum = radiusPlus1 * (pr = pixels[yi]);
@@ -27570,7 +27567,7 @@ function blur(imageData, radius) {
 
     stack = stackStart;
 
-    for (var _i2 = 0; _i2 < radiusPlus1; _i2++) {
+    for (var _i = 0; _i < radiusPlus1; _i++) {
       stack.r = pr;
       stack.g = pg;
       stack.b = pb;
@@ -27578,9 +27575,9 @@ function blur(imageData, radius) {
       stack = stack.next;
     }
 
-    for (var _i3 = 1; _i3 < radiusPlus1; _i3++) {
-      p = yi + ((widthMinus1 < _i3 ? widthMinus1 : _i3) << 2);
-      redSum += (stack.r = pr = pixels[p + 0]) * (rbs = radiusPlus1 - _i3);
+    for (var _i2 = 1; _i2 < radiusPlus1; _i2++) {
+      p = yi + ((widthMinus1 < _i2 ? widthMinus1 : _i2) << 2);
+      redSum += (stack.r = pr = pixels[p + 0]) * (rbs = radiusPlus1 - _i2);
       greenSum += (stack.g = pg = pixels[p + 1]) * rbs;
       blueSum += (stack.b = pb = pixels[p + 2]) * rbs;
       alphaSum += (stack.a = pa = pixels[p + 3]) * rbs;
@@ -27596,7 +27593,7 @@ function blur(imageData, radius) {
     stackIn = stackStart;
     stackOut = stackEnd;
 
-    for (var _x = 0; _x < width; _x++) {
+    for (var x = 0; x < width; x++) {
       pixels[yi + 3] = pa = alphaSum * mulSum >> shgSum;
       if (pa !== 0) {
         pa = 255 / pa;
@@ -27617,7 +27614,7 @@ function blur(imageData, radius) {
       blueOutSum -= stackIn.b;
       alphaOutSum -= stackIn.a;
 
-      p = yw + ((p = _x + radius + 1) < widthMinus1 ? p : widthMinus1) << 2;
+      p = yw + ((p = x + radius + 1) < widthMinus1 ? p : widthMinus1) << 2;
 
       redInSum += stackIn.r = pixels[p];
       greenInSum += stackIn.g = pixels[p + 1];
@@ -27648,10 +27645,10 @@ function blur(imageData, radius) {
     yw += width;
   }
 
-  for (var _x2 = 0; _x2 < width; _x2++) {
+  for (var _x = 0; _x < width; _x++) {
     greenInSum = blueInSum = alphaInSum = redInSum = greenSum = blueSum = alphaSum = redSum = 0;
 
-    yi = _x2 << 2;
+    yi = _x << 2;
     redOutSum = radiusPlus1 * (pr = pixels[yi]);
     greenOutSum = radiusPlus1 * (pg = pixels[yi + 1]);
     blueOutSum = radiusPlus1 * (pb = pixels[yi + 2]);
@@ -27664,7 +27661,7 @@ function blur(imageData, radius) {
 
     stack = stackStart;
 
-    for (var _i4 = 0; _i4 < radiusPlus1; _i4++) {
+    for (var _i3 = 0; _i3 < radiusPlus1; _i3++) {
       stack.r = pr;
       stack.g = pg;
       stack.b = pb;
@@ -27674,10 +27671,10 @@ function blur(imageData, radius) {
 
     yp = width;
 
-    for (var _i5 = 1; _i5 <= radius; _i5++) {
-      yi = yp + _x2 << 2;
+    for (var _i4 = 1; _i4 <= radius; _i4++) {
+      yi = yp + _x << 2;
 
-      redSum += (stack.r = pr = pixels[yi]) * (rbs = radiusPlus1 - _i5);
+      redSum += (stack.r = pr = pixels[yi]) * (rbs = radiusPlus1 - _i4);
       greenSum += (stack.g = pg = pixels[yi + 1]) * rbs;
       blueSum += (stack.b = pb = pixels[yi + 2]) * rbs;
       alphaSum += (stack.a = pa = pixels[yi + 3]) * rbs;
@@ -27689,15 +27686,15 @@ function blur(imageData, radius) {
 
       stack = stack.next;
 
-      if (_i5 < heightMinus1) {
+      if (_i4 < heightMinus1) {
         yp += width;
       }
     }
 
-    yi = _x2;
+    yi = _x;
     stackIn = stackStart;
     stackOut = stackEnd;
-    for (var _y2 = 0; _y2 < height; _y2++) {
+    for (var _y = 0; _y < height; _y++) {
       p = yi << 2;
       pixels[p + 3] = pa = alphaSum * mulSum >> shgSum;
       if (pa > 0) {
@@ -27719,7 +27716,7 @@ function blur(imageData, radius) {
       blueOutSum -= stackIn.b;
       alphaOutSum -= stackIn.a;
 
-      p = _x2 + ((p = _y2 + radiusPlus1) < heightMinus1 ? p : heightMinus1) * width << 2;
+      p = _x + ((p = _y + radiusPlus1) < heightMinus1 ? p : heightMinus1) * width << 2;
 
       redSum += redInSum += stackIn.r = pixels[p];
       greenSum += greenInSum += stackIn.g = pixels[p + 1];
@@ -27923,6 +27920,7 @@ function saveToServer(dataURL) {
 }
 
 function allDone() {
+  if (window.save === undefined || window.save === false) return;
   console.log('send to server...');
   var dataURL = state.canvas.toDataURL('image/jpeg', 0.9);
   console.log(dataURL.length);
