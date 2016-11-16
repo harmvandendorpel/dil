@@ -22,7 +22,8 @@ const state = {
   canvas: null,
   ctx: null,
   dna: '',
-  cursor: 0
+  cursor: 0,
+  save: window.save !== undefined && window.save
 };
 
 function createOffScreenCanvas(width, height) {
@@ -180,7 +181,7 @@ function saveToServer(dataURL) {
 }
 
 function allDone() {
-  if (window.save === undefined || window.save === false) return;
+  if (!state.save) return;
   console.log('send to server...');
   const dataURL = state.canvas.toDataURL('image/jpeg', 0.9);
   console.log(dataURL.length);
@@ -210,7 +211,7 @@ function makePiece() {
 
   allLayersCreated.then(allDone).then(() => {
     console.log('ready');
-    if (window.save !== undefined && window.save) {
+    if (state.save) {
       location.href = location.href;
     }
   });
@@ -220,7 +221,7 @@ function run() {
   state.canvas = document.getElementById('canvas');
   state.ctx = state.canvas.getContext('2d');
 
-  state.canvas.width = state.canvas.height = 4800;
+  state.canvas.width = state.canvas.height = state.save ? 1800 : 4800;
   state.canvas.style.width = `${state.canvas.width}px`;
   state.canvas.style.height = `${state.canvas.height}px`;
 
