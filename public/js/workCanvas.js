@@ -27953,7 +27953,7 @@ function run() {
   state.canvas = document.getElementById('canvas');
   state.ctx = state.canvas.getContext('2d');
 
-  state.canvas.width = state.canvas.height = 1800;
+  state.canvas.width = state.canvas.height = 3200;
   state.canvas.style.width = state.canvas.width + 'px';
   state.canvas.style.height = state.canvas.height + 'px';
 
