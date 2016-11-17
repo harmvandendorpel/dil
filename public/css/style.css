@@ -430,7 +430,7 @@ ul.buttons {
     height:32px;
     line-height: 0;
     background-image: url(../images/chromosome.png);
-    background-size: 30px;
+    background-size: 30px 30px;
     background-repeat:no-repeat;
     background-position: 50% 50%;
 }
