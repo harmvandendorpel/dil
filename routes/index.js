@@ -30,7 +30,7 @@ router.get('/about', (req, res) => {
   render('pages/about', { title: 'About' }, req, res);
 });
 
-router.get('/freezer', function(req, res) {
+router.get('/freezer', (req, res) => {
   Work
     .find({
       frozen: true,
@@ -38,11 +38,13 @@ router.get('/freezer', function(req, res) {
     })
     .sort({_id:-1})
     .exec((err, works) => {
-      render('pages/freezer', { title: 'freezer', works }, req, res);
+      render('pages/freezer', {
+        title: 'freezer',
+        script: 'IndexPage',
+        works
+      }, req, res);
     });
 });
-
-
 
 function randomWork(size, req, res) {
   Work
@@ -50,10 +52,10 @@ function randomWork(size, req, res) {
         frozen: true,
         enabled: true
       })
-      .sort({_id:-1})
+      .sort({ _id: -1 })
       .exec((err, works) => {
         const work = works[Math.floor(works.length * Math.random())];
-        const fullPath = [__dirname, '../public/works',size, work.filename].join('/');
+        const fullPath = [__dirname, '../public/works', size, work.filename].join('/');
 
         // res.send(fullPath);
         res.sendFile(path.resolve(fullPath));
@@ -128,9 +130,7 @@ function login(req, res) {
     session.authenticated = true;
   }
 
-  res.send({
-    result
-  });
+  res.send({ result });
 }
 
 function logout(req, res) {
@@ -144,9 +144,7 @@ function logout(req, res) {
     result = 'not logged in yet';
   }
 
-  res.send({
-    result
-  });
+  res.send({ result });
 }
 
 function render(page, data, req, res) {
@@ -177,7 +175,7 @@ function deleteWork(req, res) {
     () => {
       res.send({
         status: 'disabled'
-      })
+      });
     }
   );
 }
@@ -195,7 +193,7 @@ function freezeWork(req, res, frozen) {
       res.send({
         status: 'done',
         frozen
-      })
+      });
     }
   );
 }
@@ -298,9 +296,7 @@ function oneHit(hash) {
       }
     },
     {},
-    () => {
-
-    }
+    () => { }
   );
 }
 
@@ -324,16 +320,6 @@ function detailPage(req, res) {
     render('pages/detail', results, req, res);
   });
 }
-
-
-// backPrint : ['back-print','organ-00'],
-// foil :['foil'],
-// frontPrint1: ['organ-01'],
-// frontPrint2: ['organ-02'],
-// frontPrint3: ['organ-03'],
-// things:['things'],
-// CNC: ['cuts']
-
 
 function dissectPage(req, res) {
   const hash = req.params.hash;
@@ -362,7 +348,7 @@ router.get('/api/forceregenerate', (req, res) => {
     { multi:true },
     () => {
       res.send({
-        result: {'status':'done'}
+        result: {'status': 'done'}
       });
     });
 });

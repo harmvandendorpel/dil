@@ -14,7 +14,7 @@ export default class DetailPage {
       }
     });
   }
-  
+
   initCurrent() {
     this.$currentSection = $('.section--current');
     this.$workTitle   = this.$currentSection.find('.full-image-title').show();
@@ -27,11 +27,6 @@ export default class DetailPage {
   initParents() {
     this.$parentsSection = $('.section--parents');
     this.$parents = this.$parentsSection.find('.work--medium');
-
-    // this.$parents.bind('click touch', (e) => {
-    //   const hash = $(e.currentTarget).data().hash;
-    //   location.href = `/language/${hash}`;
-    // });
   }
 
   initSiblings() {
@@ -56,7 +51,9 @@ export default class DetailPage {
 
       }).removeClass('rotate-90');
     } else {
-      const pos = (this.$currentSection.width() - this.$currentSection.height()) / 2 - this.$workTitle.width() / 2 - this.$workTitle.height() / 2;
+      const pos =
+        (this.$currentSection.width() - this.$currentSection.height()) / 2 -
+        this.$workTitle.width() / 2 - this.$workTitle.height() / 2;
 
       this.$workTitle.css({
         right: pos,
@@ -108,7 +105,7 @@ export default class DetailPage {
   positionSiblings() {
     if (!this.$siblingsTitle.length) return;
     this.$siblingsTitle.css({
-      top: this.$siblingsItems.position().top/2 
+      top: this.$siblingsItems.position().top / 2
     });
   }
 
@@ -118,11 +115,6 @@ export default class DetailPage {
       top: this.$childrenItems.position().top/2
     });
   }
-
-  // scrollToSection(section) {
-  //   console.log('scroll to', section);
-  //   $.fn.fullpage.silentMoveTo(section);
-  // }
 
   position() {
     this.positionCurrent();

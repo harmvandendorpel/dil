@@ -31,7 +31,7 @@ mixin workTools(work)
         button.btn.btn-freeze(data-hash=work.hash, data-frozen=true) freeze
       button.btn.btn-kill(data-hash=work.hash) &times;
     else
-      button.btn.btn-more-info(data-hash=work.hash) ℹ
+      button.btn.btn-more-info(data-hash=work.hash)
 
 mixin work(work, URL, links, noTitle, lazyload)
   if links
