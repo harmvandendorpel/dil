@@ -426,17 +426,24 @@ ul.buttons {
     /*height: 30px;*/
     background-color: rgba(255,255,255,0.5);
     color: black;
-    width:30px;
-    height:30px;
+    width:32px;
+    height:32px;
     line-height: 0;
+    background-image: url(../images/chromosome.png);
+    background-size: 30px;
+    background-repeat:no-repeat;
+    background-position: 50% 50%;
 }
 
-
-
-
-.btn-more-info.active {
+/*.btn-more-info.active {
     background-color: black;
     color: white;
+    background-image: url(../images/chromosome-active.png);
+}*/
+
+.btn-more-info:hover, .btn-more-info.active {
+    background-color:white;
+    background-image: url(../images/chromosome.png);
 }
 
 .more-info {

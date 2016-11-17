@@ -1,17 +1,17 @@
 import { clone } from 'lodash';
-
-import State from './State';
-import IndexPage from './pages/IndexPage';
-import DetailPage from './pages/DetailPage';
-import MoreInfo from './MoreInfo';
+import State from './state';
+import IndexPage from './pages/index-page';
+import DetailPage from './pages/detail-page';
+import MoreInfo from './more-info';
 import { touchDown } from './events';
-class App {
+import Router from './router';
 
+class App {
   remember(hash) {
     window.state.remember(hash);
     this.render();
 
-    if (window.state.data.memory.length == 2) {
+    if (window.state.data.memory.length === 2) {
       const parents = clone(window.state.data.memory).sort();
       this.breed(parents, 9).then(() => {
         window.state.clearMemory();
@@ -20,8 +20,8 @@ class App {
   }
 
   breed(parents, count) {
-    return new Promise(resolve => {
-      $.post(`/api/breed`, {
+    return new Promise((resolve) => {
+      $.post('/api/breed', {
         parents,
         count
       }).done(() => {
@@ -33,14 +33,12 @@ class App {
   }
 
   kill(hash) {
-    // if (confirm('really?')) {
-      $.post(`/api/delete/${hash}`).done(() => {
-        const $work = $(`.work[data-hash='${hash}']`);
-        $work.slideUp(() => {
-          $work.remove();
-        });
+    $.post(`/api/delete/${hash}`).done(() => {
+      const $work = $(`.work[data-hash='${hash}']`);
+      $work.slideUp(() => {
+        $work.remove();
       });
-    // }
+    });
   }
 
   freeze(hash, frozen) {
@@ -48,7 +46,7 @@ class App {
       url: `/api/freeze/${hash}`,
       method: frozen ? 'post' : 'delete'
     }).done(() => {
-      console.log(hash, frozen)
+      console.log(hash, frozen);
     });
   }
 
@@ -56,11 +54,9 @@ class App {
     $.ajax({
       url: `/api/rerender/${hash}`,
       method: 'post'
-    }).done(() => {
-      
-    });
+    }).done(() => {});
   }
-  
+
   render() {
     const $tools = $('<div></div>').addClass('tools');
     const $memory = $('<div></div>').addClass('memory');
@@ -79,8 +75,9 @@ class App {
 
     $tools.append($memory);
 
-    $('.tools-container').html('');
-    $('.tools-container').append($tools);
+    const $toolsContainer = $('.tools-container');
+    $toolsContainer.html('');
+    $toolsContainer.append($tools);
   }
 
   requestMoreInfo(hash, $sender) {
@@ -90,21 +87,16 @@ class App {
   initRouter() {
     const router = new Router();
 
-    router.on('route:showWork', () => {
-    });
-
-    router.on('route:showChildren', ()  => {
-    });
-
-    router.on('route:showSiblings', () => {
-    });
-
+    router.on('route:showWork', () => { });
+    router.on('route:showChildren', () => {});
+    router.on('route:showSiblings', () => {});
+// test
     Backbone.history.start({
       pushState: true
       // silent: true
     });
   }
-  
+
   constructor() {
     window.state = new State();
     window.state.on('change', () => this.render());
@@ -121,7 +113,7 @@ class App {
       const hash = $(e.target).data().hash;
       this.remember(hash);
     });
-  
+
     $('.btn-rerender').bind(touchDown, (e) => {
       const hash = $(e.target).data().hash;
       this.rerender(hash);
@@ -145,9 +137,9 @@ class App {
 
     $('.btn-link').bind(touchDown, (e) => {
       const link = $(e.target).data().link;
-      location.href=link;
+      location.href = link;
     });
-    
+
     $('.btn-freeze').bind(touchDown, (e) => {
       const $sender = $(e.target);
       const data = $sender.data();
@@ -158,7 +150,7 @@ class App {
     });
 
     this.render();
-    
+
     if (window.pageClass) {
       switch (window.pageClass) {
         case 'IndexPage':

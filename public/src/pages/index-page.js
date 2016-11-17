@@ -1,5 +1,4 @@
 export default class IndexPage {
-  
   constructor() {
     $(window).bind('scroll', () => {
       this.updateLazyLoadedImages();
@@ -9,10 +8,9 @@ export default class IndexPage {
   }
 
   updateLazyLoadedImages() {
-    $('img[data-src]').each((index, image)=> {
-      const $image = $(image);
-      this.loadImage($image);
-    })
+    $('img[data-src]').each((index, image) => {
+      this.loadImage($(image));
+    });
   }
 
   loadImage($image) {
