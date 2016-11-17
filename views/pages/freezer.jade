@@ -31,6 +31,13 @@ block nav
         a.text(href='/freezer') Freezer
 
 block content
-  .recent
+  .slides-container
     each work in works
-      + workThumb(work, true, true)
+      .section.section--current(data-anchor=work.hash)
+        .work--full.work.work--has-tools(data-hash=work.hash)
+
+          .work-full-image(style=`background-image:url(/works/full/${work.filename})`)
+            .full-image-title.rotate-90= `${work.title} ${work.parents[0].title} ${work.parents[1].title}`
+          + workTools(work)
+
+

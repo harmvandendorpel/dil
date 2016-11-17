@@ -2,6 +2,7 @@ import { clone } from 'lodash';
 import State from './state';
 import IndexPage from './pages/index-page';
 import DetailPage from './pages/detail-page';
+import FreezerPage from './pages/freezer-page';
 import MoreInfo from './more-info';
 import { touchDown } from './events';
 import Router from './router';
@@ -88,12 +89,12 @@ class App {
     const router = new Router();
 
     router.on('route:showWork', () => { });
-    router.on('route:showChildren', () => {});
+    router.on('route:showChildren', () => { });
     router.on('route:showSiblings', () => {});
-// test
+    router.on('route:showFreezer', () => {});
+
     Backbone.history.start({
       pushState: true
-      // silent: true
     });
   }
 
@@ -159,6 +160,8 @@ class App {
         case 'DetailPage':
           new DetailPage();
           break;
+        case 'FreezerPage':
+          new FreezerPage();
       }
     }
   }

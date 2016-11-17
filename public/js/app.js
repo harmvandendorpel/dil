@@ -62,6 +62,10 @@
 
 	var _detailPage2 = _interopRequireDefault(_detailPage);
 
+	var _freezerPage = __webpack_require__(34);
+
+	var _freezerPage2 = _interopRequireDefault(_freezerPage);
+
 	var _moreInfo = __webpack_require__(7);
 
 	var _moreInfo2 = _interopRequireDefault(_moreInfo);
@@ -165,10 +169,10 @@
 	      router.on('route:showWork', function () {});
 	      router.on('route:showChildren', function () {});
 	      router.on('route:showSiblings', function () {});
-	      // test
+	      router.on('route:showFreezer', function () {});
+
 	      Backbone.history.start({
 	        pushState: true
-	        // silent: true
 	      });
 	    }
 	  }]);
@@ -238,6 +242,8 @@
 	        case 'DetailPage':
 	          new _detailPage2.default();
 	          break;
+	        case 'FreezerPage':
+	          new _freezerPage2.default();
 	      }
 	    }
 	  }
@@ -19406,7 +19412,8 @@
 	      return {
 	        'language/:hash/children(/)': 'showChildren',
 	        'language/:hash/siblings(/)': 'showSiblings',
-	        'language/:hash(/)': 'showWork'
+	        'language/:hash(/)': 'showWork',
+	        'freezer/:hash(/)': 'showFreezerWork'
 	      };
 	    }
 	  }]);
@@ -33122,6 +33129,99 @@
 	return jQuery;
 	} );
 
+
+/***/ },
+/* 34 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var DetailPage = function () {
+	  function DetailPage() {
+	    var _this = this;
+
+	    _classCallCheck(this, DetailPage);
+
+	    this.initCurrents();
+
+	    $(window).resize(function () {
+	      return _this.position();
+	    });
+	    $('.slides-container').fullpage({
+	      afterRender: function afterRender() {
+	        return _this.position();
+	      },
+	      onLeave: function onLeave() {
+	        $('body').trigger('fakescroll');
+	      }
+	    });
+	  }
+
+	  _createClass(DetailPage, [{
+	    key: 'initCurrents',
+	    value: function initCurrents() {
+	      this.$currentSection = $('.section--current');
+	      this.$workTitle = this.$currentSection.find('.full-image-title').show();
+	      this.$tools = this.$currentSection.find('.work__tools');
+	    }
+	  }, {
+	    key: 'positionTitle',
+	    value: function positionTitle() {
+	      if (this.isMobile()) {
+	        var pos = this.$currentSection.width() / 2;
+	        this.$workTitle.css({
+	          right: 'auto',
+	          width: '100%',
+	          marginTop: pos
+
+	        }).removeClass('rotate-90');
+	      } else {
+	        var _pos = (this.$currentSection.width() - this.$currentSection.height()) / 2 - this.$workTitle.width() / 2 - this.$workTitle.height() / 2;
+
+	        this.$workTitle.css({
+	          right: _pos,
+	          marginTop: 0
+	        }).addClass('rotate-90');
+	      }
+	    }
+	  }, {
+	    key: 'positionTools',
+	    value: function positionTools() {
+	      var workWidth = $(window).width();
+	      this.$tools.css({
+	        right: (workWidth - this.$currentSection.height()) / 2
+	      });
+	    }
+	  }, {
+	    key: 'isMobile',
+	    value: function isMobile() {
+	      return $(window).width() > 320 && $(window).width() < 480;
+	    }
+	  }, {
+	    key: 'positionCurrents',
+	    value: function positionCurrents() {
+	      this.positionTitle();
+	      this.positionTools();
+	    }
+	  }, {
+	    key: 'position',
+	    value: function position() {
+	      this.positionCurrents();
+	    }
+	  }]);
+
+	  return DetailPage;
+	}();
+
+	exports.default = DetailPage;
 
 /***/ }
 /******/ ]);
