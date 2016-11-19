@@ -8,7 +8,6 @@ export default function (router) {
         frozen: true,
         enabled: true
       })
-      .sort({ _id: -1 })
       .exec((err, works) => {
         const hydratedWorks = [];
 
@@ -18,11 +17,14 @@ export default function (router) {
           });
         });
 
+
         Promise.all(promises).then(() => {
+          const sortedWorks = hydratedWorks.sort((a, b) => a.current._id < b.current._id);
+
           render('pages/freezer', {
             title: 'Freezer',
             script: 'FreezerPage',
-            works: hydratedWorks
+            works: sortedWorks
           }, req, res);
         });
       });
