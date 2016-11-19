@@ -1,3 +1,4 @@
+import { shuffle } from 'lodash';
 import sha1 from 'sha1';
 
 import { WorkImageStatus } from '../const/const';
@@ -41,15 +42,15 @@ function renderWork(req, res)  {
     .sort({ _id: -1 })
     .limit(1000).exec((err, docs) => {
 
-    if (docs.length > 0) {
-      docs = shuffle(docs);
-      displayRenderPage({
-        chromosome: docs[0].chromosome,
-        save: true
-      }, res);
-    } else {
-      res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title><meta http-equiv="refresh" content="5"></head><body>completed</body></html>`);
-    }
+      if (docs.length > 0) {
+        docs = shuffle(docs);
+        displayRenderPage({
+          chromosome: docs[0].chromosome,
+          save: true
+        }, res);
+      } else {
+        res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title><meta http-equiv="refresh" content="5"></head><body>completed</body></html>`);
+      }
   });
 }
 

@@ -17,7 +17,6 @@ export default function (router) {
           });
         });
 
-
         Promise.all(promises).then(() => {
           const sortedWorks = hydratedWorks.sort((a, b) => a.current._id < b.current._id);
 
