@@ -1,3 +1,43 @@
-.test-class-freezer {
-  color: #123456;
+.freezer--row {
+  width: 100%;
+  clear: both;
+  float: left;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 5vw;
+  &:first-child {
+    padding-top: 5vw;
+  }
 }
+
+.freezer--image {
+  display: block;
+  margin: auto;
+  float: left;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.freezer--info {
+  width: 50%;
+  float: left;
+}
+
+.freezer--info-content {
+
+}
+
+
+.freezer--image-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  width: 50%;
+  height: 75vh;
+}
+

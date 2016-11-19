@@ -27,10 +27,10 @@ block nav
     ul.buttons
       li.nav-button
         a.text(href='/about') About
-      //li.nav-button
-      //  a.text(href='/freezer') Freezer
+      li.nav-button
+        a.text(href='/freezer')= `Frozen (${frozenCount})`
 
 block content
   .recent
     each work in works
-      + workThumb(work, true, true)
+      + indexThumb(work, true, true)
