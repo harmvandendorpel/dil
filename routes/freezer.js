@@ -1,5 +1,5 @@
 import Work from '../models/work';
-import { render } from '../helpers/helpers';
+import { render, workData } from '../helpers/helpers';
 
 export default function (router) {
   router.get('/freezer', (req, res) => {
@@ -8,14 +8,23 @@ export default function (router) {
         frozen: true,
         enabled: true
       })
-      .sort({_id: -1})
+      .sort({ _id: -1 })
       .exec((err, works) => {
-        console.log(works[1]);
-        render('pages/freezer', {
-          title: 'Freezer',
-          script: 'FreezerPage',
-          works
-        }, req, res);
+        const hydratedWorks = [];
+
+        const promises = works.map((work) => {
+          return workData(work.hash).then((more) => {
+            hydratedWorks.push(more);
+          });
+        });
+
+        Promise.all(promises).then(() => {
+          render('pages/freezer', {
+            title: 'Freezer',
+            script: 'FreezerPage',
+            works: hydratedWorks
+          }, req, res);
+        });
       });
   });
 }

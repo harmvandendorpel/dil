@@ -7,6 +7,8 @@ import MoreInfo from './more-info';
 import { touchDown } from './events';
 import Router from './router';
 
+require('../sass/index.scss');
+
 class App {
   remember(hash) {
     window.state.remember(hash);

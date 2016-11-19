@@ -1,5 +1,8 @@
-export default class IndexPage {
+import AbstractPage from './abstract-page';
+
+export default class IndexPage extends AbstractPage {
   constructor() {
+    super();
     $(window).bind('scroll', () => {
       this.updateLazyLoadedImages();
     });
