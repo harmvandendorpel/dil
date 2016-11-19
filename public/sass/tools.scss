@@ -1,0 +1,37 @@
+.work__tools {
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  display: none;
+  text-align: right;
+  top: 0;
+}
+
+.work__tools.active {
+  display:block;
+}
+
+.work--has-tools:hover .work__tools {
+  display: inline;
+}
+
+.tools-container {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+}
+
+@media (max-width:720px) {
+  .work--has-tools .work__tools {
+    display: inline;
+  }
+
+  .work--has-tools:hover .work__tools {
+    display: inherit;
+  }
+
+  .work__tools {
+    padding:0;
+  }
+}

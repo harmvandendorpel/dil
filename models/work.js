@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { WorkImageStatus } from '../const/const';
 const Schema = mongoose.Schema;
 
-var WorkSchema = new Schema({
+const WorkSchema = new Schema({
   title: String,
   hash: String,
   chromosome: String,

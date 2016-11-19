@@ -1,12 +1,14 @@
-export default class DetailPage {
+import AbstractPage from './abstract-page';
 
+export default class DetailPage extends AbstractPage {
   constructor() {
+    super();
+
     this.initCurrent();
     this.initParents();
     this.initSiblings();
     this.initChildren();
 
-    $(window).resize(() => this.position());
     $('.slides-container').fullpage({
       afterRender: () => this.position(),
       onLeave: () => {
@@ -17,10 +19,10 @@ export default class DetailPage {
 
   initCurrent() {
     this.$currentSection = $('.section--current');
-    this.$workTitle   = this.$currentSection.find('.full-image-title').show();
-    this.$tools       = this.$currentSection.find('.work__tools');
+    this.$workTitle = this.$currentSection.find('.full-image-title').show();
+    this.$tools = this.$currentSection.find('.work__tools');
 
-    this.$parentLeft  = this.$currentSection.find('.link-to-parent.left').show();
+    this.$parentLeft = this.$currentSection.find('.link-to-parent.left').show();
     this.$parentRight = this.$currentSection.find('.link-to-parent.right').show();
   }
 
@@ -67,10 +69,6 @@ export default class DetailPage {
     this.$tools.css({
       right: (workWidth - this.$currentSection.height()) / 2
     });
-  }
-
-  isMobile() {
-    return $(window).width() > 320 && $(window).width() < 480;
   }
 
   positionParentLinks() {

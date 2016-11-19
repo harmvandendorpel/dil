@@ -5,7 +5,8 @@ export default class Router extends Backbone.Router {
     return {
       'language/:hash/children(/)': 'showChildren',
       'language/:hash/siblings(/)': 'showSiblings',
-      'language/:hash(/)': 'showWork'
+      'language/:hash(/)': 'showWork',
+      'freezer/:hash(/)': 'showFreezerWork'
     };
   }
 }

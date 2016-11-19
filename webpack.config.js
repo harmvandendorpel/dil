@@ -1,4 +1,6 @@
-var path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require("webpack");
+const path = require('path');
 
 module.exports = {
   entry: './public/src/app.js',
@@ -16,7 +18,19 @@ module.exports = {
       {
         test: /\.handlebars$/,
         loader: 'handlebars-loader'
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css!sass')
+      },
+      {
+        test: /\.png/,
+        loader: 'ignore-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin('../css/app.css'),
+    new webpack.optimize.UglifyJsPlugin({minimize: true})
+  ]
 };
