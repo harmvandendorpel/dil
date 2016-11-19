@@ -3,6 +3,11 @@ mixin workThumb(work, links, noTitle, lazyload)
     + workTools(work)
     + work(work, `/works/thumb/${work.filename}`, links, noTitle, lazyload)
 
+mixin indexThumb(work, links, noTitle, lazyload)
+  .index--thumb.work.work--has-tools(data-hash=work.hash)
+    + workTools(work)
+    + work(work, `/works/thumb/${work.filename}`, links, noTitle, lazyload)
+
 mixin workMedium(work, links)
   .work--medium.work.work--has-tools(data-hash=work.hash)
     + workTools(work)

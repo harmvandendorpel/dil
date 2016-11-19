@@ -6,15 +6,15 @@ export default class DetailPage extends AbstractPage {
     super();
 
     this.$currentSection = $('.section--current');
-    this.$workTitle = this.$currentSection.find('.full-image-title').show();
+    // this.$workTitle = this.$currentSection.find('.full-image-title').show();
     this.$tools = this.$currentSection.find('.work__tools');
 
-    $('.slides-container').fullpage({
-      afterRender: () => this.position(),
-      onLeave: () => {
-        $('body').trigger('fakescroll');
-      }
-    });
+    // $('.slides-container').fullpage({
+    //   afterRender: () => this.position(),
+    //   onLeave: () => {
+    //     $('body').trigger('fakescroll');
+    //   }
+    // });
   }
 
   positionTitle() {

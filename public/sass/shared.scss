@@ -64,10 +64,6 @@ a.text:hover {
   border-bottom: 1px solid black;
 }
 
-.work--thumb img {
-  max-width: 100%;
-}
-
 .work--thumb {
   display: inline-block;
   /*float:left;*/
@@ -75,6 +71,9 @@ a.text:hover {
   max-width: 18%;
   box-sizing: border-box;
   position:relative;
+  img {
+    max-width: 100%;
+  }
 }
 
 p.title--parent {
@@ -262,10 +261,6 @@ p.title {
 .children__items {
   width: 100%;
   line-height:0;
-}
-
-.recent {
-  padding:40px 1% 1% 1%;
 }
 
 .work--remove-button {
@@ -473,4 +468,10 @@ ul.buttons {
     float: right;
     margin-bottom:0;
   }
+
+  .work--thumb {
+    margin: 1%;
+    max-width: 31.3333333%;
+  }
+
 }

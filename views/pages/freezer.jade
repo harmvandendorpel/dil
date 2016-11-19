@@ -28,15 +28,17 @@ block nav
       li.nav-button
         a.text(href='/about') About
       li.nav-button
-        a.text(href='/freezer') Freezer
+        a.text(href='/') Population
 
 block content
-  .slides-container
-    each work in works
-      .section.section--current(data-anchor=work.current.hash.substring(0, 5))
-        .work--full.work.work--has-tools(data-hash=work.current.hash)
-          .work-full-image(style=`background-image:url(/works/full/${work.current.filename})`)
-            .full-image-title= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}`
-          + workTools(work.current)
+  each work in works
+    //.section.section--current(data-anchor=work.current.hash.substring(0, 5))
+    //  .work--full.work.work--has-tools(data-hash=work.current.hash)
+    .freezer--row
+      .freezer--image-container
+        .freezer--image(style=`background-image:url(/works/full/${work.current.filename})`)
+      .freezer--info= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}`
+    //.full-image-title= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}`
+    //+ workTools(work.current)
 
 

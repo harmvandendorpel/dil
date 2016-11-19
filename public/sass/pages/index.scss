@@ -1,0 +1,21 @@
+.recent {
+  padding: 0;
+}
+
+.index--thumb {
+  float: left;
+  margin: 0;
+  max-width: 20%;
+  box-sizing: border-box;
+  position: relative;
+  img {
+    max-width: 100%;
+  }
+}
+
+
+@media (max-width:720px) {
+  .index--thumb {
+    max-width:33.33333%
+  }
+}

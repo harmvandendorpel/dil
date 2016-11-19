@@ -9,15 +9,23 @@ import {
 export default function (router) {
   router.get('/', (req, res) => {
     Work
-      .find({ enabled: true })
-      .sort({ ts: -1 })
-      .exec((err, works) => {
-        render('pages/index', {
-          script: 'IndexPage',
-          title: 'Death Imitates Language',
-          metaDescription: 'A speculative genealogy exploring the emergence of meaning in generative aesthetics using micro feedback and a genetic algorithm. By Harm van den Dorpel, 2016.',
-          works
-        }, req, res);
+      .find({
+        frozen: true,
+        enabled: true
+      })
+      .exec((err, frozenWorks) => {
+        Work
+          .find({ enabled: true })
+          .sort({ ts: -1 })
+          .exec((err, works) => {
+            render('pages/index', {
+              frozenCount: frozenWorks.length,
+              script: 'IndexPage',
+              title: 'Death Imitates Language',
+              metaDescription: 'A speculative genealogy exploring the emergence of meaning in generative aesthetics using micro feedback and a genetic algorithm. By Harm van den Dorpel, 2016.',
+              works
+            }, req, res);
+          });
       });
   });
 
