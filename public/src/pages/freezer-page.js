@@ -1,7 +1,12 @@
 import AbstractPage from './abstract-page';
 
 export default class DetailPage extends AbstractPage {
-  positionTools() {
+  constructor() {
+    super();
+    this.position();
+  }
+
+  position() {
     const $tools = $('.work__tools');
     const $imageContainer = $('.freezer--image-container');
     console.log($imageContainer);
@@ -11,12 +16,5 @@ export default class DetailPage extends AbstractPage {
     $tools.css({
       right: (workWidth - workHeight) / 2
     });
-
-    this.position();
-  }
-
-  position() {
-
-    this.positionTools();
   }
 }
