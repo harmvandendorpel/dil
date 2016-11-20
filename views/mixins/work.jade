@@ -20,7 +20,6 @@ mixin workFull(work, links)
 
 mixin workTools(work)
   .work__tools
-
     if authenticated
       button.btn.btn-link(data-link=`/language/${work.hash}#parents`) parents
       button.btn.btn-link(data-link=`/language/${work.hash}#siblings`) siblings
