@@ -8,6 +8,8 @@ export default class IndexPage extends AbstractPage {
     });
 
     this.updateLazyLoadedImages();
+
+    this.position();
   }
 
   updateLazyLoadedImages() {

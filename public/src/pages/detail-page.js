@@ -15,6 +15,8 @@ export default class DetailPage extends AbstractPage {
         $('body').trigger('fakescroll');
       }
     });
+
+    this.position();
   }
 
   initCurrent() {

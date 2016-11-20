@@ -11,6 +11,8 @@ export default class DetailPage extends AbstractPage {
     $tools.css({
       right: (workWidth - workHeight) / 2
     });
+
+    this.position();
   }
 
   position() {
