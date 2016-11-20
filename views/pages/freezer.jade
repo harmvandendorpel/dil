@@ -36,6 +36,6 @@ block content
       .freezer--image-container.work--has-tools(data-hash=work.current.hash)
         .freezer--image.work__image(style=`background-image:url(/works/full/${work.current.filename})`)
           + workTools(work.current)
-      .freezer--info= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}`
+      .freezer--info= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}, ${work.current.year}`
 
 

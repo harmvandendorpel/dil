@@ -3,7 +3,6 @@ import moment from 'moment';
 import path from 'path';
 import { each, shuffle } from 'lodash';
 
-import { WorkImageStatus } from '../const/const';
 import Work from '../models/work';
 
 export function randomWork(size, req, res) {
@@ -58,10 +57,12 @@ export function workData(hashPart) {
     }).lean().exec((err, doc) => {
       const current = doc[0];
       const ts = current._id.getTimestamp();
+      const m = moment(ts);
 
-      current.ago = moment(ts).fromNow();
+      current.ago = m.fromNow();
+      current.year = m.year();
 
-      current.birthday = moment(ts).format('MMMM Do YYYY');
+      current.birthday = m.format('MMMM Do YYYY');
 
       if (!current) {
         res.status(404).send('not found');
