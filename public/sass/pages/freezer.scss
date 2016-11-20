@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 5vw;
+
   &:first-child {
     padding-top: 5vw;
   }
@@ -20,6 +21,7 @@
   background-size: contain;
   background-position: 50% 50%;
   background-repeat: no-repeat;
+  position: relative;
 }
 
 .freezer--info {
