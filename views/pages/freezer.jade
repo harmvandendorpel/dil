@@ -32,14 +32,10 @@ block nav
 
 block content
   each work in works
-    //.section.section--current(data-anchor=work.current.hash.substring(0, 5))
-    //  .work--full.work.work--has-tools(data-hash=work.current.hash)
     .freezer--row
       .freezer--image-container.work--has-tools(data-hash=work.current.hash)
         .freezer--image.work__image(style=`background-image:url(/works/full/${work.current.filename})`)
           + workTools(work.current)
       .freezer--info= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}`
-    //.full-image-title= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}`
-    //+ workTools(work.current)
 
 

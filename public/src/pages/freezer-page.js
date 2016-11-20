@@ -13,8 +13,16 @@ export default class DetailPage extends AbstractPage {
     const workWidth = $imageContainer.width();
     const workHeight = $imageContainer.height();
 
-    $tools.css({
-      right: (workWidth - workHeight) / 2
-    });
+    if (workWidth > workHeight) {
+      $tools.css({
+        top: 0,
+        right: (workWidth - workHeight) / 2
+      });
+    } else {
+      $tools.css({
+        top: (workHeight - workWidth) / 2,
+        right: 0
+      });
+    }
   }
 }
