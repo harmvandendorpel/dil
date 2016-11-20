@@ -31,9 +31,13 @@ block nav
       li.nav-button
         a.text(href='/about') About
 
+
+
+      li.nav-button
+        a.text(href='/freezer')= `Frozen (${frozenCount})`
+
       li.nav-button
         a.text(href='/') Population
-
 block content
   .slides-container
     .section.section--current(data-anchor="top")

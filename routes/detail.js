@@ -1,3 +1,4 @@
+import Work from '../models/work';
 import { oneHit, render, workData } from '../helpers/helpers';
 
 function detailPage(req, res) {
@@ -16,7 +17,16 @@ function detailPage(req, res) {
 
     results.title = names.join(' ');
     results.metaDescription = `Born ${results.current.birthday}`;
-    render('pages/detail', results, req, res);
+
+    Work
+      .find({
+        frozen: true,
+        enabled: true
+      })
+      .exec((err, frozenWorks) => {
+        results.frozenCount = frozenWorks.length;
+        render('pages/detail', results, req, res);
+      });
   });
 }
 
