@@ -27944,7 +27944,7 @@ function run() {
   state.canvas = document.getElementById('canvas');
   state.ctx = state.canvas.getContext('2d');
 
-  state.canvas.width = state.canvas.height = state.save ? 1800 : 4800;
+  state.canvas.width = state.canvas.height = state.save ? 1800 : 7800; // 4800 
   state.canvas.style.width = state.canvas.width + 'px';
   state.canvas.style.height = state.canvas.height + 'px';
 

@@ -14,6 +14,13 @@ const MongoStore = connectMongo(session);
 
 mongoose.connect('mongodb://localhost/dil');
 
+app.all(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
 app.use(session({
   name: 'DILCOOKIE',
   secret: 'DIL16',
@@ -30,6 +37,10 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(cookieParser());
+
+
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // app.use('/', routes);
