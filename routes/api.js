@@ -101,10 +101,21 @@ function rerenderWork(req, res) {
 
 function theWorks() {
   return new Promise((resolve) => {
-    Work.find({})
+    Work.find({
+      imageStatus: 2
+    }, {
+      __v: false,
+      _id: false,
+      chromosome: false,
+      hits: false,
+      imageStatus: false,
+      frozen: false,
+      ts: false
+    })
       .sort({ _id: -1 })
       .lean().exec((err, docs) => {
-        resolve(stripMongoNoise(docs));
+        //resolve(stripMongoNoise(docs));
+        resolve((docs));
       });
   });
 }

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon ./bin/www",
+    "watch": "nodemon ./bin/www",
     "start": "node ./bin/www",
     "watch:canvas": "watchify public/src/work/index.js --debug -t [ babelify ] -o public/js/workCanvas.js -v",
     "watch:frontend": "webpack --watch"
