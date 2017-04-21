@@ -1,0 +1,38 @@
+@import 'helpers';
+
+$pageWidth: 18;
+$pageHeight: 24;
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.page {
+  page-break-after: always;
+  width: cm($pageWidth);
+  height: cm($pageHeight);
+  box-sizing: border-box;
+  padding-top: cm(1);
+  padding-bottom: cm(1);
+  position: relative;
+}
+
+.title {
+  position: absolute;
+  bottom: cm(1);
+}
+
+.page:nth-child(odd) {
+  padding-left: cm(1.5);
+  padding-right: cm(1);
+}
+
+.page:nth-child(even) {
+  padding-left: cm(1);
+  padding-right: cm(1.5);
+}
+
+.page img {
+  width: cm($pageWidth - 3);
+}

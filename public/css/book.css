@@ -1,0 +1,29 @@
+body {
+  padding: 0;
+  margin: 0; }
+
+.page {
+  page-break-after: always;
+  width: 1020pt;
+  height: 1360pt;
+  box-sizing: border-box;
+  padding-top: 56.66667pt;
+  padding-bottom: 56.66667pt;
+  position: relative; }
+
+.title {
+  position: absolute;
+  bottom: 56.66667pt; }
+
+.page:nth-child(odd) {
+  padding-left: 85pt;
+  padding-right: 56.66667pt; }
+
+.page:nth-child(even) {
+  padding-left: 56.66667pt;
+  padding-right: 85pt; }
+
+.page img {
+  width: 850pt; }
+
+/*# sourceMappingURL=book.css.map */

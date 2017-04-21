@@ -1,0 +1,3 @@
+@function cm($cm) {
+  @return #{$cm * 1360 / 24}pt;
+}

@@ -6,7 +6,8 @@
     "watch": "nodemon ./bin/www",
     "start": "node ./bin/www",
     "watch:canvas": "watchify public/src/work/index.js --debug -t [ babelify ] -o public/js/workCanvas.js -v",
-    "watch:frontend": "webpack --watch"
+    "watch:frontend": "webpack --watch",
+    "build:book": "./build-book.sh"
   },
   "dependencies": {
     "asap": "^2.0.5",
