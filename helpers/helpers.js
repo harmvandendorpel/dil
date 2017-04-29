@@ -1,7 +1,6 @@
 import Async from 'async';
 import moment from 'moment';
 import path from 'path';
-import { each, shuffle } from 'lodash';
 
 import Work from '../models/work';
 
@@ -16,22 +15,8 @@ export function randomWork(size, req, res) {
       const work = works[Math.floor(works.length * Math.random())];
       const fullPath = [__dirname, '../public/works', size, work.filename].join('/');
 
-      // res.send(fullPath);
       res.sendFile(path.resolve(fullPath));
     });
-}
-
-export function stripMongoNoise(o) {
-  delete o._id;
-  delete o.__v;
-
-  each(o, (el) => {
-    delete el._id;
-    delete el.__v;
-    delete el.chromosome;
-  });
-
-  return o;
 }
 
 export function render(page, data, req, res) {
@@ -115,7 +100,6 @@ export function workData(hashPart) {
           });
         }
       }, (err, results) => {
-        console.log('resolved');
         resolve(results);
       });
     });
@@ -150,8 +134,36 @@ export function theWorks() {
     })
       .sort({ _id: -1 })
       .lean().exec((err, docs) => {
-      //resolve(stripMongoNoise(docs));
-      resolve((docs));
+      resolve(docs);
     });
+  });
+}
+
+export function bookData() {
+  return new Promise((resolve) => {
+    Work
+      .find({
+        imageStatus: 2
+      }, {
+        __v: false,
+        _id: false,
+      })
+      .sort({ _id: -1 })
+      .limit(25)
+      .lean().exec((err, docs) => {
+        const injectFamilyInfoList = docs.map((work) => {
+          return (callback) => {
+            console.log(work.hash);
+            workData(work.hash).then((result) => {
+              callback(null, result);
+            });
+          }
+        });
+
+        Async.parallel(injectFamilyInfoList, (error, results) => {
+          console.log(results);
+          resolve(results);
+        });
+      });
   });
 }

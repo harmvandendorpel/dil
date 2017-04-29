@@ -6,7 +6,10 @@ wkhtmltopdf \
   --print-media-type \
   --page-width 180 \
   --page-height 240 \
+  --image-quality 100 \
+  --no-pdf-compression \
   -d 600 \
+  --image-dpi 600 \
   --margin-left 0 \
   --margin-right 0 \
   --margin-top 0 \

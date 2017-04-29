@@ -13,17 +13,20 @@ body {
 
 .title {
   position: absolute;
-  bottom: 56.66667pt; }
+  bottom: 56.66667pt;
+  width: 878.33333pt; }
 
 .page:nth-child(odd) {
   padding-left: 85pt;
   padding-right: 56.66667pt; }
+  .page:nth-child(odd) .title {
+    text-align: right; }
 
 .page:nth-child(even) {
   padding-left: 56.66667pt;
   padding-right: 85pt; }
 
 .page img {
-  width: 850pt; }
+  width: 878.33333pt; }
 
 /*# sourceMappingURL=book.css.map */

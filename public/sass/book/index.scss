@@ -21,11 +21,16 @@ body {
 .title {
   position: absolute;
   bottom: cm(1);
+  width: cm($pageWidth - 2.5);
 }
 
 .page:nth-child(odd) {
   padding-left: cm(1.5);
   padding-right: cm(1);
+
+  .title {
+    text-align: right;
+  }
 }
 
 .page:nth-child(even) {
@@ -34,5 +39,5 @@ body {
 }
 
 .page img {
-  width: cm($pageWidth - 3);
+  width: cm($pageWidth - 2.5);
 }
