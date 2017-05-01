@@ -2,8 +2,8 @@ import { WorkImageStatus } from '../const/const';
 import Work from '../models/work';
 import {
   auth,
-  stripMongoNoise,
-  workData
+  workData,
+  theWorks
 } from '../helpers/helpers';
 import { breed, getNames, generateName } from '../organisms';
 import saveWorkImage from '../saveWorkImage';
@@ -97,27 +97,6 @@ function rerenderWork(req, res) {
       });
     }
   );
-}
-
-function theWorks() {
-  return new Promise((resolve) => {
-    Work.find({
-      imageStatus: 2
-    }, {
-      __v: false,
-      _id: false,
-      chromosome: false,
-      hits: false,
-      imageStatus: false,
-      frozen: false,
-      ts: false
-    })
-      .sort({ _id: -1 })
-      .lean().exec((err, docs) => {
-        //resolve(stripMongoNoise(docs));
-        resolve((docs));
-      });
-  });
 }
 
 export default function (router) {

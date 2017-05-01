@@ -1,3 +1,8 @@
-replace
 node_modules
 public/works
+book.pdf
+.sass-cache
+npm-debug.log
+naieveee.jpg
+data/npm-debug.log
+tmp

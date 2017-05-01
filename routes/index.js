@@ -4,6 +4,7 @@ import API from './api';
 import detailPage from './detail';
 import dissect from './dissect';
 import render from './render';
+import book from './book';
 import freezer from './freezer';
 
 export default function (router) {
@@ -14,4 +15,5 @@ export default function (router) {
   dissect(router);
   render(router);
   freezer(router);
+  book(router);
 }

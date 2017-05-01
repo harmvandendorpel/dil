@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    link(rel='stylesheet', href='/css/book.css')
+  body(class=mode === 'pdf' ? 'pdf' : 'web')
+    .outer
+      for work in works
+        .page
+          img(src=`/works/full/${work.current.filename}`)
+          .title= work.current.title
