@@ -8,6 +8,7 @@ import { auth } from '../helpers/helpers';
 function displayRenderPage(options, res) {
   const chromosome = options.chromosome;
   const hash = sha1(chromosome);
+  const toRenderCount = options.toRenderCount;
 
   res.end(`<!doctype html>
 <html>
@@ -16,6 +17,7 @@ window.chromosome = '${chromosome}';
 window.hash       = '${hash}';
 window.layer      = ${options.layer ? "'" + options.layer + "'":null};
 window.save       = ${options.save ? 'true':'false'};
+window.toRenderCount = ${toRenderCount};
 </script><style>
 body {background-color:#eee; margin:0px}
 #btn-download {position:absolute;top:10px;left:10px;font-size:64px;}
@@ -35,21 +37,22 @@ function renderWork(req, res)  {
   if (!auth(req, res)) return;
 
   Work.find({
-    enabled: true,
+    // enabled: true,
     imageStatus: WorkImageStatus.IMAGE_NONE
   })
     .lean()
-    .sort({ _id: -1 })
+    //.sort({ _id: -1 })
     .limit(1000).exec((err, docs) => {
 
       if (docs.length > 0) {
         docs = shuffle(docs);
         displayRenderPage({
           chromosome: docs[0].chromosome,
-          save: true
+          save: true,
+          toRenderCount: docs.length
         }, res);
       } else {
-        res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title><meta http-equiv="refresh" content="5"></head><body>completed</body></html>`);
+        res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title></head><body>completed</body></html>`);
       }
   });
 }
