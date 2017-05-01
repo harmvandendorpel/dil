@@ -1,6 +1,27 @@
 body {
   padding: 0;
   margin: 0; }
+  body.web {
+    zoom: 0.4;
+    background-color: #ddd; }
+    body.web .page {
+      margin-top: 100px;
+      box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75); }
+      body.web .page:nth-child(odd) {
+        clear: both;
+        border-right: 1px solid #eee; }
+    body.web .outer {
+      margin-bottom: 100px;
+      float: left;
+      display: flex;
+      display: -webkit-flex;
+      /* Safari 8 */
+      flex-wrap: wrap;
+      -webkit-flex-wrap: wrap;
+      /* Safari 8 */
+      justify-content: center;
+      -webkit-justify-content: center;
+      /* Safari 8 */ }
 
 .page {
   page-break-after: always;
@@ -9,20 +30,22 @@ body {
   box-sizing: border-box;
   padding-top: 56.66667pt;
   padding-bottom: 56.66667pt;
-  position: relative; }
+  position: relative;
+  float: left;
+  background-color: white; }
 
 .title {
   position: absolute;
   bottom: 56.66667pt;
   width: 878.33333pt; }
 
-.page:nth-child(odd) {
+.page:nth-child(even) {
   padding-left: 85pt;
   padding-right: 56.66667pt; }
-  .page:nth-child(odd) .title {
+  .page:nth-child(even) .title {
     text-align: right; }
 
-.page:nth-child(even) {
+.page:nth-child(odd) {
   padding-left: 56.66667pt;
   padding-right: 85pt; }
 

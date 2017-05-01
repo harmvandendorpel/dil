@@ -6,6 +6,33 @@ $pageHeight: 24;
 body {
   padding: 0;
   margin: 0;
+
+  &.web {
+    zoom: 0.4;
+
+    background-color: #ddd;
+
+    .page {
+      margin-top: 100px;
+      box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+
+      &:nth-child(odd) {
+        clear: both;
+        border-right: 1px solid #eee;
+      }
+    }
+
+    .outer {
+      margin-bottom: 100px;
+      float: left;
+      display:                 flex;
+      display:                 -webkit-flex; /* Safari 8 */
+      flex-wrap:               wrap;
+      -webkit-flex-wrap:       wrap;         /* Safari 8 */
+      justify-content:         center;
+      -webkit-justify-content: center;       /* Safari 8 */
+    }
+  }
 }
 
 .page {
@@ -16,6 +43,8 @@ body {
   padding-top: cm(1);
   padding-bottom: cm(1);
   position: relative;
+  float: left;
+  background-color:white;
 }
 
 .title {
@@ -24,7 +53,7 @@ body {
   width: cm($pageWidth - 2.5);
 }
 
-.page:nth-child(odd) {
+.page:nth-child(even) {
   padding-left: cm(1.5);
   padding-right: cm(1);
 
@@ -33,7 +62,7 @@ body {
   }
 }
 
-.page:nth-child(even) {
+.page:nth-child(odd) {
   padding-left: cm(1);
   padding-right: cm(1.5);
 }
@@ -41,3 +70,4 @@ body {
 .page img {
   width: cm($pageWidth - 2.5);
 }
+

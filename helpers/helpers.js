@@ -149,21 +149,13 @@ export function bookData() {
         _id: false,
       })
       .sort({ _id: -1 })
-      .limit(25)
+      .limit(250)
       .lean().exec((err, docs) => {
-        const injectFamilyInfoList = docs.map((work) => {
-          return (callback) => {
-            console.log(work.hash);
-            workData(work.hash).then((result) => {
-              callback(null, result);
-            });
-          }
-        });
+        const injectFamilyInfoList = docs.map((work) =>
+          (callback) => workData(work.hash).then((result) => callback(null, result))
+        );
 
-        Async.parallel(injectFamilyInfoList, (error, results) => {
-          console.log(results);
-          resolve(results);
-        });
+        Async.parallel(injectFamilyInfoList, (error, results) => resolve(results));
       });
   });
 }

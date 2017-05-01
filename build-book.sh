@@ -15,4 +15,4 @@ wkhtmltopdf \
   --margin-top 0 \
   --margin-bottom 0 \
   --disable-smart-shrinking \
-  http://localhost:3000/book book.pdf
+  http://localhost:3000/book?pdf book.pdf
