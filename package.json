@@ -8,7 +8,7 @@
     "watch:canvas": "watchify public/src/work/index.js --debug -t [ babelify ] -o public/js/workCanvas.js -v",
     "watch:frontend": "webpack --watch",
     "build:book": "./build-book.sh",
-    "watch:book": "sass -w public/sass/book/index.scss:public/css/book.css"
+    "build:book:style": "sass public/sass/book/index.scss:public/css/book.css"
   },
   "dependencies": {
     "asap": "^2.0.5",

@@ -49,7 +49,14 @@ body {
   padding-left: 56.66667pt;
   padding-right: 85pt; }
 
-.page img {
+.page__one-work img {
   width: 878.33333pt; }
+
+.page__two-works {
+  text-align: center; }
+  .page__two-works img {
+    width: 595pt; }
+  .page__two-works img:last-child {
+    margin-top: 56.66667pt; }
 
 /*# sourceMappingURL=book.css.map */

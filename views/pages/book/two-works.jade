@@ -1,0 +1,4 @@
+.page__two-works
+  img(src=`/works/full/${page.works[0].current.filename}`)
+  if page.works.length > 1
+    img(src=`/works/full/${page.works[1].current.filename}`)
