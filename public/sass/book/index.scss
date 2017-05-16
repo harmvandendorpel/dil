@@ -67,7 +67,19 @@ body {
   padding-right: cm(1.5);
 }
 
-.page img {
-  width: cm($pageWidth - 2.5);
+.page__one-work {
+  img {
+    width: cm($pageWidth - 2.5);
+  }
 }
 
+.page__two-works {
+  text-align:center;
+  img {
+    width: cm($pageHeight/2 - 1.5);
+  }
+
+  img:last-child {
+    margin-top: cm(1);
+  }
+}
