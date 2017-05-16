@@ -1,0 +1,9 @@
+.page__three-works
+  .split
+    img(src=`/works/full/${page.works[0].current.filename}`)
+  if page.works.length > 1
+    .split
+      img(src=`/works/full/${page.works[1].current.filename}`)
+  if page.works.length > 2
+    .split
+      img(src=`/works/full/${page.works[2].current.filename}`)

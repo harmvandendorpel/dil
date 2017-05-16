@@ -83,3 +83,19 @@ body {
     margin-top: cm(1);
   }
 }
+
+.page__three-works {
+  text-align:center;
+  img {
+    width: cm($pageHeight/3 - 1.5);
+
+  }
+
+  div {
+    margin-top: cm(1)
+  }
+  
+  div:first-child {
+    margin: 0;
+  }
+}

@@ -9,7 +9,7 @@ function preparePages(works) {
       works: []
     };
 
-    switch(parseInt(Math.random() * 2, 10)) {
+    switch(parseInt(Math.random() * 3, 10)) {
       case 0:
         page.works.push(works.shift());
         page.view = 'one-work';
@@ -18,6 +18,11 @@ function preparePages(works) {
       case 1:
         page.works.push(...works.splice(0, 2));
         page.view = 'two-works';
+        break;
+
+      case 2:
+        page.works.push(...works.splice(0, 3));
+        page.view = 'three-works';
         break;
 
       default:
