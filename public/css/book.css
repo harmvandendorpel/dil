@@ -59,4 +59,13 @@ body {
   .page__two-works img:last-child {
     margin-top: 56.66667pt; }
 
+.page__three-works {
+  text-align: center; }
+  .page__three-works img {
+    width: 368.33333pt; }
+  .page__three-works div {
+    margin-top: 56.66667pt; }
+  .page__three-works div:first-child {
+    margin: 0; }
+
 /*# sourceMappingURL=book.css.map */
