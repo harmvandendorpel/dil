@@ -4,6 +4,10 @@ export default class DetailPage extends AbstractPage {
   constructor() {
     super();
     this.position();
+    $('*[data-href]').bind('mouseup touchend', (e) => {
+      const href = $(e.currentTarget).data().href;
+      location.href = href;
+    });
   }
 
   position() {

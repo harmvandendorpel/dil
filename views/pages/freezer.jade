@@ -2,17 +2,17 @@ extends ../layout
 include ../mixins/work
 
 block meta
-  link(href=`/works/thumb/${works[0].filename}`, rel='shortcut icon')
-  link(href=`/works/thumb/${works[0].filename}`, rel='icon')
+  link(href=`/works/thumb/${works[0].current.filename}`, rel='shortcut icon')
+  link(href=`/works/thumb/${works[0].current.filename}`, rel='icon')
   meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no', name='viewport')
 
   meta(content=`${title}`, property='twitter:title')
   meta(content=`${title}`, property='og:title')
   meta(content='http://death.imitates.org/', property='og:url')
   meta(content='http://death.imitates.org/', property='twitter:url')
-  meta(content='http://death.imitates.org/works/medium/'+ works[0].filename, property='og:image')
-  meta(content='http://death.imitates.org/works/medium/' + works[0].filename, property='twitter:image')
-  meta(content='http://death.imitates.org/works/full/' + works[0].filename, property='twitter:card')
+  meta(content='http://death.imitates.org/works/medium/'+ works[0].current.filename, property='og:image')
+  meta(content='http://death.imitates.org/works/medium/' + works[0].current.filename, property='twitter:image')
+  meta(content='http://death.imitates.org/works/full/' + works[0].current.filename, property='twitter:card')
   meta(content='Death Imitates Language', property='og:site_name')
   meta(content='article', property='og:type')
   meta(content='summary', property='twitter:card')
@@ -36,6 +36,7 @@ block content
       .freezer--image-container.work--has-tools(data-hash=work.current.hash)
         .freezer--image.work__image(style=`background-image:url(/works/full/${work.current.filename})`)
           + workTools(work.current)
-      .freezer--info= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}, ${work.current.year}`
+      .freezer--info
+        a.name(href=`/language/${work.current.hash}`)= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}, ${work.current.year}`
 
 
