@@ -6,9 +6,11 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 5vw;
-
   &:first-child {
     padding-top: 5vw;
+  }
+  a.name:hover {
+    border-bottom: 1px solid black;
   }
 }
 

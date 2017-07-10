@@ -514,6 +514,8 @@ ul.buttons {
   padding-bottom: 5vw; }
   .freezer--row:first-child {
     padding-top: 5vw; }
+  .freezer--row a.name:hover {
+    border-bottom: 1px solid black; }
 
 .freezer--image {
   display: block;
