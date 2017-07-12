@@ -8,33 +8,36 @@ function workAge(work) {
   return moment(ts).fromNow();
 }
 
-export default function (router) {
-  router.get('/freezer', (req, res) => {
-    Work
-      .find({
-        frozen: true,
-        enabled: true
-      })
-      .exec((err, works) => {
-        const hydratedWorks = [];
+function frozenWorkData() {
+  return new Promise((resolve) => {
+    Work.find({
+      frozen: true,
+      enabled: true
+    })
+    .exec((err, works) => {
+      const hydratedWorks = [];
+      const promises = works.map(work =>
+        workData(work.hash).then(more => hydratedWorks.push(more))
+      );
 
-        const promises = works.map((work) => {
-          return workData(work.hash).then((more) => {
-            hydratedWorks.push(more);
-          });
+      Promise.all(promises).then(() => {
+        const sortedWorks = hydratedWorks.sort((a, b) => {
+          return a.current.ts - b.current.ts;
         });
-
-        Promise.all(promises).then(() => {
-          const sortedWorks = hydratedWorks.sort((a, b) => {
-            return workAge(a.current) > workAge(b.current);
-          });
-
-          render('pages/freezer', {
-            title: 'Freezer',
-            script: 'FreezerPage',
-            works: sortedWorks
-          }, req, res);
-        });
+        resolve(sortedWorks);
       });
+    });
   });
+}
+
+export default function (router) {
+  router.get('/freezer', (req, res) =>
+    frozenWorkData().then(works =>
+      render('pages/freezer', {
+        title: 'Freezer',
+        script: 'FreezerPage',
+        works
+      }, req, res)
+    )
+  );
 }

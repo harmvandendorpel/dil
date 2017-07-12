@@ -121,6 +121,12 @@ export default function (router) {
     });
   });
 
+  router.get('/api/frozen', (req, res) => {
+    theWorks().then((results) => {
+      res.send(results);
+    });
+  });
+
   router.get('/api/forceregenerate', (req, res) => {
     if (!auth(req, res)) return;
 
