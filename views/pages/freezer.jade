@@ -37,6 +37,8 @@ block content
         .freezer--image.work__image(style=`background-image:url(/works/full/${work.current.filename})`)
           + workTools(work.current)
       .freezer--info
-        a.name(href=`/language/${work.current.hash}`)= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}, ${work.current.birthday}`
+        a.name(href=`/language/${work.current.hash}`)= `${work.current.title} ${work.parents[0].title} ${work.parents[1].title}`
+        br
+        span= `Born ${work.current.birthday}`
 
 
