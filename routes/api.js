@@ -3,7 +3,8 @@ import Work from '../models/work';
 import {
   auth,
   workData,
-  theWorks
+  theWorks,
+  frozenWorkData
 } from '../helpers/helpers';
 import { breed, getNames, generateName } from '../organisms';
 import saveWorkImage from '../saveWorkImage';
@@ -122,9 +123,9 @@ export default function (router) {
   });
 
   router.get('/api/frozen', (req, res) => {
-    theWorks().then((results) => {
-      res.send(results);
-    });
+    frozenWorkData().then(works =>
+      res.send(works)
+    );
   });
 
   router.get('/api/forceregenerate', (req, res) => {
