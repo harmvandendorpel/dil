@@ -42,7 +42,7 @@ function deleteWork(req, res) {
   const hash = req.params.hash;
 
   Work.update(
-    { hash, frozen: { $ne: true }},
+    { hash, frozen: { $ne: true } },
     { enabled: false },
     {},
     () => {
@@ -53,7 +53,7 @@ function deleteWork(req, res) {
   );
 }
 
-function createOffspring(req, res)  {
+function createOffspring(req, res) {
   if (!auth(req, res)) return;
 
   const parents = req.body.parents;
@@ -61,7 +61,7 @@ function createOffspring(req, res)  {
 
   parents.sort();
 
-  breed(parents, count).then((result) => res.send(result));
+  breed(parents, count).then(result => res.send(result));
 }
 
 function freezeWork(req, res, frozen) {
@@ -173,7 +173,6 @@ export default function (router) {
         });
       });
     });
-
   });
 
   router.post('/api/saveimage', (req, res) => {

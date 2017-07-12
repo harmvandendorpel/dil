@@ -14,7 +14,6 @@ export default function saveWorkImage(req) {
     const base64Data = image.replace(/^data:image\/jpeg;base64,/, '');
 
     require('fs').writeFile(inputFullFilename, base64Data, 'base64', function(err) {
-
       sharp(inputFullFilename)
         .resize(900, 900)
         .quality(90)
