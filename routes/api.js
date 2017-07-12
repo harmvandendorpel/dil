@@ -3,7 +3,8 @@ import Work from '../models/work';
 import {
   auth,
   workData,
-  theWorks
+  theWorks,
+  frozenWorkData
 } from '../helpers/helpers';
 import { breed, getNames, generateName } from '../organisms';
 import saveWorkImage from '../saveWorkImage';
@@ -42,7 +43,7 @@ function deleteWork(req, res) {
   const hash = req.params.hash;
 
   Work.update(
-    { hash, frozen: { $ne: true }},
+    { hash, frozen: { $ne: true } },
     { enabled: false },
     {},
     () => {
@@ -53,7 +54,7 @@ function deleteWork(req, res) {
   );
 }
 
-function createOffspring(req, res)  {
+function createOffspring(req, res) {
   if (!auth(req, res)) return;
 
   const parents = req.body.parents;
@@ -61,7 +62,7 @@ function createOffspring(req, res)  {
 
   parents.sort();
 
-  breed(parents, count).then((result) => res.send(result));
+  breed(parents, count).then(result => res.send(result));
 }
 
 function freezeWork(req, res, frozen) {
@@ -121,6 +122,12 @@ export default function (router) {
     });
   });
 
+  router.get('/api/frozen', (req, res) => {
+    frozenWorkData().then(works =>
+      res.send(works)
+    );
+  });
+
   router.get('/api/forceregenerate', (req, res) => {
     if (!auth(req, res)) return;
 
@@ -173,7 +180,6 @@ export default function (router) {
         });
       });
     });
-
   });
 
   router.post('/api/saveimage', (req, res) => {

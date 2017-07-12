@@ -106,6 +106,27 @@ export function workData(hashPart) {
   });
 }
 
+export function frozenWorkData() {
+  return new Promise((resolve) => {
+    Work.find({
+      frozen: true,
+      enabled: true
+    }).exec((err, works) => {
+      const hydratedWorks = [];
+      const promises = works.map(work =>
+        workData(work.hash).then(more => hydratedWorks.push(more))
+      );
+
+      Promise.all(promises).then(() => {
+        const sortedWorks = hydratedWorks.sort((a, b) =>
+          a.current.ts - b.current.ts
+        );
+        resolve(sortedWorks);
+      });
+    });
+  });
+}
+
 export function oneHit(hash) {
   Work.update(
     { hash },
