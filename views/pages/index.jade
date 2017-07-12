@@ -32,5 +32,5 @@ block nav
 
 block content
   .recent
-    each work in works
+    each work in works.slice(0, 500)
       + indexThumb(work, true, true)
