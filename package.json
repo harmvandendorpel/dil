@@ -57,11 +57,11 @@
     "style-loader": "^0.18.2",
     "uglify-js": "^3.0.24",
     "util": "^0.10.3",
-    "watchify": "^3.9.0",
     "webpack": "^3.2.0",
     "babel-preset-stage-3": "^6.24.1"
   },
   "devDependencies": {
+    "watchify": "^3.9.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.2",

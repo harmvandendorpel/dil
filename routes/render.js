@@ -15,8 +15,8 @@ function displayRenderPage(options, res) {
 <head><title>generating ${hash}</title><script>
 window.chromosome = '${chromosome}';
 window.hash       = '${hash}';
-window.layer      = ${options.layer ? "'" + options.layer + "'":null};
-window.save       = ${options.save ? 'true':'false'};
+window.layer      = ${options.layer ? "'" + options.layer + "'" : null};
+window.save       = ${options.save ? 'true' : 'false'};
 window.toRenderCount = ${toRenderCount};
 </script><style>
 body {background-color:#eee; margin:0px}
@@ -41,18 +41,16 @@ function renderWork(req, res)  {
     imageStatus: WorkImageStatus.IMAGE_NONE
   })
     .lean()
-    //.sort({ _id: -1 })
     .limit(1000).exec((err, docs) => {
-
       if (docs.length > 0) {
-        docs = shuffle(docs);
+        const shuffledDocs = shuffle(docs);
         displayRenderPage({
-          chromosome: docs[0].chromosome,
+          chromosome: shuffledDocs[0].chromosome,
           save: true,
-          toRenderCount: docs.length
+          toRenderCount: shuffledDocs.length
         }, res);
       } else {
-        res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title></head><body>completed</body></html>`);
+        res.end('<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title></head><body>completed</body></html>');
       }
   });
 }
@@ -66,7 +64,6 @@ function renderLayer(req, res)  {
   Work.find({
     hash
   }).limit(1).exec((err, docs) => {
-
     if (docs.length > 0) {
       displayRenderPage({
         chromosome: docs[0].chromosome,
@@ -74,7 +71,7 @@ function renderLayer(req, res)  {
         layer
       }, res);
     } else {
-      res.end(`<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title><meta http-equiv="refresh" content="5"></head><body>work or layer not found</body></html>`);
+      res.end('<!doctype html><html><head><meta http-equiv="refresh" content="10"><title>done</title><meta http-equiv="refresh" content="5"></head><body>work or layer not found</body></html>');
     }
   });
 }

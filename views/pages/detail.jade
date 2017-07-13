@@ -1,7 +1,6 @@
 extends ../layout
 include ../mixins/work
 
-
 block meta
   link(href=`/works/thumb/${current.filename}`, rel='shortcut icon')
   link(href=`/works/thumb/${current.filename}`, rel='icon')
@@ -24,7 +23,6 @@ block meta
   meta(content='@harmvddorpel', property='twitter:site')
   meta(content='@harmvddorpel', property='twitter:creator')
 
-
 block nav
   .nav
     ul.buttons
@@ -38,6 +36,7 @@ block nav
 
       li.nav-button
         a.text(href='/') Population
+
 block content
   .slides-container
     .section.section--current(data-anchor="top")
@@ -51,9 +50,7 @@ block content
           .link-to-parent.left <i class='icon-arrow-down'></i> <u>Parents</u> <i class='icon-arrow-down'></i>
           .link-to-parent.right <i class='icon-arrow-down'></i> <u>Parents</u> <i class='icon-arrow-down'></i>
 
-
     if parents.length == 2
-
       .section.section--parents(data-anchor="parents")
         .parents
           + workParent(parents[0])
@@ -73,7 +70,6 @@ block content
             u= `${children.length} Children`
             &nbsp;
             i.icon-arrow-down
-
 
     if siblings && siblings.length > 0
       .section.screen--siblings.section--siblings(data-anchor="siblings")
@@ -105,8 +101,6 @@ block content
                 a(href=`/language/${work.hash.substring(0,8)}`)
                   img.work__image(src=`/works/thumb/${work.filename}`)
                   p.title.title--thumb.hide-phone= work.title
-
-
 
 mixin workParent(parent)
   .work--medium.work.work--has-tools
