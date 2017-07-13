@@ -41,17 +41,20 @@ def store_current(data, folder):
     parents = data["parents"]
     os.makedirs(folder)
     source = "{}/full/{}".format(IMAGE_LOCATION, current["filename"])
-    full_name = "{} {} {}.jpg".format(current["title"], parents[0]["title"], parents[0]["title"])
+    full_name = "{} {} {}.jpg".format(current["title"], parents[0]["title"], parents[1]["title"])
     destination = "{}/{}".format(folder, full_name)
     try_copy(source, destination)
 
 
-def store_multiple(data, folder):
+def store_multiple(data, folder, filter_enabled):
     os.makedirs(folder)
     for child in data:
-        source = "{}/full/{}".format(IMAGE_LOCATION, child["filename"])
-        destination = "{}/{}.jpg".format(folder, child["title"])
-        try_copy(source, destination)
+        if filter_enabled and not child["enabled"]:
+            print 'skipping disabled child'
+        else:
+            source = "{}/full/{}".format(IMAGE_LOCATION, child["filename"])
+            destination = "{}/{}.jpg".format(folder, child["title"])
+            try_copy(source, destination)
 
 
 def process_frozen_work_by_hash(hash, index):
@@ -60,9 +63,9 @@ def process_frozen_work_by_hash(hash, index):
     work_folder = "{}/{index:03d}-{}".format(BOOK_DATA, hash, index=index)
     os.makedirs(work_folder)
     store_current(frozen_work, "{}/current".format(work_folder))
-    store_multiple(frozen_work["children"], "{}/children".format(work_folder))
-    store_multiple(frozen_work["siblings"], "{}/siblings".format(work_folder))
-    store_multiple(frozen_work["parents"], "{}/parents".format(work_folder))
+    store_multiple(frozen_work["children"], "{}/children".format(work_folder), True)
+    store_multiple(frozen_work["siblings"], "{}/siblings".format(work_folder), True)
+    store_multiple(frozen_work["parents"], "{}/parents".format(work_folder), False)
 
 
 process_frozen_works()
