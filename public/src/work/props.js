@@ -250,7 +250,7 @@ export const organs = [
       { f: '020', no45: true },
       { f: '021', no45: true },
       { f: '022', no45: true },
-      { f: '005' },
+      { f: '023', no45: true },
       { f: '006', no45: true },
       { f: '007' },
       { f: '008' },
