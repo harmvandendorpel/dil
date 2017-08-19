@@ -7,7 +7,7 @@ export const layerGroups = {
   things: ['things'],
   CNC: ['cuts']
 };
-
+//
 export const foils = [{
   fixedColor: true,
   folder: 'foils',

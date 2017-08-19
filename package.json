@@ -5,7 +5,7 @@
   "scripts": {
     "watch": "nodemon ./bin/www",
     "start": "node ./bin/www",
-    "watch:canvas": "watchify public/src/work/index.js --debug -t [ babelify ] -o public/js/workCanvas.js -v",
+    "watch:canvas": "watchify public/src/work/index.js -t [ babelify ] -o public/js/workCanvas.js -v",
     "watch:frontend": "webpack --watch",
     "build:book": "./build-book.sh",
     "build:book:style": "sass public/sass/book/index.scss:public/css/book.css"
