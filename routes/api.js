@@ -150,7 +150,7 @@ export default function (router) {
         });
       });
       res.set('Content-Type', 'text/xml');
-      res.send(rss);
+      res.send(rss.xml());
     });
   });
 
