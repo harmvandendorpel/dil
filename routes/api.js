@@ -1,3 +1,6 @@
+import RSS from 'rss';
+import moment from 'moment';
+
 import { WorkImageStatus } from '../const/const';
 import Work from '../models/work';
 import {
@@ -109,6 +112,12 @@ export default function (router) {
   router.delete('/api/freeze/:hash', (req, res) => freezeWork(req, res, false));
   router.post('/api/breed', createOffspring);
 
+  router.get('/api/works', (req, res) => {
+    theWorks().then((results) => {
+      res.send(results);
+    });
+  });
+
   router.get('/api/work/:hash', (req, res) => {
     const hash = req.params.hash;
     workData(hash).then((results) => {
@@ -116,9 +125,31 @@ export default function (router) {
     });
   });
 
-  router.get('/api/works', (req, res) => {
-    theWorks().then((results) => {
-      res.send(results);
+  router.get('/feed', (req, res) => {
+    frozenWorkData().then((results) => {
+      const rss = new RSS({
+        title: 'Death Imitates Language',
+        feed_url: 'http://death.imitates.org/feed',
+        image_url: `http://death.imitates.org/works/full/${results[0].current.filename}`,
+        site_url: 'http://death.imitates.org'
+      });
+
+      const reversed = results.reverse();
+
+      reversed.forEach((item) => {
+        const imageUrl = `http://death.imitates.org/works/full/${item.current.filename}`;
+        rss.item({
+          date: moment(item.current.ts),
+          description: `<img src="${imageUrl}">`,
+          url: `http://death.imitates.org/language/${item.current.hash}`,
+          title: [item.current.title, item.parents[0].title, item.parents[1].title].join(' '),
+          enclosure: {
+            url: imageUrl,
+            type: 'image/jpeg'
+          }
+        });
+      });
+      res.send(rss);
     });
   });
 
