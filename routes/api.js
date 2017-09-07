@@ -143,6 +143,7 @@ export default function (router) {
           description: `<img src="${imageUrl}">`,
           url: `http://death.imitates.org/language/${item.current.hash}`,
           title: [item.current.title, item.parents[0].title, item.parents[1].title].join(' '),
+          author: 'Harm van den Dorpel',
           enclosure: {
             url: imageUrl,
             type: 'image/jpeg'
