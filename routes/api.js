@@ -137,15 +137,14 @@ export default function (router) {
       const reversed = results.reverse();
 
       reversed.forEach((item) => {
-        const imageUrl = `http://death.imitates.org/works/full/${item.current.filename}`;
         rss.item({
           date: moment(item.current.ts),
-          description: `<img src="${imageUrl}">`,
+          description: `<img src="http://death.imitates.org/works/medium/${item.current.filename}">`,
           url: `http://death.imitates.org/language/${item.current.hash}`,
           title: [item.current.title, item.parents[0].title, item.parents[1].title].join(' '),
           author: 'Harm van den Dorpel',
           enclosure: {
-            url: imageUrl,
+            url: `http://death.imitates.org/works/full/${item.current.filename}`,
             type: 'image/jpeg'
           }
         });
