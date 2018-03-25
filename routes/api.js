@@ -129,8 +129,8 @@ export default function (router) {
     frozenWorkData().then((results) => {
       const rss = new RSS({
         title: 'Death Imitates Language',
-        feed_url: 'http://death.imitates.org/feed',
-        image_url: `http://death.imitates.org/works/full/${results[0].current.filename}`,
+        feed_url: 'https://deathimitateslanguage.harmvandendorpel.com/feed',
+        image_url: `https://deathimitateslanguage.harmvandendorpel.com/works/full/${results[0].current.filename}`,
         site_url: 'http://death.imitates.org'
       });
 
@@ -139,12 +139,12 @@ export default function (router) {
       reversed.forEach((item) => {
         rss.item({
           date: moment(item.current.ts),
-          description: `<img src="http://death.imitates.org/works/medium/${item.current.filename}">`,
-          url: `http://death.imitates.org/language/${item.current.hash}`,
+          description: `<img src="https://deathimitateslanguage.harmvandendorpel.com/works/medium/${item.current.filename}">`,
+          url: `https://deathimitateslanguage.harmvandendorpel.com/language/${item.current.hash}`,
           title: [item.current.title, item.parents[0].title, item.parents[1].title].join(' '),
           author: 'Harm van den Dorpel',
           enclosure: {
-            url: `http://death.imitates.org/works/full/${item.current.filename}`,
+            url: `https://deathimitateslanguage.harmvandendorpel.com/works/full/${item.current.filename}`,
             type: 'image/jpeg'
           }
         });
